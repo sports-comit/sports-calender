@@ -1,1 +1,875 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>School Sports Events in Bahrain</title>
+    <style>
+        /* --- GLOBAL NUMBER & NUMERIC ENFORCEMENT --- */
+        *, *::before, *::after, html[dir="rtl"] *, html[dir="ltr"] * {
+            font-variant-numeric: lining-nums tabular-nums !important;
+            font-feature-settings: "lnum" 1, "tnum" 1 !important;
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
+        :root {
+            /* Palette: Exclusively Blue, Dark Blue, and Baby Blue */
+            --dark-blue-deep: #071324;
+            --dark-blue-navy: #0D2137;
+            --dark-blue-surface: #143250;
+            --blue-primary: #0077B6;
+            --blue-accent: #0284C7;
+            --blue-hover: #0369A1;
+            --baby-blue: #90E0EF;
+            --baby-blue-light: #E0F7FA;
+            --baby-blue-pale: #F0F9FF;
+            --white: #FFFFFF;
+            --shadow-glow: rgba(144, 224, 239, 0.45);
+            --modal-backdrop: rgba(7, 19, 36, 0.65);
+        }
+
+        body {
+            background-color: var(--baby-blue-pale);
+            color: var(--dark-blue-navy);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* --- Header & Glowing Typography --- */
+        header {
+            background: linear-gradient(135deg, var(--dark-blue-deep) 0%, var(--dark-blue-navy) 100%);
+            padding: 1.25rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(7, 19, 36, 0.35);
+            border-bottom: 2px solid var(--blue-accent);
+        }
+
+        .header-title-container {
+            flex: 1;
+        }
+
+        h1.site-title {
+            color: var(--baby-blue);
+            font-size: 1.7rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            /* Glowing text-shadow styling */
+            text-shadow: 0 0 10px rgba(144, 224, 239, 0.8),
+                         0 0 20px rgba(0, 119, 182, 0.6),
+                         0 0 35px rgba(2, 132, 199, 0.4);
+            user-select: none;
+        }
+
+        #langToggle {
+            background-color: var(--baby-blue);
+            color: var(--dark-blue-deep);
+            border: 2px solid transparent;
+            padding: 0.55rem 1.4rem;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            flex-shrink: 0;
+        }
+
+        #langToggle:hover {
+            background-color: var(--white);
+            color: var(--blue-primary);
+            border-color: var(--baby-blue);
+            box-shadow: 0 0 14px var(--shadow-glow);
+        }
+
+        /* --- Main Content Layout --- */
+        main {
+            flex: 1;
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.25rem;
+            border-bottom: 2px solid rgba(0, 119, 182, 0.2);
+            padding-bottom: 0.5rem;
+        }
+
+        .section-title {
+            color: var(--dark-blue-navy);
+            font-size: 1.45rem;
+            font-weight: 700;
+        }
+
+        /* --- Showcase: Upcoming Events View --- */
+        #upcomingShowcase {
+            margin-bottom: 3.5rem;
+        }
+
+        .showcase-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .showcase-card {
+            background: var(--white);
+            border: 1px solid rgba(0, 119, 182, 0.2);
+            border-radius: 12px;
+            padding: 1.25rem;
+            border-inline-start: 6px solid var(--blue-primary);
+            box-shadow: 0 4px 12px rgba(7, 19, 36, 0.06);
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .showcase-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 119, 182, 0.16);
+            border-color: var(--blue-accent);
+        }
+
+        .card-tag-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .card-date-badge {
+            font-size: 0.85rem;
+            color: var(--blue-primary);
+            font-weight: 700;
+            background-color: var(--baby-blue-light);
+            padding: 0.2rem 0.55rem;
+            border-radius: 6px;
+        }
+
+        .card-category-badge {
+            font-size: 0.75rem;
+            background-color: var(--dark-blue-surface);
+            color: var(--baby-blue);
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            color: var(--dark-blue-deep);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-location-meta {
+            font-size: 0.85rem;
+            color: var(--blue-hover);
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        /* --- 12-Month Calendar Grid Overview --- */
+        #yearGridSection {
+            transition: opacity 0.3s ease;
+        }
+
+        .year-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .month-block-card {
+            background-color: var(--white);
+            border: 2px solid var(--baby-blue-light);
+            border-radius: 12px;
+            padding: 1.5rem 1rem;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 119, 182, 0.05);
+            transition: all 0.25s ease;
+        }
+
+        .month-block-card:hover {
+            background-color: var(--blue-primary);
+            border-color: var(--blue-accent);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 20px rgba(0, 119, 182, 0.2);
+        }
+
+        .month-block-card:hover .month-title {
+            color: var(--white);
+        }
+
+        .month-block-card:hover .month-event-counter {
+            background-color: var(--baby-blue);
+            color: var(--dark-blue-deep);
+        }
+
+        .month-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--dark-blue-deep);
+            margin-bottom: 0.75rem;
+            transition: color 0.25s ease;
+        }
+
+        .month-event-counter {
+            font-size: 0.85rem;
+            background-color: var(--dark-blue-navy);
+            color: var(--baby-blue);
+            padding: 0.35rem 0.9rem;
+            border-radius: 20px;
+            display: inline-block;
+            font-weight: 600;
+            transition: all 0.25s ease;
+        }
+
+        /* --- Full Month Expanded View --- */
+        #expandedMonthSection {
+            display: none;
+            animation: slideDownFade 0.35s ease forwards;
+        }
+
+        @keyframes slideDownFade {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .expanded-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--white);
+            padding: 0.9rem 1.25rem;
+            border-radius: 10px;
+            margin-bottom: 1.25rem;
+            border: 1px solid rgba(0, 119, 182, 0.2);
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .back-nav-btn {
+            background-color: var(--dark-blue-navy);
+            color: var(--baby-blue);
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .back-nav-btn:hover {
+            background-color: var(--blue-primary);
+            color: var(--white);
+        }
+
+        .category-filters-container {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .category-filter-btn {
+            background-color: var(--baby-blue-light);
+            color: var(--dark-blue-deep);
+            border: 1px solid var(--blue-accent);
+            padding: 0.35rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .category-filter-btn.active {
+            background-color: var(--blue-primary);
+            color: var(--white);
+            border-color: var(--blue-primary);
+        }
+
+        .calendar-table-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 6px;
+            background-color: var(--blue-primary);
+            border: 2px solid var(--blue-primary);
+            border-radius: 10px;
+            padding: 6px;
+            overflow: hidden;
+        }
+
+        .calendar-day-header {
+            background-color: var(--dark-blue-navy);
+            color: var(--baby-blue);
+            text-align: center;
+            padding: 0.75rem 0;
+            font-weight: 700;
+            font-size: 0.9rem;
+            border-radius: 4px;
+        }
+
+        .calendar-cell {
+            background-color: var(--white);
+            min-height: 110px;
+            padding: 0.45rem;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            border-radius: 4px;
+        }
+
+        .calendar-cell.cell-empty {
+            background-color: rgba(240, 249, 255, 0.4);
+            border: 1px dashed rgba(0, 119, 182, 0.15);
+        }
+
+        .cell-date-num {
+            font-weight: 800;
+            color: var(--dark-blue-deep);
+            font-size: 0.95rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .event-chip-item {
+            background-color: var(--blue-primary);
+            color: var(--white);
+            padding: 0.35rem 0.45rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-weight: 600;
+            transition: background 0.2s ease, transform 0.1s ease;
+        }
+
+        .event-chip-item:hover {
+            background-color: var(--dark-blue-navy);
+            transform: scale(0.98);
+        }
+
+        /* --- Interactive Modal with Backdrop Blur --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: var(--modal-backdrop);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.25s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-card {
+            background-color: var(--white);
+            padding: 2.25rem;
+            border-radius: 14px;
+            width: 90%;
+            max-width: 440px;
+            box-shadow: 0 16px 36px rgba(7, 19, 36, 0.4);
+            border: 3px solid var(--baby-blue);
+            transform: scale(0.94);
+            transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .modal-overlay.active .modal-card {
+            transform: scale(1);
+        }
+
+        .modal-title {
+            color: var(--dark-blue-deep);
+            font-size: 1.45rem;
+            font-weight: 700;
+            margin-bottom: 1.25rem;
+            border-bottom: 2px solid var(--baby-blue-light);
+            padding-bottom: 0.65rem;
+        }
+
+        .modal-meta-field {
+            margin-bottom: 0.85rem;
+            color: var(--blue-hover);
+            font-size: 1rem;
+            display: flex;
+            gap: 0.5rem;
+            align-items: baseline;
+        }
+
+        .modal-meta-field strong {
+            color: var(--dark-blue-navy);
+            min-width: 85px;
+            font-weight: 700;
+        }
+
+        .modal-meta-val {
+            color: var(--dark-blue-deep);
+            word-break: break-word;
+        }
+
+        .modal-close-btn {
+            margin-top: 1.75rem;
+            width: 100%;
+            background-color: var(--blue-primary);
+            color: var(--white);
+            border: none;
+            padding: 0.85rem;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .modal-close-btn:hover {
+            background-color: var(--dark-blue-navy);
+        }
+
+        /* --- Responsive Layout Adjustments --- */
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem;
+            }
+            h1.site-title {
+                font-size: 1.25rem;
+            }
+            main {
+                padding: 1.25rem 0.75rem;
+            }
+            .calendar-cell {
+                min-height: 75px;
+                padding: 0.25rem;
+            }
+            .calendar-day-header {
+                font-size: 0.75rem;
+                padding: 0.5rem 0;
+            }
+            .event-chip-item {
+                font-size: 0.65rem;
+                padding: 0.2rem;
+            }
+            .expanded-toolbar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-title-container">
+            <h1 class="site-title" id="pageTitle">School Sports Events in Bahrain</h1>
+        </div>
+        <button id="langToggle">عربي</button>
+    </header>
+
+    <main>
+        <!-- 1. Dedicated Initial View: Upcoming Events Showcase -->
+        <section id="upcomingShowcase">
+            <div class="section-header">
+                <h2 class="section-title" id="upcomingHeaderTitle">Upcoming Events Showcase</h2>
+            </div>
+            <div class="showcase-grid" id="upcomingContainer">
+                <!-- Injected via JavaScript -->
+            </div>
+        </section>
+
+        <!-- 2. 12-Month Calendar Grid Overview -->
+        <section id="yearGridSection">
+            <div class="section-header">
+                <h2 class="section-title" id="yearHeaderTitle">Academic Calendar (12 Months)</h2>
+            </div>
+            <div class="year-grid" id="yearGridContainer">
+                <!-- Injected via JavaScript -->
+            </div>
+        </section>
+
+        <!-- 3. Dynamic Month Expansion Full View -->
+        <section id="expandedMonthSection">
+            <div class="section-header">
+                <h2 class="section-title" id="expandedMonthTitle">Month Year</h2>
+            </div>
+            <div class="expanded-toolbar">
+                <button class="back-nav-btn" id="backToYearBtn">Back to Year View</button>
+                <div class="category-filters-container" id="categoryFilters">
+                    <!-- Category pills injected via JavaScript -->
+                </div>
+            </div>
+            <div class="calendar-table-grid" id="calendarTableGrid">
+                <!-- Interactive date blocks injected via JavaScript -->
+            </div>
+        </section>
+    </main>
+
+    <!-- 4. Interactive Event Modal -->
+    <div class="modal-overlay" id="eventModal">
+        <div class="modal-card">
+            <h3 class="modal-title" id="mTitle">Event Title</h3>
+            <div class="modal-meta-field">
+                <strong id="lblDate">Date:</strong>
+                <span class="modal-meta-val" id="mDate"></span>
+            </div>
+            <div class="modal-meta-field">
+                <strong id="lblTime">Time:</strong>
+                <span class="modal-meta-val" id="mTime"></span>
+            </div>
+            <div class="modal-meta-field">
+                <strong id="lblLoc">Location:</strong>
+                <span class="modal-meta-val" id="mLoc"></span>
+            </div>
+            <button class="modal-close-btn" id="modalCloseBtn">Close</button>
+        </div>
+    </div>
+
+    <script>
+        // <!-- GM&USER_EDITABLE_DATA_START -->
+        // STRICT NUMBER FORMATTING: Standard English digits (0-9) used exclusively across all fields.
+        const eventsData = [
+            { id: 1, title_en: 'Sports Governance Workshop', title_ar: 'الحوكمة الرياضية', date: '2026-10-04', time: '09:00', location_en: 'Ministry Headquarters, Manama', location_ar: 'مقر الوزارة، المنامة', sport_category: 'Management' },
+            { id: 2, title_en: 'National Sports Talent Selection', title_ar: 'الانتقاء الرياضي', date: '2026-10-11', time: '08:00', location_en: 'Bahrain National Stadium, Riffa', location_ar: 'الاستاد الوطني، الرفاع', sport_category: 'Talent' },
+            { id: 3, title_en: 'Student Discovery Initiative Kickoff', title_ar: 'البدء باكتشاف المواهب الطلابية', date: '2026-10-15', time: '10:00', location_en: 'Public Secondary Schools', location_ar: 'المدارس الحكومية الثانوية', sport_category: 'Talent' },
+            { id: 4, title_en: 'Educational Directorates Cup', title_ar: 'كأس منتخبات المناطق التعليمية', date: '2026-10-25', time: '15:30', location_en: 'Isa Town Sports City', location_ar: 'مدينة عيسى الرياضية', sport_category: 'Tournament' },
+            { id: 5, title_en: 'Higher Education Sports Symposium', title_ar: 'الشراكة الجامعية', date: '2026-11-01', time: '11:00', location_en: 'University of Bahrain, Sakhir', location_ar: 'جامعة البحرين، الصخير', sport_category: 'University' },
+            { id: 6, title_en: 'Collegiate Esports Championship', title_ar: 'البطولة الجامعية للألعاب الإلكترونية', date: '2026-11-15', time: '17:00', location_en: 'Zain Arena, Um Al Hassam', location_ar: 'صالة زين، أم الحصم', sport_category: 'University' },
+            { id: 7, title_en: 'University League Technical Meeting', title_ar: 'المؤتمر الفني لدوري الجامعات', date: '2027-02-07', time: '09:30', location_en: 'Conference Hall, Seef', location_ar: 'قاعة المؤتمرات، السيف', sport_category: 'Management' },
+            { id: 8, title_en: 'Elite Athletics Training Camps', title_ar: 'معسكرات النخبة الرياضية', date: '2027-03-14', time: '07:00', location_en: 'Athletics Excellence Center', location_ar: 'مركز التميز لألعاب القوى', sport_category: 'Talent' },
+            { id: 9, title_en: 'Collegiate Chess Championship', title_ar: 'البطولة الجامعية للشطرنج', date: '2027-03-21', time: '16:00', location_en: 'Student Services Center', location_ar: 'مركز الخدمات الطلابية', sport_category: 'University' },
+            { id: 10, title_en: 'Collegiate Table Tennis Finals', title_ar: 'البطولة الجامعية لكرة الطاولة', date: '2027-04-04', time: '15:00', location_en: 'Table Tennis Association Hall', location_ar: 'صالة اتحاد كرة الطاولة', sport_category: 'University' },
+            { id: 11, title_en: 'Collegiate Football Championship', title_ar: 'البطولة الجامعية لكرة القدم', date: '2027-04-11', time: '17:30', location_en: 'BFA Stadium, Riffa', location_ar: 'استاد اتحاد كرة القدم، الرفاع', sport_category: 'University' },
+            { id: 12, title_en: 'Gulf School Sports Championship', title_ar: 'البطولة الخليجية المدرسية', date: '2027-04-25', time: '08:30', location_en: 'Khalifa Sports City, Isa Town', location_ar: 'مدينة خليفة الرياضية', sport_category: 'Tournament' },
+            { id: 13, title_en: 'Talent Discovery Season Closing', title_ar: 'نهاية اكتشاف المواهب الطلابية', date: '2027-04-29', time: '11:00', location_en: 'Hall D, Ministry Complex', location_ar: 'القاعة د، مجمع الوزارة', sport_category: 'Talent' },
+            { id: 14, title_en: 'Collegiate Sports Development Forum', title_ar: 'ملتقى تطوير الرياضة الجامعية', date: '2027-05-09', time: '10:00', location_en: 'Main Auditorium, Sakhir', location_ar: 'المسرح الرئيسي، الصخير', sport_category: 'University' },
+            { id: 15, title_en: 'Annual Sports Excellence Awards', title_ar: 'جائزة التميز الرياضي', date: '2027-05-16', time: '19:00', location_en: 'Cultural Hall, Manama', location_ar: 'الصالة الثقافية، المنامة', sport_category: 'Management' }
+        ];
+        // <!-- GM&USER_EDITABLE_DATA_END -->
+
+        // State Machine
+        let currentLang = 'en';
+        let expandedMonthMeta = null;
+        let selectedCategory = 'All';
+
+        // 12-Month Academic Year Setup (Sep 2026 - Aug 2027)
+        const academicMonths = Array.from({ length: 12 }, (_, idx) => {
+            const dateRef = new Date(2026, 8 + idx, 1);
+            return {
+                year: dateRef.getFullYear(),
+                month: dateRef.getMonth()
+            };
+        });
+
+        // Multilingual Dictionary
+        const i18n = {
+            en: {
+                siteTitle: "School Sports Events in Bahrain",
+                btnLang: "عربي",
+                upcomingTitle: "Upcoming Events Showcase",
+                yearGridTitle: "Academic Calendar (12 Months)",
+                backBtn: "Back to Year View",
+                lblDate: "Date:",
+                lblTime: "Time:",
+                lblLoc: "Location:",
+                btnClose: "Close",
+                eventsCountSuffix: "Events",
+                allCategories: "All Sports",
+                daysOfWeek: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+                monthsOfYear: [
+                    "January", "February", "March", "April", "May", "June",
+                    "July", "August", "September", "October", "November", "December"
+                ]
+            },
+            ar: {
+                siteTitle: "فعاليات الرياضة المدرسية في البحرين",
+                btnLang: "English",
+                upcomingTitle: "أبرز الفعاليات القادمة",
+                yearGridTitle: "التقويم الدراسي السنوي (12 شهراً)",
+                backBtn: "العودة للتقويم السنوي",
+                lblDate: "التاريخ:",
+                lblTime: "الوقت:",
+                lblLoc: "المكان:",
+                btnClose: "إغلاق",
+                eventsCountSuffix: "فعاليات",
+                allCategories: "جميع الرياضات",
+                daysOfWeek: ["الأحد", "الإثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"],
+                monthsOfYear: [
+                    "يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو",
+                    "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"
+                ]
+            }
+        };
+
+        // Standard string formatting (Direct return guarantees 0-9 digits)
+        function formatNumberString(str) {
+            return String(str);
+        }
+
+        // Application Controller
+        function initializeApp() {
+            bindEventListeners();
+            updateUIStrings();
+        }
+
+        function toggleLanguage() {
+            currentLang = (currentLang === 'en') ? 'ar' : 'en';
+            document.documentElement.lang = currentLang;
+            document.documentElement.dir = (currentLang === 'en') ? 'ltr' : 'rtl';
+            updateUIStrings();
+        }
+
+        function updateUIStrings() {
+            const dict = i18n[currentLang];
+            document.getElementById('pageTitle').textContent = dict.siteTitle;
+            document.getElementById('langToggle').textContent = dict.btnLang;
+            document.getElementById('upcomingHeaderTitle').textContent = dict.upcomingTitle;
+            document.getElementById('yearHeaderTitle').textContent = dict.yearGridTitle;
+            document.getElementById('backToYearBtn').textContent = dict.backBtn;
+            document.getElementById('lblDate').textContent = dict.lblDate;
+            document.getElementById('lblTime').textContent = dict.lblTime;
+            document.getElementById('lblLoc').textContent = dict.lblLoc;
+            document.getElementById('modalCloseBtn').textContent = dict.btnClose;
+
+            renderUpcomingShowcase();
+
+            if (expandedMonthMeta) {
+                renderCategoryFilters();
+                renderExpandedCalendar(expandedMonthMeta.year, expandedMonthMeta.month);
+            } else {
+                renderYearGrid();
+            }
+        }
+
+        // Showcase: Upcoming events (Sorted chronologically)
+        function renderUpcomingShowcase() {
+            const container = document.getElementById('upcomingContainer');
+            container.innerHTML = '';
+
+            const nowIso = new Date().toISOString().split('T')[0];
+            const upcomingList = eventsData
+                .filter(ev => ev.date >= nowIso)
+                .sort((a, b) => new Date(a.date) - new Date(b.date))
+                .slice(0, 4);
+
+            const displayList = upcomingList.length > 0 ? upcomingList : eventsData.slice(0, 4);
+
+            displayList.forEach(eventItem => {
+                const card = document.createElement('div');
+                card.className = 'showcase-card';
+                card.addEventListener('click', () => openModal(eventItem));
+
+                const titleText = (currentLang === 'en') ? eventItem.title_en : eventItem.title_ar;
+                const locText = (currentLang === 'en') ? eventItem.location_en : eventItem.location_ar;
+
+                card.innerHTML = `
+                    <div>
+                        <div class="card-tag-row">
+                            <span class="card-date-badge">${formatNumberString(eventItem.date)}</span>
+                            <span class="card-category-badge">${eventItem.sport_category}</span>
+                        </div>
+                        <div class="card-title">${titleText}</div>
+                    </div>
+                    <div class="card-location-meta">
+                        <span>📍</span>
+                        <span>${locText}</span>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Year Grid: 12-Month compact blocks
+        function renderYearGrid() {
+            const container = document.getElementById('yearGridContainer');
+            container.innerHTML = '';
+            document.getElementById('yearGridSection').style.display = 'block';
+            document.getElementById('expandedMonthSection').style.display = 'none';
+            expandedMonthMeta = null;
+
+            const dict = i18n[currentLang];
+
+            academicMonths.forEach(m => {
+                const block = document.createElement('div');
+                block.className = 'month-block-card';
+
+                const count = eventsData.filter(ev => {
+                    const d = new Date(ev.date);
+                    return d.getFullYear() === m.year && d.getMonth() === m.month;
+                }).length;
+
+                block.innerHTML = `
+                    <div class="month-title">${dict.monthsOfYear[m.month]} ${formatNumberString(m.year)}</div>
+                    <div class="month-event-counter">${formatNumberString(count)} ${dict.eventsCountSuffix}</div>
+                `;
+
+                block.addEventListener('click', () => {
+                    document.getElementById('yearGridSection').style.display = 'none';
+                    document.getElementById('expandedMonthSection').style.display = 'block';
+                    expandedMonthMeta = { year: m.year, month: m.month };
+                    selectedCategory = 'All';
+                    renderCategoryFilters();
+                    renderExpandedCalendar(m.year, m.month);
+                    document.getElementById('expandedMonthSection').scrollIntoView({ behavior: 'smooth' });
+                });
+
+                container.appendChild(block);
+            });
+        }
+
+        // Category Filter Pills
+        function renderCategoryFilters() {
+            const container = document.getElementById('categoryFilters');
+            container.innerHTML = '';
+            const dict = i18n[currentLang];
+
+            const categories = ['All', ...new Set(eventsData.map(ev => ev.sport_category))];
+
+            categories.forEach(cat => {
+                const btn = document.createElement('button');
+                btn.className = `category-filter-btn ${selectedCategory === cat ? 'active' : ''}`;
+                btn.textContent = (cat === 'All') ? dict.allCategories : cat;
+                btn.addEventListener('click', () => {
+                    selectedCategory = cat;
+                    renderCategoryFilters();
+                    renderExpandedCalendar(expandedMonthMeta.year, expandedMonthMeta.month);
+                });
+                container.appendChild(btn);
+            });
+        }
+
+        // Expanded Interactive Calendar Grid
+        function renderExpandedCalendar(year, month) {
+            const dict = i18n[currentLang];
+            const grid = document.getElementById('calendarTableGrid');
+            grid.innerHTML = '';
+
+            document.getElementById('expandedMonthTitle').textContent =
+                `${dict.monthsOfYear[month]} ${formatNumberString(year)}`;
+
+            dict.daysOfWeek.forEach(dayName => {
+                const dayHeader = document.createElement('div');
+                dayHeader.className = 'calendar-day-header';
+                dayHeader.textContent = dayName;
+                grid.appendChild(dayHeader);
+            });
+
+            const firstDayIndex = new Date(year, month, 1).getDay();
+            const totalDaysInMonth = new Date(year, month + 1, 0).getDate();
+
+            for (let i = 0; i < firstDayIndex; i++) {
+                const emptyCell = document.createElement('div');
+                emptyCell.className = 'calendar-cell cell-empty';
+                grid.appendChild(emptyCell);
+            }
+
+            for (let day = 1; day <= totalDaysInMonth; day++) {
+                const cell = document.createElement('div');
+                cell.className = 'calendar-cell';
+
+                const cellDateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+
+                const numLabel = document.createElement('div');
+                numLabel.className = 'cell-date-num';
+                numLabel.textContent = formatNumberString(day);
+                cell.appendChild(numLabel);
+
+                const activeEvents = eventsData.filter(ev => {
+                    return ev.date === cellDateStr && (selectedCategory === 'All' || ev.sport_category === selectedCategory);
+                });
+
+                activeEvents.forEach(evItem => {
+                    const chip = document.createElement('div');
+                    chip.className = 'event-chip-item';
+                    chip.textContent = (currentLang === 'en') ? evItem.title_en : evItem.title_ar;
+                    chip.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        openModal(evItem);
+                    });
+                    cell.appendChild(chip);
+                });
+
+                grid.appendChild(cell);
+            }
+        }
+
+        // Modal Handlers
+        function openModal(eventItem) {
+            document.getElementById('mTitle').textContent = (currentLang === 'en') ? eventItem.title_en : eventItem.title_ar;
+            document.getElementById('mDate').textContent = formatNumberString(eventItem.date);
+            document.getElementById('mTime').textContent = formatNumberString(eventItem.time);
+            document.getElementById('mLoc').textContent = (currentLang === 'en') ? eventItem.location_en : eventItem.location_ar;
+
+            document.getElementById('eventModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('eventModal').classList.remove('active');
+        }
+
+        function bindEventListeners() {
+            document.getElementById('langToggle').addEventListener('click', toggleLanguage);
+
+            document.getElementById('backToYearBtn').addEventListener('click', () => {
+                renderYearGrid();
+                document.getElementById('yearGridSection').scrollIntoView({ behavior: 'smooth' });
+            });
+
+            document.getElementById('modalCloseBtn').addEventListener('click', closeModal);
+
+            const modalOverlay = document.getElementById('eventModal');
+            modalOverlay.addEventListener('click', (e) => {
+                if (e.target === modalOverlay) {
+                    closeModal();
+                }
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && modalOverlay.classList.contains('active')) {
+                    closeModal();
+                }
+            });
+        }
+
+        // Bootstrap on load
+        document.addEventListener('DOMContentLoaded', initializeApp);
+    </script>
+</body>
+</html>
