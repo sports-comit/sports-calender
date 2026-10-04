@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>School Sports Events in Bahrain</title>
+    <title>Bahrain School Sports Calendar</title>
     <style>
-        /* --- GLOBAL NUMBER & NUMERIC ENFORCEMENT --- */
+        /* --- GLOBAL NUMERIC FORCING (STRICT NUMBER RULE) --- */
         *, *::before, *::after, html[dir="rtl"] *, html[dir="ltr"] * {
             font-variant-numeric: lining-nums tabular-nums !important;
             font-feature-settings: "lnum" 1, "tnum" 1 !important;
@@ -15,26 +15,25 @@
         }
 
         :root {
-            /* Palette: Exclusively Blue, Dark Blue, and Baby Blue */
-            --dark-blue-deep: #071324;
-            --dark-blue-navy: #0D2137;
-            --dark-blue-surface: #143250;
+            /* Palette: Balanced tones of Blue, Dark Blue, and Baby Blue */
+            --dark-blue-deep: #051329;
+            --dark-blue-navy: #0B2545;
+            --dark-blue-surface: #133E68;
             --blue-primary: #0077B6;
-            --blue-accent: #0284C7;
-            --blue-hover: #0369A1;
+            --blue-accent: #0096C7;
             --baby-blue: #90E0EF;
             --baby-blue-light: #E0F7FA;
-            --baby-blue-pale: #F0F9FF;
+            --baby-blue-pale: #F4FAFD;
             --white: #FFFFFF;
-            --shadow-glow: rgba(144, 224, 239, 0.5);
-            --modal-backdrop: rgba(7, 19, 36, 0.65);
+            --border-subtle: rgba(0, 119, 182, 0.16);
+            --modal-backdrop: rgba(5, 19, 41, 0.65);
         }
 
         body {
             background-color: var(--baby-blue-pale);
             color: var(--dark-blue-navy);
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            line-height: 1.5;
+            line-height: 1.6;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -42,39 +41,39 @@
             scroll-behavior: smooth;
         }
 
-        /* --- Full-Width Center-Aligned Header Banner --- */
+        /* --- Header: Fully Centered with Luminescent Glow --- */
         header {
             background: linear-gradient(135deg, var(--dark-blue-deep) 0%, var(--dark-blue-navy) 100%);
-            padding: 1.6rem 2rem;
+            padding: 2.2rem 1.5rem;
             position: sticky;
             top: 0;
             z-index: 100;
-            box-shadow: 0 4px 20px rgba(7, 19, 36, 0.4);
+            box-shadow: 0 4px 20px rgba(5, 19, 41, 0.45);
             border-bottom: 2px solid var(--blue-accent);
             display: flex;
             align-items: center;
             justify-content: center;
+            margin-bottom: 40px; /* Generous structural vertical margin */
         }
 
         h1.site-title {
             color: var(--baby-blue);
-            font-size: 2rem;
+            font-size: 2.1rem;
             font-weight: 800;
             letter-spacing: 0.6px;
             text-align: center;
             width: 100%;
-            padding: 0 5rem; /* Generous clearance for the floating language toggle */
-            /* Expanded Multi-Layer Glowing Typography Effect */
-            text-shadow: 0 0 12px rgba(144, 224, 239, 0.85),
-                         0 0 24px rgba(0, 119, 182, 0.75),
-                         0 0 45px rgba(2, 132, 199, 0.5),
-                         0 0 65px rgba(144, 224, 239, 0.35);
+            padding: 0 5.5rem;
+            /* Refined multi-layer glow */
+            text-shadow: 0 0 12px rgba(144, 224, 239, 0.8),
+                         0 0 24px rgba(0, 119, 182, 0.65),
+                         0 0 45px rgba(0, 150, 199, 0.45);
             user-select: none;
         }
 
         #langToggle {
             position: absolute;
-            inset-inline-end: 2rem; /* Automatically mirrors positions between LTR and RTL */
+            inset-inline-end: 2rem;
             top: 50%;
             transform: translateY(-50%);
             background-color: var(--baby-blue);
@@ -94,51 +93,54 @@
             background-color: var(--white);
             color: var(--blue-primary);
             border-color: var(--baby-blue);
-            box-shadow: 0 0 14px var(--shadow-glow);
+            box-shadow: 0 0 14px rgba(144, 224, 239, 0.6);
         }
 
-        /* --- Main Content Layout --- */
+        /* --- Main Layout & Breathability --- */
         main {
             flex: 1;
             max-width: 1200px;
             width: 100%;
             margin: 0 auto;
-            padding: 2rem 1.5rem;
+            padding: 0 1.5rem 3rem 1.5rem;
         }
 
         .section-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1.25rem;
-            border-bottom: 2px solid rgba(0, 119, 182, 0.2);
-            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border-subtle);
+            padding-bottom: 0.6rem;
         }
 
         .section-title {
             color: var(--dark-blue-navy);
             font-size: 1.45rem;
             font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
-        /* --- Showcase: Upcoming Events View --- */
+        /* --- Section 1: Upcoming Events Showcase --- */
         #upcomingShowcase {
-            margin-bottom: 3.5rem;
+            margin-bottom: 40px; /* Generous structural vertical margin */
         }
 
         .showcase-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(265px, 1fr));
             gap: 1.25rem;
         }
 
         .showcase-card {
             background: var(--white);
-            border: 1px solid rgba(0, 119, 182, 0.2);
+            border: 1px solid var(--border-subtle);
             border-radius: 12px;
-            padding: 1.25rem;
+            padding: 1.3rem;
             border-inline-start: 6px solid var(--blue-primary);
-            box-shadow: 0 4px 12px rgba(7, 19, 36, 0.06);
+            box-shadow: 0 4px 14px rgba(5, 19, 41, 0.05);
             cursor: pointer;
             transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
             display: flex;
@@ -148,7 +150,7 @@
 
         .showcase-card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 8px 24px rgba(0, 119, 182, 0.16);
+            box-shadow: 0 10px 24px rgba(0, 119, 182, 0.16);
             border-color: var(--blue-accent);
         }
 
@@ -156,7 +158,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 0.75rem;
+            margin-bottom: 0.8rem;
         }
 
         .card-date-badge {
@@ -164,7 +166,7 @@
             color: var(--blue-primary);
             font-weight: 700;
             background-color: var(--baby-blue-light);
-            padding: 0.2rem 0.55rem;
+            padding: 0.25rem 0.6rem;
             border-radius: 6px;
         }
 
@@ -172,7 +174,7 @@
             font-size: 0.75rem;
             background-color: var(--dark-blue-surface);
             color: var(--baby-blue);
-            padding: 0.15rem 0.5rem;
+            padding: 0.2rem 0.55rem;
             border-radius: 4px;
             font-weight: 600;
         }
@@ -181,89 +183,120 @@
             font-size: 1.1rem;
             color: var(--dark-blue-deep);
             font-weight: 700;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.6rem;
+            line-height: 1.4;
         }
 
         .card-location-meta {
             font-size: 0.85rem;
-            color: var(--blue-hover);
+            color: var(--dark-blue-surface);
             display: flex;
             align-items: center;
-            gap: 0.35rem;
+            gap: 0.4rem;
+            margin-top: 0.4rem;
         }
 
-        /* --- 12-Month Calendar Grid Overview --- */
+        /* --- Section 2: 12-Month Calendar Grid with Mini-Calendars --- */
         #yearGridSection {
+            margin-bottom: 40px;
             transition: opacity 0.3s ease;
         }
 
         .year-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-            gap: 1.25rem;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1.5rem;
         }
 
         .month-block-card {
             background-color: var(--white);
-            border: 2px solid var(--baby-blue-light);
-            border-radius: 12px;
-            padding: 1.5rem 1rem;
-            text-align: center;
+            border: 1px solid var(--border-subtle);
+            border-radius: 14px;
+            padding: 1.3rem;
             cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0, 119, 182, 0.05);
+            box-shadow: 0 4px 12px rgba(5, 19, 41, 0.04);
             transition: all 0.25s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         .month-block-card:hover {
-            background-color: var(--blue-primary);
-            border-color: var(--blue-accent);
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 8px 20px rgba(0, 119, 182, 0.2);
+            border-color: var(--blue-primary);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 24px rgba(0, 119, 182, 0.16);
         }
 
-        .month-block-card:hover .month-title {
-            color: var(--white);
-        }
-
-        .month-block-card:hover .month-event-counter {
-            background-color: var(--baby-blue);
-            color: var(--dark-blue-deep);
+        .month-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 0.9rem;
+            border-bottom: 1px solid var(--baby-blue-light);
+            padding-bottom: 0.5rem;
         }
 
         .month-title {
-            font-size: 1.3rem;
+            font-size: 1.15rem;
             font-weight: 700;
-            color: var(--dark-blue-deep);
-            margin-bottom: 0.75rem;
-            transition: color 0.25s ease;
+            color: var(--dark-blue-navy);
         }
 
         .month-event-counter {
-            font-size: 0.85rem;
-            background-color: var(--dark-blue-navy);
-            color: var(--baby-blue);
-            padding: 0.35rem 0.9rem;
-            border-radius: 20px;
-            display: inline-block;
-            font-weight: 600;
-            transition: all 0.25s ease;
+            font-size: 0.78rem;
+            background-color: var(--baby-blue-light);
+            color: var(--blue-primary);
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-weight: 700;
         }
 
-        /* --- Full Month Expanded View --- */
+        /* Embedded Mini-Calendar Grid */
+        .mini-calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 3px;
+            text-align: center;
+            margin-top: 0.4rem;
+        }
+
+        .mini-day-header {
+            font-size: 0.68rem;
+            color: var(--dark-blue-surface);
+            font-weight: 700;
+            padding-bottom: 0.3rem;
+        }
+
+        .mini-day-cell {
+            font-size: 0.75rem;
+            padding: 0.25rem 0;
+            border-radius: 4px;
+            color: var(--dark-blue-navy);
+            background-color: var(--white);
+            position: relative;
+        }
+
+        .mini-day-cell.empty {
+            visibility: hidden;
+        }
+
+        .mini-day-cell.has-event {
+            background-color: var(--baby-blue);
+            color: var(--dark-blue-deep);
+            font-weight: 800;
+            box-shadow: inset 0 0 0 1px var(--blue-accent);
+        }
+
+        /* --- Section 3: Full Expanded Month View --- */
         #expandedMonthSection {
             display: none;
+            margin-bottom: 40px;
             animation: slideDownFade 0.35s ease forwards;
         }
 
         @keyframes slideDownFade {
-            from {
-                opacity: 0;
-                transform: translateY(15px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .expanded-toolbar {
@@ -271,10 +304,10 @@
             justify-content: space-between;
             align-items: center;
             background-color: var(--white);
-            padding: 0.9rem 1.25rem;
+            padding: 1rem 1.3rem;
             border-radius: 10px;
-            margin-bottom: 1.25rem;
-            border: 1px solid rgba(0, 119, 182, 0.2);
+            margin-bottom: 1.3rem;
+            border: 1px solid var(--border-subtle);
             flex-wrap: wrap;
             gap: 1rem;
         }
@@ -283,17 +316,21 @@
             background-color: var(--dark-blue-navy);
             color: var(--baby-blue);
             border: none;
-            padding: 0.6rem 1.2rem;
-            border-radius: 6px;
+            padding: 0.65rem 1.3rem;
+            border-radius: 8px;
             font-weight: 700;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             cursor: pointer;
-            transition: background 0.2s ease;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         .back-nav-btn:hover {
             background-color: var(--blue-primary);
             color: var(--white);
+            box-shadow: 0 4px 12px rgba(0, 119, 182, 0.25);
         }
 
         .category-filters-container {
@@ -306,7 +343,7 @@
             background-color: var(--baby-blue-light);
             color: var(--dark-blue-deep);
             border: 1px solid var(--blue-accent);
-            padding: 0.35rem 0.8rem;
+            padding: 0.4rem 0.85rem;
             border-radius: 20px;
             font-size: 0.85rem;
             cursor: pointer;
@@ -326,7 +363,7 @@
             gap: 6px;
             background-color: var(--blue-primary);
             border: 2px solid var(--blue-primary);
-            border-radius: 10px;
+            border-radius: 12px;
             padding: 6px;
             overflow: hidden;
         }
@@ -335,51 +372,112 @@
             background-color: var(--dark-blue-navy);
             color: var(--baby-blue);
             text-align: center;
-            padding: 0.75rem 0;
+            padding: 0.8rem 0;
             font-weight: 700;
             font-size: 0.9rem;
-            border-radius: 4px;
+            border-radius: 6px;
         }
 
         .calendar-cell {
             background-color: var(--white);
             min-height: 110px;
-            padding: 0.45rem;
+            padding: 0.5rem;
             display: flex;
             flex-direction: column;
-            gap: 4px;
-            border-radius: 4px;
+            gap: 5px;
+            border-radius: 6px;
         }
 
         .calendar-cell.cell-empty {
-            background-color: rgba(240, 249, 255, 0.4);
-            border: 1px dashed rgba(0, 119, 182, 0.15);
+            background-color: rgba(244, 250, 253, 0.6);
+            border: 1px dashed rgba(0, 119, 182, 0.2);
         }
 
         .cell-date-num {
             font-weight: 800;
             color: var(--dark-blue-deep);
             font-size: 0.95rem;
-            margin-bottom: 0.25rem;
+            margin-bottom: 0.2rem;
         }
 
         .event-chip-item {
             background-color: var(--blue-primary);
             color: var(--white);
-            padding: 0.35rem 0.45rem;
+            padding: 0.35rem 0.5rem;
             border-radius: 4px;
-            font-size: 0.75rem;
+            font-size: 0.78rem;
             cursor: pointer;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
             font-weight: 600;
-            transition: background 0.2s ease, transform 0.1s ease;
+            transition: background 0.2s ease;
         }
 
         .event-chip-item:hover {
             background-color: var(--dark-blue-navy);
-            transform: scale(0.98);
+        }
+
+        /* --- Section 4: Polished School Standings Leaderboard --- */
+        #leaderboardSection {
+            margin-top: 10px;
+            margin-bottom: 2rem;
+        }
+
+        .leaderboard-card {
+            background-color: var(--white);
+            border: 1px solid var(--border-subtle);
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(5, 19, 41, 0.05);
+        }
+
+        .leaderboard-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: start;
+        }
+
+        .leaderboard-table th {
+            background-color: var(--dark-blue-navy);
+            color: var(--baby-blue);
+            font-weight: 700;
+            font-size: 0.9rem;
+            padding: 1rem 1.2rem;
+            text-align: inherit;
+        }
+
+        .leaderboard-table td {
+            padding: 1rem 1.2rem;
+            font-size: 0.95rem;
+            border-bottom: 1px solid var(--baby-blue-light);
+            color: var(--dark-blue-deep);
+            text-align: inherit;
+        }
+
+        .leaderboard-table tbody tr:hover {
+            background-color: var(--baby-blue-pale);
+        }
+
+        .rank-badge {
+            font-weight: 800;
+            width: 30px;
+            height: 30px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background-color: var(--baby-blue-light);
+            color: var(--blue-primary);
+        }
+
+        .rank-top-1 { background-color: #FFD166; color: #5C4300; }
+        .rank-top-2 { background-color: #E0E1DD; color: #333333; }
+        .rank-top-3 { background-color: #EDAFB8; color: #5E2A32; }
+
+        .pts-col {
+            font-weight: 800;
+            color: var(--blue-primary);
         }
 
         /* --- Interactive Modal with Backdrop Blur --- */
@@ -412,9 +510,9 @@
             border-radius: 14px;
             width: 90%;
             max-width: 440px;
-            box-shadow: 0 16px 36px rgba(7, 19, 36, 0.4);
+            box-shadow: 0 16px 36px rgba(5, 19, 41, 0.4);
             border: 3px solid var(--baby-blue);
-            transform: scale(0.94);
+            transform: scale(0.95);
             transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
@@ -433,7 +531,7 @@
 
         .modal-meta-field {
             margin-bottom: 0.85rem;
-            color: var(--blue-hover);
+            color: var(--dark-blue-surface);
             font-size: 1rem;
             display: flex;
             gap: 0.5rem;
@@ -469,15 +567,15 @@
             background-color: var(--dark-blue-navy);
         }
 
-        /* --- Responsive Layout Adjustments --- */
+        /* --- Responsive Queries --- */
         @media (max-width: 768px) {
             header {
-                padding: 1.2rem 1rem;
+                padding: 1.5rem 1rem;
                 flex-direction: column;
-                gap: 0.8rem;
+                gap: 1rem;
             }
             h1.site-title {
-                font-size: 1.35rem;
+                font-size: 1.4rem;
                 padding: 0;
             }
             #langToggle {
@@ -485,23 +583,27 @@
                 transform: none;
             }
             main {
-                padding: 1.25rem 0.75rem;
+                padding: 0 0.8rem 2rem 0.8rem;
             }
             .calendar-cell {
-                min-height: 75px;
-                padding: 0.25rem;
+                min-height: 80px;
+                padding: 0.3rem;
             }
             .calendar-day-header {
                 font-size: 0.75rem;
                 padding: 0.5rem 0;
             }
             .event-chip-item {
-                font-size: 0.65rem;
+                font-size: 0.68rem;
                 padding: 0.2rem;
             }
             .expanded-toolbar {
                 flex-direction: column;
                 align-items: stretch;
+            }
+            .leaderboard-table th, .leaderboard-table td {
+                padding: 0.75rem 0.6rem;
+                font-size: 0.85rem;
             }
         }
     </style>
@@ -514,23 +616,29 @@
     </header>
 
     <main>
-        <!-- 1. Dedicated Initial View: Upcoming Events Showcase -->
+        <!-- 1. Landing View: Upcoming Events Showcase -->
         <section id="upcomingShowcase">
             <div class="section-header">
-                <h2 class="section-title" id="upcomingHeaderTitle">Upcoming Events Showcase</h2>
+                <h2 class="section-title">
+                    <span>⚡</span>
+                    <span id="upcomingHeaderTitle">Upcoming Events Showcase</span>
+                </h2>
             </div>
             <div class="showcase-grid" id="upcomingContainer">
                 <!-- Injected via JavaScript -->
             </div>
         </section>
 
-        <!-- 2. 12-Month Calendar Grid Overview -->
+        <!-- 2. Landing View: 12-Month Calendar Grid with Embedded Mini-Calendars -->
         <section id="yearGridSection">
             <div class="section-header">
-                <h2 class="section-title" id="yearHeaderTitle">Academic Calendar (12 Months)</h2>
+                <h2 class="section-title">
+                    <span>📅</span>
+                    <span id="yearHeaderTitle">Academic Calendar (12 Months)</span>
+                </h2>
             </div>
             <div class="year-grid" id="yearGridContainer">
-                <!-- Injected via JavaScript -->
+                <!-- Mini-calendars injected via JavaScript -->
             </div>
         </section>
 
@@ -540,18 +648,47 @@
                 <h2 class="section-title" id="expandedMonthTitle">Month Year</h2>
             </div>
             <div class="expanded-toolbar">
-                <button class="back-nav-btn" id="backToYearBtn">Back to Year View</button>
+                <button class="back-nav-btn" id="backToYearBtn">
+                    <span id="backArrowIcon">←</span>
+                    <span id="backBtnLabel">Back to Year View</span>
+                </button>
                 <div class="category-filters-container" id="categoryFilters">
                     <!-- Category pills injected via JavaScript -->
                 </div>
             </div>
             <div class="calendar-table-grid" id="calendarTableGrid">
-                <!-- Interactive date blocks injected via JavaScript -->
+                <!-- Date blocks injected via JavaScript -->
+            </div>
+        </section>
+
+        <!-- 4. Bottom Widget: School Standings Leaderboard -->
+        <section id="leaderboardSection">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span>🏆</span>
+                    <span id="leaderboardTitle">School Standings Leaderboard</span>
+                </h2>
+            </div>
+            <div class="leaderboard-card">
+                <table class="leaderboard-table">
+                    <thead>
+                        <tr>
+                            <th id="thRank">Rank</th>
+                            <th id="thSchool">School</th>
+                            <th id="thPlayed">Played</th>
+                            <th id="thWins">Wins</th>
+                            <th id="thPoints">Points</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leaderboardBody">
+                        <!-- Leaderboard placeholder rows injected via JS -->
+                    </tbody>
+                </table>
             </div>
         </section>
     </main>
 
-    <!-- 4. Interactive Event Modal -->
+    <!-- Modal Popup Window -->
     <div class="modal-overlay" id="eventModal">
         <div class="modal-card">
             <h3 class="modal-title" id="mTitle">Event Title</h3>
@@ -573,7 +710,7 @@
 
     <script>
         // <!-- GM&USER_EDITABLE_DATA_START -->
-        // STRICT NUMBER FORMATTING: Standard English digits (0-9) used exclusively across all fields.
+        // STRICT NUMBER RULE: Dates, times, IDs, and scores strictly utilize standard Western digits (0-9).
         const eventsData = [
             { id: 1, title_en: 'Sports Governance Workshop', title_ar: 'الحوكمة الرياضية', date: '2026-10-04', time: '09:00', location_en: 'Ministry Headquarters, Manama', location_ar: 'مقر الوزارة، المنامة', sport_category: 'Management' },
             { id: 2, title_en: 'National Sports Talent Selection', title_ar: 'الانتقاء الرياضي', date: '2026-10-11', time: '08:00', location_en: 'Bahrain National Stadium, Riffa', location_ar: 'الاستاد الوطني، الرفاع', sport_category: 'Talent' },
@@ -591,6 +728,14 @@
             { id: 14, title_en: 'Collegiate Sports Development Forum', title_ar: 'ملتقى تطوير الرياضة الجامعية', date: '2027-05-09', time: '10:00', location_en: 'Main Auditorium, Sakhir', location_ar: 'المسرح الرئيسي، الصخير', sport_category: 'University' },
             { id: 15, title_en: 'Annual Sports Excellence Awards', title_ar: 'جائزة التميز الرياضي', date: '2027-05-16', time: '19:00', location_en: 'Cultural Hall, Manama', location_ar: 'الصالة الثقافية، المنامة', sport_category: 'Management' }
         ];
+
+        const sampleLeaderboard = [
+            { rank: 1, name_en: 'Isa Town Secondary School', name_ar: 'مدرسة مدينة عيسى الثانوية', played: 12, wins: 10, points: 31 },
+            { rank: 2, name_en: 'Al-Hidaya Al-Khalifia School', name_ar: 'مدرسة الهداية الخليفية', played: 12, wins: 9, points: 28 },
+            { rank: 3, name_en: 'Muharraq Secondary School', name_ar: 'مدرسة المحرق الثانوية', played: 12, wins: 8, points: 25 },
+            { rank: 4, name_en: 'Riffa Secondary School', name_ar: 'مدرسة الرفاع الثانوية', played: 12, wins: 7, points: 22 },
+            { rank: 5, name_en: 'Shaikh Isa bin Ali School', name_ar: 'مدرسة الشيخ عيسى بن علي', played: 12, wins: 5, points: 17 }
+        ];
         // <!-- GM&USER_EDITABLE_DATA_END -->
 
         // State Machine
@@ -598,7 +743,7 @@
         let expandedMonthMeta = null;
         let selectedCategory = 'All';
 
-        // 12-Month Academic Year Setup (Sep 2026 - Aug 2027)
+        // 12-Month Academic Year (Sep 2026 - Aug 2027)
         const academicMonths = Array.from({ length: 12 }, (_, idx) => {
             const dateRef = new Date(2026, 8 + idx, 1);
             return {
@@ -607,7 +752,7 @@
             };
         });
 
-        // Multilingual Dictionary
+        // Multilingual Translation Dictionary
         const i18n = {
             en: {
                 siteTitle: "School Sports Events in Bahrain",
@@ -615,6 +760,7 @@
                 upcomingTitle: "Upcoming Events Showcase",
                 yearGridTitle: "Academic Calendar (12 Months)",
                 backBtn: "Back to Year View",
+                backArrow: "←",
                 lblDate: "Date:",
                 lblTime: "Time:",
                 lblLoc: "Location:",
@@ -622,10 +768,17 @@
                 eventsCountSuffix: "Events",
                 allCategories: "All Sports",
                 daysOfWeek: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+                miniDays: ["S", "M", "T", "W", "T", "F", "S"],
                 monthsOfYear: [
                     "January", "February", "March", "April", "May", "June",
                     "July", "August", "September", "October", "November", "December"
-                ]
+                ],
+                leaderboardTitle: "School Standings Leaderboard",
+                thRank: "Rank",
+                thSchool: "School Name",
+                thPlayed: "Played",
+                thWins: "Wins",
+                thPoints: "Points"
             },
             ar: {
                 siteTitle: "فعاليات الرياضة المدرسية في البحرين",
@@ -633,6 +786,7 @@
                 upcomingTitle: "أبرز الفعاليات القادمة",
                 yearGridTitle: "التقويم الدراسي السنوي (12 شهراً)",
                 backBtn: "العودة للتقويم السنوي",
+                backArrow: "→",
                 lblDate: "التاريخ:",
                 lblTime: "الوقت:",
                 lblLoc: "المكان:",
@@ -640,10 +794,17 @@
                 eventsCountSuffix: "فعاليات",
                 allCategories: "جميع الرياضات",
                 daysOfWeek: ["الأحد", "الإثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"],
+                miniDays: ["أ", "إ", "ث", "أ", "خ", "ج", "س"],
                 monthsOfYear: [
                     "يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو",
                     "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"
-                ]
+                ],
+                leaderboardTitle: "جدول ترتيب المدارس المعتمد",
+                thRank: "الترتيب",
+                thSchool: "اسم المدرسة",
+                thPlayed: "لعب",
+                thWins: "فوز",
+                thPoints: "النقاط"
             }
         };
 
@@ -654,6 +815,7 @@
         function initializeApp() {
             bindEventListeners();
             updateUIStrings();
+            renderLeaderboard();
         }
 
         function toggleLanguage() {
@@ -669,13 +831,23 @@
             document.getElementById('langToggle').textContent = dict.btnLang;
             document.getElementById('upcomingHeaderTitle').textContent = dict.upcomingTitle;
             document.getElementById('yearHeaderTitle').textContent = dict.yearGridTitle;
-            document.getElementById('backToYearBtn').textContent = dict.backBtn;
+            document.getElementById('backBtnLabel').textContent = dict.backBtn;
+            document.getElementById('backArrowIcon').textContent = dict.backArrow;
             document.getElementById('lblDate').textContent = dict.lblDate;
             document.getElementById('lblTime').textContent = dict.lblTime;
             document.getElementById('lblLoc').textContent = dict.lblLoc;
             document.getElementById('modalCloseBtn').textContent = dict.btnClose;
 
+            // Leaderboard Headers
+            document.getElementById('leaderboardTitle').textContent = dict.leaderboardTitle;
+            document.getElementById('thRank').textContent = dict.thRank;
+            document.getElementById('thSchool').textContent = dict.thSchool;
+            document.getElementById('thPlayed').textContent = dict.thPlayed;
+            document.getElementById('thWins').textContent = dict.thWins;
+            document.getElementById('thPoints').textContent = dict.thPoints;
+
             renderUpcomingShowcase();
+            renderLeaderboard();
 
             if (expandedMonthMeta) {
                 renderCategoryFilters();
@@ -685,7 +857,7 @@
             }
         }
 
-        // Showcase: Upcoming events (Sorted chronologically)
+        // Showcase: Immediate Future Events
         function renderUpcomingShowcase() {
             const container = document.getElementById('upcomingContainer');
             container.innerHTML = '';
@@ -723,7 +895,7 @@
             });
         }
 
-        // Year Grid: 12-Month compact blocks
+        // 12-Month Calendar Grid with Mini-Calendars
         function renderYearGrid() {
             const container = document.getElementById('yearGridContainer');
             container.innerHTML = '';
@@ -737,16 +909,44 @@
                 const block = document.createElement('div');
                 block.className = 'month-block-card';
 
-                const count = eventsData.filter(ev => {
+                const monthEvents = eventsData.filter(ev => {
                     const d = new Date(ev.date);
                     return d.getFullYear() === m.year && d.getMonth() === m.month;
-                }).length;
+                });
 
-                block.innerHTML = `
-                    <div class="month-title">${dict.monthsOfYear[m.month]} ${formatNumberString(m.year)}</div>
-                    <div class="month-event-counter">${formatNumberString(count)} ${dict.eventsCountSuffix}</div>
+                const eventDaysSet = new Set(monthEvents.map(ev => parseInt(ev.date.split('-')[2], 10)));
+
+                // Header
+                const headerHtml = `
+                    <div class="month-card-header">
+                        <div class="month-title">${dict.monthsOfYear[m.month]} ${formatNumberString(m.year)}</div>
+                        <div class="month-event-counter">${formatNumberString(monthEvents.length)} ${dict.eventsCountSuffix}</div>
+                    </div>
                 `;
 
+                // Build Mini-Calendar Grid
+                let miniCalHtml = `<div class="mini-calendar">`;
+                dict.miniDays.forEach(dayLetter => {
+                    miniCalHtml += `<div class="mini-day-header">${dayLetter}</div>`;
+                });
+
+                const firstDay = new Date(m.year, m.month, 1).getDay();
+                const totalDays = new Date(m.year, m.month + 1, 0).getDate();
+
+                for (let i = 0; i < firstDay; i++) {
+                    miniCalHtml += `<div class="mini-day-cell empty"></div>`;
+                }
+
+                for (let day = 1; day <= totalDays; day++) {
+                    const isEventDay = eventDaysSet.has(day);
+                    miniCalHtml += `<div class="mini-day-cell ${isEventDay ? 'has-event' : ''}">${formatNumberString(day)}</div>`;
+                }
+
+                miniCalHtml += `</div>`;
+
+                block.innerHTML = headerHtml + miniCalHtml;
+
+                // Click to expand
                 block.addEventListener('click', () => {
                     document.getElementById('yearGridSection').style.display = 'none';
                     document.getElementById('expandedMonthSection').style.display = 'block';
@@ -761,7 +961,7 @@
             });
         }
 
-        // Category Filter Pills
+        // Category Filter Controls
         function renderCategoryFilters() {
             const container = document.getElementById('categoryFilters');
             container.innerHTML = '';
@@ -837,6 +1037,27 @@
             }
         }
 
+        // Render Leaderboard
+        function renderLeaderboard() {
+            const tbody = document.getElementById('leaderboardBody');
+            tbody.innerHTML = '';
+
+            sampleLeaderboard.forEach(row => {
+                const tr = document.createElement('tr');
+                const rankClass = row.rank <= 3 ? `rank-top-${row.rank}` : '';
+                const schoolName = currentLang === 'en' ? row.name_en : row.name_ar;
+
+                tr.innerHTML = `
+                    <td><span class="rank-badge ${rankClass}">${formatNumberString(row.rank)}</span></td>
+                    <td style="font-weight: 600;">${schoolName}</td>
+                    <td>${formatNumberString(row.played)}</td>
+                    <td>${formatNumberString(row.wins)}</td>
+                    <td class="pts-col">${formatNumberString(row.points)}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
         // Modal Handlers
         function openModal(eventItem) {
             document.getElementById('mTitle').textContent = (currentLang === 'en') ? eventItem.title_en : eventItem.title_ar;
@@ -854,6 +1075,7 @@
         function bindEventListeners() {
             document.getElementById('langToggle').addEventListener('click', toggleLanguage);
 
+            // Universal Prominent Back Button Logic
             document.getElementById('backToYearBtn').addEventListener('click', () => {
                 renderYearGrid();
                 document.getElementById('yearGridSection').scrollIntoView({ behavior: 'smooth' });
@@ -875,7 +1097,7 @@
             });
         }
 
-        // Bootstrap on load
+        // Initialize on DOM load
         document.addEventListener('DOMContentLoaded', initializeApp);
     </script>
 </body>
