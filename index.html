@@ -5,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>School Sports Events in Bahrain</title>
     <style>
+        /* --- BILINGUAL NUMBER OVERRIDE (FORCE ENGLISH NUMERALS) --- */
+        html[dir="rtl"] *, html[dir="ltr"] * { 
+            font-variant-numeric: lining-nums tabular-nums !important; 
+            font-feature-settings: "lnum" 1, "tnum" 1 !important; 
+            /* Enforcing standard system fonts that respect numeric overrides */
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+        }
+
         :root {
             /* Exclusive Blue Palette */
             --dark-blue: #0A192F;
@@ -22,7 +30,6 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
         body {
@@ -53,11 +60,12 @@
 
         .logo-wrapper {
             background-color: var(--white);
-            padding: 8px;
+            padding: 10px;
             border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
+            box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
         }
 
         .logo-wrapper img {
@@ -413,7 +421,8 @@
     <header>
         <div class="brand-container">
             <div class="logo-wrapper">
-                <img src="moe-logo.png" alt="MOE Logo" id="moeLogo">
+                <!-- Embedded Live Wikimedia Commons SVG for the State Emblem of Bahrain -->
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Emblem_of_Bahrain.svg/512px-Emblem_of_Bahrain.svg.png" alt="MOE Logo" id="moeLogo">
             </div>
             <h1 id="pageTitle">School Sports Events in Bahrain</h1>
         </div>
