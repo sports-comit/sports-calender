@@ -26,7 +26,7 @@
             --baby-blue-light: #E0F7FA;
             --baby-blue-pale: #F0F9FF;
             --white: #FFFFFF;
-            --shadow-glow: rgba(144, 224, 239, 0.45);
+            --shadow-glow: rgba(144, 224, 239, 0.5);
             --modal-backdrop: rgba(7, 19, 36, 0.65);
         }
 
@@ -42,37 +42,41 @@
             scroll-behavior: smooth;
         }
 
-        /* --- Header & Glowing Typography --- */
+        /* --- Full-Width Center-Aligned Header Banner --- */
         header {
             background: linear-gradient(135deg, var(--dark-blue-deep) 0%, var(--dark-blue-navy) 100%);
-            padding: 1.25rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            padding: 1.6rem 2rem;
             position: sticky;
             top: 0;
             z-index: 100;
-            box-shadow: 0 4px 20px rgba(7, 19, 36, 0.35);
+            box-shadow: 0 4px 20px rgba(7, 19, 36, 0.4);
             border-bottom: 2px solid var(--blue-accent);
-        }
-
-        .header-title-container {
-            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         h1.site-title {
             color: var(--baby-blue);
-            font-size: 1.7rem;
+            font-size: 2rem;
             font-weight: 800;
-            letter-spacing: 0.5px;
-            /* Glowing text-shadow styling */
-            text-shadow: 0 0 10px rgba(144, 224, 239, 0.8),
-                         0 0 20px rgba(0, 119, 182, 0.6),
-                         0 0 35px rgba(2, 132, 199, 0.4);
+            letter-spacing: 0.6px;
+            text-align: center;
+            width: 100%;
+            padding: 0 5rem; /* Generous clearance for the floating language toggle */
+            /* Expanded Multi-Layer Glowing Typography Effect */
+            text-shadow: 0 0 12px rgba(144, 224, 239, 0.85),
+                         0 0 24px rgba(0, 119, 182, 0.75),
+                         0 0 45px rgba(2, 132, 199, 0.5),
+                         0 0 65px rgba(144, 224, 239, 0.35);
             user-select: none;
         }
 
         #langToggle {
+            position: absolute;
+            inset-inline-end: 2rem; /* Automatically mirrors positions between LTR and RTL */
+            top: 50%;
+            transform: translateY(-50%);
             background-color: var(--baby-blue);
             color: var(--dark-blue-deep);
             border: 2px solid transparent;
@@ -82,7 +86,7 @@
             font-size: 0.95rem;
             cursor: pointer;
             transition: all 0.25s ease;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
             flex-shrink: 0;
         }
 
@@ -468,10 +472,17 @@
         /* --- Responsive Layout Adjustments --- */
         @media (max-width: 768px) {
             header {
-                padding: 1rem;
+                padding: 1.2rem 1rem;
+                flex-direction: column;
+                gap: 0.8rem;
             }
             h1.site-title {
-                font-size: 1.25rem;
+                font-size: 1.35rem;
+                padding: 0;
+            }
+            #langToggle {
+                position: static;
+                transform: none;
             }
             main {
                 padding: 1.25rem 0.75rem;
@@ -498,9 +509,7 @@
 <body>
 
     <header>
-        <div class="header-title-container">
-            <h1 class="site-title" id="pageTitle">School Sports Events in Bahrain</h1>
-        </div>
+        <h1 class="site-title" id="pageTitle">School Sports Events in Bahrain</h1>
         <button id="langToggle">عربي</button>
     </header>
 
@@ -638,12 +647,10 @@
             }
         };
 
-        // Standard string formatting (Direct return guarantees 0-9 digits)
         function formatNumberString(str) {
             return String(str);
         }
 
-        // Application Controller
         function initializeApp() {
             bindEventListeners();
             updateUIStrings();
