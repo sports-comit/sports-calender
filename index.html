@@ -35,7 +35,7 @@
             --border-subtle: rgba(0, 119, 182, 0.16);
             --modal-backdrop: rgba(5, 19, 41, 0.65);
 
-            /* Cohesive Neutral & Pastel Blue Accents (Replaced Greens with Slate/Neutral Blues) */
+            /* Cohesive Neutral & Pastel Blue Accents */
             --cat-blue-bg: #E3F2FD;
             --cat-blue-txt: #1565C0;
             --cat-blue-border: #BBDEFB;
@@ -552,7 +552,7 @@
         }
 
         /* ==========================================================================
-           7. TIMELINE & SCORES VIEWS
+           7. TIMELINE & SCORES VIEWS & LEADERBOARD (SIDE-SCROLLING FIXES)
            ========================================================================== */
         .timeline-container {
             background: var(--white);
@@ -586,6 +586,7 @@
             font-weight: 700;
             color: var(--blue-primary);
             font-size: 0.9rem;
+            white-space: nowrap;
         }
 
         .timeline-main h4 {
@@ -604,37 +605,59 @@
             text-align: end;
         }
 
-        .table-wrap {
+        /* --- SIDE-SCROLLING OVERFLOW-X WRAPPERS & MIN-WIDTHS --- */
+        .table-scroll-container {
+            width: 100%;
+            overflow-x: auto !important;
+            -webkit-overflow-scrolling: touch; /* Silky smooth touch scrolling on iOS & Android */
+            margin-bottom: 20px;
+            border-radius: 12px;
             background: var(--white);
             border: 1px solid var(--border-subtle);
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+            box-shadow: 0 4px 16px rgba(5, 19, 41, 0.05);
         }
 
-        .scores-table {
+        .table-scroll-container::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .table-scroll-container::-webkit-scrollbar-track {
+            background: var(--baby-blue-light);
+            border-radius: 8px;
+        }
+
+        .table-scroll-container::-webkit-scrollbar-thumb {
+            background: var(--blue-primary);
+            border-radius: 8px;
+        }
+
+        .scores-table, .leaderboard-table {
             width: 100%;
+            min-width: 600px; /* Preserves layout integrity and prevents text squishing */
             border-collapse: collapse;
             text-align: start;
         }
 
-        .scores-table th {
+        .scores-table th, .leaderboard-table th {
             background-color: var(--dark-blue-navy);
             color: var(--baby-blue);
-            font-weight: 600;
-            font-size: 0.85rem;
-            padding: 1rem 1.25rem;
-            text-align: inherit;
-        }
-
-        .scores-table td {
-            padding: 1rem 1.25rem;
+            font-weight: 700;
             font-size: 0.9rem;
-            border-bottom: 1px solid var(--border-subtle);
+            padding: 1rem 1.2rem;
             text-align: inherit;
+            white-space: nowrap;
         }
 
-        .scores-table tbody tr:hover {
+        .scores-table td, .leaderboard-table td {
+            padding: 1rem 1.2rem;
+            font-size: 0.95rem;
+            border-bottom: 1px solid var(--baby-blue-light);
+            color: var(--dark-blue-deep);
+            text-align: inherit;
+            white-space: nowrap; /* Keeps school names, dates, and scores single-lined */
+        }
+
+        .scores-table tbody tr:hover, .leaderboard-table tbody tr:hover {
             background-color: var(--baby-blue-pale);
         }
 
@@ -642,9 +665,37 @@
             background-color: var(--baby-blue-light);
             color: var(--dark-blue-deep);
             font-weight: 800;
-            padding: 0.2rem 0.6rem;
+            padding: 0.25rem 0.75rem;
             border-radius: 20px;
             display: inline-block;
+            white-space: nowrap;
+        }
+
+        /* Leaderboard Badges */
+        #leaderboardSection {
+            margin-top: 10px;
+            margin-bottom: 2rem;
+        }
+
+        .rank-badge {
+            font-weight: 800;
+            width: 30px;
+            height: 30px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background-color: var(--baby-blue-light);
+            color: var(--blue-primary);
+        }
+
+        .rank-top-1 { background-color: #FFD166; color: #5C4300; }
+        .rank-top-2 { background-color: #E0E1DD; color: #333333; }
+        .rank-top-3 { background-color: #EDAFB8; color: #5E2A32; }
+
+        .pts-col {
+            font-weight: 800;
+            color: var(--blue-primary);
         }
 
         /* ==========================================================================
@@ -862,7 +913,7 @@
             </div>
         </section>
 
-        <!-- VIEW 4: Past Scores Overview List -->
+        <!-- VIEW 4: Past Scores Overview List (Side-Scrolling Enabled) -->
         <section id="viewPastScores" class="view-section">
             <div class="section-header">
                 <h2 class="section-title">
@@ -870,7 +921,7 @@
                     <span id="scoresHeaderTitle">Past Match Results</span>
                 </h2>
             </div>
-            <div class="table-wrap">
+            <div class="table-scroll-container">
                 <table class="scores-table">
                     <thead>
                         <tr>
@@ -903,6 +954,32 @@
             </div>
             <div class="calendar-table-grid" id="calendarTableGrid">
                 <!-- Date blocks injected via JavaScript -->
+            </div>
+        </section>
+
+        <!-- School Standings Leaderboard Section (Side-Scrolling Enabled) -->
+        <section id="leaderboardSection">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span>🏆</span>
+                    <span id="leaderboardTitle">School Standings Leaderboard</span>
+                </h2>
+            </div>
+            <div class="table-scroll-container">
+                <table class="leaderboard-table">
+                    <thead>
+                        <tr>
+                            <th id="thRank">Rank</th>
+                            <th id="thSchool">School</th>
+                            <th id="thPlayed">Played</th>
+                            <th id="thWins">Wins</th>
+                            <th id="thPoints">Points</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leaderboardBody">
+                        <!-- Leaderboard placeholder rows injected via JS -->
+                    </tbody>
+                </table>
             </div>
         </section>
     </main>
@@ -958,6 +1035,14 @@
             { id: 14, title_en: 'Collegiate Sports Development Forum', title_ar: 'ملتقى تطوير الرياضة الجامعية', date: '2027-05-09', time: '10:00', location_en: 'Main Auditorium, Sakhir', location_ar: 'المسرح الرئيسي، الصخير', sport_category: 'University', theme: 'sky', teams_en: 'Academic Board', teams_ar: 'الهيئة الأكاديمية والرياضية', score: 'Upcoming' },
             { id: 15, title_en: 'Annual Sports Excellence Awards', title_ar: 'جائزة التميز الرياضي السنوية', date: '2027-05-16', time: '19:00', location_en: 'Cultural Hall, Manama', location_ar: 'الصالة الثقافية، المنامة', sport_category: 'Management', theme: 'slate', teams_en: 'Award Nominees', teams_ar: 'المدارس واللاعبون المكرمون', score: 'Upcoming' }
         ];
+
+        const sampleLeaderboard = [
+            { rank: 1, name_en: 'Isa Town Secondary School', name_ar: 'مدرسة مدينة عيسى الثانوية', played: 12, wins: 10, points: 31 },
+            { rank: 2, name_en: 'Al-Hidaya Al-Khalifia School', name_ar: 'مدرسة الهداية الخليفية', played: 12, wins: 9, points: 28 },
+            { rank: 3, name_en: 'Muharraq Secondary School', name_ar: 'مدرسة المحرق الثانوية', played: 12, wins: 8, points: 25 },
+            { rank: 4, name_en: 'Riffa Secondary School', name_ar: 'مدرسة الرفاع الثانوية', played: 12, wins: 7, points: 22 },
+            { rank: 5, name_en: 'Shaikh Isa bin Ali School', name_ar: 'مدرسة الشيخ عيسى بن علي', played: 12, wins: 5, points: 17 }
+        ];
         // <!-- GM&USER_EDITABLE_DATA_END -->
 
         // State Machine
@@ -984,6 +1069,7 @@
                 yearGridTitle: "Academic Calendar (12 Months)",
                 timelineTitle: "Schedule Timeline",
                 scoresTitle: "Past Match Results",
+                leaderboardTitle: "School Standings Leaderboard",
                 backBtn: "Back to Year View",
                 backArrow: "←",
                 lblDate: "Date:",
@@ -1006,6 +1092,11 @@
                 thEvent: "Tournament / Event",
                 thTeams: "Competing Schools",
                 thResult: "Result / Status",
+                thRank: "Rank",
+                thSchool: "School Name",
+                thPlayed: "Played",
+                thWins: "Wins",
+                thPoints: "Points",
                 daysOfWeek: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
                 miniDays: ["S", "M", "T", "W", "T", "F", "S"],
                 monthsOfYear: [
@@ -1021,6 +1112,7 @@
                 yearGridTitle: "التقويم الأكاديمي السنوي (12 شهراً)",
                 timelineTitle: "الجدول الزمني للفعاليات",
                 scoresTitle: "النتائج السابقة",
+                leaderboardTitle: "جدول ترتيب المدارس المعتمد",
                 backBtn: "العودة للتقويم السنوي",
                 backArrow: "→",
                 lblDate: "التاريخ:",
@@ -1043,6 +1135,11 @@
                 thEvent: "البطولة / الفعالية",
                 thTeams: "المدارس / الفرق المشاركة",
                 thResult: "النتيجة / الحالة",
+                thRank: "الترتيب",
+                thSchool: "اسم المدرسة",
+                thPlayed: "لعب",
+                thWins: "فوز",
+                thPoints: "النقاط",
                 daysOfWeek: ["الأحد", "الإثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"],
                 miniDays: ["أ", "إ", "ث", "أ", "خ", "ج", "س"],
                 monthsOfYear: [
@@ -1059,6 +1156,7 @@
         function initializeApp() {
             bindEventListeners();
             updateUIStrings();
+            renderLeaderboard();
         }
 
         function toggleLanguage() {
@@ -1078,6 +1176,7 @@
             document.getElementById('yearHeaderTitle').textContent = dict.yearGridTitle;
             document.getElementById('timelineHeaderTitle').textContent = dict.timelineTitle;
             document.getElementById('scoresHeaderTitle').textContent = dict.scoresTitle;
+            document.getElementById('leaderboardTitle').textContent = dict.leaderboardTitle;
 
             document.getElementById('backBtnLabel').textContent = dict.backBtn;
             document.getElementById('backArrowIcon').textContent = dict.backArrow;
@@ -1103,9 +1202,16 @@
             document.getElementById('thTeams').textContent = dict.thTeams;
             document.getElementById('thResult').textContent = dict.thResult;
 
+            document.getElementById('thRank').textContent = dict.thRank;
+            document.getElementById('thSchool').textContent = dict.thSchool;
+            document.getElementById('thPlayed').textContent = dict.thPlayed;
+            document.getElementById('thWins').textContent = dict.thWins;
+            document.getElementById('thPoints').textContent = dict.thPoints;
+
             renderUpcomingShowcase();
             renderTimelineList();
             renderPastScoresTable();
+            renderLeaderboard();
 
             if (expandedMonthMeta) {
                 renderCategoryFilters();
@@ -1256,6 +1362,27 @@
                     <td><span class="score-pill">${formatNumberString(evt.score)}</span></td>
                 `;
                 container.appendChild(tr);
+            });
+        }
+
+        // Leaderboard View
+        function renderLeaderboard() {
+            const tbody = document.getElementById('leaderboardBody');
+            tbody.innerHTML = '';
+
+            sampleLeaderboard.forEach(row => {
+                const tr = document.createElement('tr');
+                const rankClass = row.rank <= 3 ? `rank-top-${row.rank}` : '';
+                const schoolName = currentLang === 'en' ? row.name_en : row.name_ar;
+
+                tr.innerHTML = `
+                    <td><span class="rank-badge ${rankClass}">${formatNumberString(row.rank)}</span></td>
+                    <td style="font-weight: 600;">${schoolName}</td>
+                    <td>${formatNumberString(row.played)}</td>
+                    <td>${formatNumberString(row.wins)}</td>
+                    <td class="pts-col">${formatNumberString(row.points)}</td>
+                `;
+                tbody.appendChild(tr);
             });
         }
 
