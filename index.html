@@ -9,7 +9,6 @@
         html[dir="rtl"] *, html[dir="ltr"] * { 
             font-variant-numeric: lining-nums tabular-nums !important; 
             font-feature-settings: "lnum" 1, "tnum" 1 !important; 
-            /* Enforcing standard system fonts that respect numeric overrides */
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
         }
 
@@ -59,13 +58,11 @@
         }
 
         .logo-wrapper {
-            background-color: var(--white);
+            background-color: transparent; /* Ensures transparent background */
             padding: 10px;
-            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
         }
 
         .logo-wrapper img {
@@ -338,7 +335,6 @@
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
-            /* Transparent blue color backdrop utilizing smooth backdrop-filter blur */
             background-color: rgba(0, 34, 68, 0.5); 
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
@@ -421,7 +417,7 @@
     <header>
         <div class="brand-container">
             <div class="logo-wrapper">
-                <!-- Embedded Live Wikimedia Commons SVG for the State Emblem of Bahrain -->
+                <!-- Embedded Live Wikimedia Commons PNG for the State Emblem of Bahrain (Transparent Background) -->
                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Emblem_of_Bahrain.svg/512px-Emblem_of_Bahrain.svg.png" alt="MOE Logo" id="moeLogo">
             </div>
             <h1 id="pageTitle">School Sports Events in Bahrain</h1>
@@ -480,7 +476,6 @@
 
     <script>
         // <!-- GM&USER_EDITABLE_DATA_START -->
-        // STRICT NUMBER RULE APPLIED: All dates, times, and identifiers use standard digits (0-9).
         const eventsData = [
             { id: 1, title_en: 'Sports Governance', title_ar: 'الحوكمة الرياضية', date: '2026-10-04', time: '09:00', location_en: 'Ministry Headquarters', location_ar: 'مقر الوزارة', sport_category: 'Management' },
             { id: 2, title_en: 'Sports Selection', title_ar: 'الانتقاء الرياضي', date: '2026-10-11', time: '08:00', location_en: 'National Stadium', location_ar: 'الاستاد الوطني', sport_category: 'Talent' },
@@ -501,17 +496,15 @@
 
         // State & Setup
         let currentLang = 'en';
-        let expandedMonthData = null; // Stores currently viewed month
-        let activeFilter = 'All';     // Filter for the expanded calendar view
-        const todayStr = new Date().toISOString().split('T')[0]; // Current date for highlighting
+        let expandedMonthData = null; 
+        let activeFilter = 'All';     
+        const todayStr = new Date().toISOString().split('T')[0]; 
 
-        // Generate 12 Months starting from Sep 2026
         const academicYearMonths = Array.from({length: 12}, (_, i) => {
             const d = new Date(2026, 8 + i, 1);
             return { year: d.getFullYear(), month: d.getMonth() };
         });
 
-        // Dictionary (STRICT NUMBER RULE: Only standard 0-9 digits in translations)
         const i18n = {
             en: {
                 title: "School Sports Events in Bahrain",
@@ -545,7 +538,11 @@
             }
         };
 
-        // Initialize App
+        // Enforce English Numerals unconditionally: Replaced conversion logic to return original string.
+        function formatNumbers(numStr) {
+            return String(numStr);
+        }
+
         function init() {
             setupEventListeners();
             updateLanguageUI();
@@ -583,7 +580,6 @@
             const container = document.getElementById('upcomingCards');
             container.innerHTML = '';
             
-            // Filter future events and take top 4
             const upcoming = eventsData
                 .filter(e => e.date >= todayStr)
                 .sort((a, b) => new Date(a.date) - new Date(b.date))
@@ -596,7 +592,7 @@
                 
                 const title = currentLang === 'en' ? e.title_en : e.title_ar;
                 card.innerHTML = `
-                    <div class="card-date">${e.date}</div>
+                    <div class="card-date">${formatNumbers(e.date)}</div>
                     <div class="card-title">${title}</div>
                 `;
                 container.appendChild(card);
@@ -622,8 +618,8 @@
                 }).length;
 
                 block.innerHTML = `
-                    <div class="month-name">${t.months[m.month]} ${m.year}</div>
-                    <div class="month-count">${count} ${t.eventsCount}</div>
+                    <div class="month-name">${t.months[m.month]} ${formatNumbers(m.year)}</div>
+                    <div class="month-count">${formatNumbers(count)} ${t.eventsCount}</div>
                 `;
                 
                 block.onclick = () => {
@@ -652,7 +648,7 @@
                 btn.textContent = cat === 'All' ? t.filterAll : cat;
                 btn.onclick = () => {
                     activeFilter = cat;
-                    renderFilters(); // Re-render to update active class
+                    renderFilters(); 
                     renderExpandedMonth(expandedMonthData.year, expandedMonthData.month);
                 };
                 container.appendChild(btn);
@@ -664,9 +660,8 @@
             const grid = document.getElementById('calendarGrid');
             grid.innerHTML = '';
             
-            document.getElementById('expandedMonthTitle').textContent = `${t.months[month]} ${year}`;
+            document.getElementById('expandedMonthTitle').textContent = `${t.months[month]} ${formatNumbers(year)}`;
 
-            // Header Days
             t.days.forEach(day => {
                 const div = document.createElement('div');
                 div.className = 'day-header';
@@ -677,14 +672,12 @@
             const firstDayIndex = new Date(year, month, 1).getDay();
             const daysInMonth = new Date(year, month + 1, 0).getDate();
 
-            // Offset empty cells
             for (let i = 0; i < firstDayIndex; i++) {
                 const emptyCell = document.createElement('div');
                 emptyCell.className = 'day-cell empty';
                 grid.appendChild(emptyCell);
             }
 
-            // Fill actual days
             for (let day = 1; day <= daysInMonth; day++) {
                 const cell = document.createElement('div');
                 cell.className = 'day-cell';
@@ -694,7 +687,7 @@
                 
                 const num = document.createElement('div');
                 num.className = 'day-number';
-                num.textContent = day;
+                num.textContent = formatNumbers(day);
                 cell.appendChild(num);
 
                 const dayEvents = eventsData.filter(e => {
@@ -718,8 +711,8 @@
 
         function openModal(eventData) {
             document.getElementById('mTitle').textContent = currentLang === 'en' ? eventData.title_en : eventData.title_ar;
-            document.getElementById('mDate').textContent = eventData.date;
-            document.getElementById('mTime').textContent = eventData.time;
+            document.getElementById('mDate').textContent = formatNumbers(eventData.date);
+            document.getElementById('mTime').textContent = formatNumbers(eventData.time);
             document.getElementById('mLoc').textContent = currentLang === 'en' ? eventData.location_en : eventData.location_ar;
             
             document.getElementById('eventModal').classList.add('active');
@@ -743,7 +736,6 @@
             });
         }
 
-        // Run
         init();
     </script>
 </body>
