@@ -10,19 +10,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
     <style>
         /* ==========================================================================
-           1. STRICT NUMERIC RULE & GLOBAL TYPOGRAPHY
+           1. STRICT NUMERIC RULE & GLOBAL RESETS
            ========================================================================== */
         *, *::before, *::after, html[dir="rtl"] *, html[dir="ltr"] * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            /* Enforces Western standard Arabic numerals (0-9) universally */
+            /* Strict Western standard Arabic numerals (0-9) universally across both languages */
             font-variant-numeric: lining-nums tabular-nums !important;
             font-feature-settings: "lnum" 1, "tnum" 1 !important;
         }
 
         :root {
-            /* Palette: Balanced tones of Blue, Dark Blue, Slate, and Baby Blue */
+            /* Palette: Deep Blue, Navy, Slate, and Baby Blue */
             --dark-blue-deep: #051329;
             --dark-blue-navy: #0B2545;
             --dark-blue-surface: #133E68;
@@ -72,11 +72,11 @@
         }
 
         /* ==========================================================================
-           2. HEADER: FULL-WIDTH CENTERED BANNER & RESPONSIVE MOE EMBLEM
+           2. HEADER: FIXED TOP-RIGHT LOGO & UNCLASHED NAVIGATION
            ========================================================================== */
         header {
             background: linear-gradient(135deg, var(--dark-blue-deep) 0%, var(--dark-blue-navy) 100%);
-            padding: 2.2rem 1.5rem;
+            padding: 1.5rem 1.25rem;
             position: sticky;
             top: 0;
             z-index: 100;
@@ -84,81 +84,32 @@
             border-bottom: 2px solid var(--blue-accent);
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: space-between;
             margin-bottom: 40px;
+            min-height: 90px;
         }
 
-        /* Responsive MOE Emblem */
-        .moe-header-emblem {
-            position: absolute;
-            right: 1.5rem;
-            top: 15px;
-            z-index: 100;
-            background: #ffffff;
-            width: 72px;
-            height: 72px;
+        /* Action Cluster (Pinned to Left in LTR / Right in RTL via natural flex flow) */
+        .header-actions-left {
             display: flex;
             align-items: center;
-            justify-content: center;
-            border-radius: 12px;
-            padding: 5px;
-            box-shadow: 0 4px 14px rgba(5, 19, 41, 0.35);
-            border: 2px solid var(--baby-blue);
-        }
-
-        .moe-header-emblem img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-        }
-
-        .header-title-box {
-            text-align: center;
-            width: 100%;
-            padding: 0 6.5rem;
-        }
-
-        h1.site-title {
-            color: var(--baby-blue);
-            font-size: 2.1rem;
-            font-weight: 800;
-            letter-spacing: 0.6px;
-            text-align: center;
-            width: 100%;
-            text-shadow: 0 0 12px rgba(144, 224, 239, 0.8),
-                         0 0 24px rgba(0, 119, 182, 0.65),
-                         0 0 45px rgba(0, 150, 199, 0.45);
-            user-select: none;
-            line-height: 1.3;
-        }
-
-        .header-subtitle {
-            font-size: 0.95rem;
-            color: var(--baby-blue-light);
-            font-weight: 600;
-            margin-top: 0.25rem;
-            display: block;
-            text-shadow: 0 0 8px rgba(144, 224, 239, 0.4);
+            z-index: 102;
+            flex-shrink: 0;
         }
 
         #langToggle {
-            position: absolute;
-            left: 2rem;
-            top: 50%;
-            transform: translateY(-50%);
             background-color: var(--baby-blue);
             color: var(--dark-blue-deep);
             border: 2px solid transparent;
-            padding: 0.55rem 1.4rem;
+            padding: 0.5rem 1.2rem;
             border-radius: 8px;
             font-weight: 700;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             cursor: pointer;
             transition: all 0.25s ease;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-            flex-shrink: 0;
             font-family: inherit;
-            z-index: 101;
+            white-space: nowrap;
         }
 
         #langToggle:hover {
@@ -168,22 +119,82 @@
             box-shadow: 0 0 14px rgba(144, 224, 239, 0.6);
         }
 
+        /* Centered Header Text Container */
+        .header-title-box {
+            flex: 1;
+            text-align: center;
+            padding: 0 1rem;
+            z-index: 101;
+        }
+
+        h1.site-title {
+            color: var(--baby-blue);
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            text-align: center;
+            text-shadow: 0 0 12px rgba(144, 224, 239, 0.8),
+                         0 0 24px rgba(0, 119, 182, 0.65),
+                         0 0 45px rgba(0, 150, 199, 0.45);
+            user-select: none;
+            line-height: 1.25;
+        }
+
+        .header-subtitle {
+            font-size: 0.9rem;
+            color: var(--baby-blue-light);
+            font-weight: 600;
+            margin-top: 0.25rem;
+            display: block;
+            text-shadow: 0 0 8px rgba(144, 224, 239, 0.4);
+        }
+
+        /* STRICT TOP-RIGHT EMBLEM (Fixed across all viewport sizes) */
+        .header-actions-right {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            z-index: 102;
+            flex-shrink: 0;
+        }
+
+        .moe-header-emblem {
+            background: #ffffff;
+            width: 64px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            padding: 4px;
+            box-shadow: 0 4px 14px rgba(5, 19, 41, 0.35);
+            border: 2px solid var(--baby-blue);
+            flex-shrink: 0;
+        }
+
+        .moe-header-emblem img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
         /* ==========================================================================
-           3. MAIN LAYOUT & CONTROLS
+           3. MAIN LAYOUT & CONTROLS (EDGE-SAFE PADDING)
            ========================================================================== */
         main {
             flex: 1;
             max-width: 1200px;
             width: 100%;
             margin: 0 auto;
-            padding: 0 1.5rem 3rem 1.5rem;
+            padding: 0 1.5rem 3rem 1.5rem; /* Safe side margin prevents clipping */
         }
 
         .control-panel {
             background: var(--white);
             border: 1px solid var(--border-subtle);
             border-radius: 12px;
-            padding: 0.75rem 1rem;
+            padding: 0.85rem 1.25rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -200,6 +211,7 @@
             padding: 0.3rem;
             border-radius: 8px;
             border: 1px solid var(--border-subtle);
+            flex-wrap: wrap;
         }
 
         .tab-btn {
@@ -216,6 +228,7 @@
             align-items: center;
             gap: 0.4rem;
             font-family: inherit;
+            white-space: nowrap;
         }
 
         .tab-btn.active {
@@ -242,6 +255,7 @@
             padding: 0.2rem 0.6rem;
             border-radius: 4px;
             border: 1px solid transparent;
+            white-space: nowrap;
         }
 
         .legend-tag.blue { background: var(--cat-blue-bg); color: var(--cat-blue-txt); border-color: var(--cat-blue-border); }
@@ -583,7 +597,7 @@
             background: var(--white);
             border: 1px solid var(--border-subtle);
             border-radius: 12px;
-            padding: 1.5rem;
+            padding: 1.5rem 1.75rem; /* Generous internal padding prevents text cutting */
             box-shadow: 0 2px 6px rgba(0,0,0,0.02);
         }
 
@@ -592,10 +606,11 @@
             grid-template-columns: 140px 1fr 140px;
             gap: 1.5rem;
             align-items: center;
-            padding: 1.1rem 0;
+            padding: 1.1rem 0.5rem;
             border-bottom: 1px solid var(--border-subtle);
             cursor: pointer;
             transition: background 0.15s ease;
+            border-radius: 6px;
         }
 
         .timeline-row:last-child {
@@ -604,7 +619,6 @@
 
         .timeline-row:hover {
             background-color: var(--baby-blue-pale);
-            border-radius: 6px;
         }
 
         .timeline-date {
@@ -630,7 +644,7 @@
             text-align: end;
         }
 
-        /* Overflow-X Scrollable Container */
+        /* Overflow-X Scrollable Container with Protective Gutter */
         .table-scroll-container {
             width: 100%;
             overflow-x: auto !important;
@@ -640,6 +654,7 @@
             background: var(--white);
             border: 1px solid var(--border-subtle);
             box-shadow: 0 4px 16px rgba(5, 19, 41, 0.05);
+            padding: 0 0.5rem; /* Prevents text clipping near scroll edges */
         }
 
         .table-scroll-container::-webkit-scrollbar {
@@ -658,7 +673,7 @@
 
         .scores-table, .leaderboard-table {
             width: 100%;
-            min-width: 600px;
+            min-width: 620px;
             border-collapse: collapse;
             text-align: start;
         }
@@ -668,13 +683,13 @@
             color: var(--baby-blue);
             font-weight: 700;
             font-size: 0.9rem;
-            padding: 1rem 1.2rem;
+            padding: 1.1rem 1.4rem;
             text-align: inherit;
             white-space: nowrap;
         }
 
         .scores-table td, .leaderboard-table td {
-            padding: 1rem 1.2rem;
+            padding: 1.1rem 1.4rem;
             font-size: 0.95rem;
             border-bottom: 1px solid var(--baby-blue-light);
             color: var(--dark-blue-deep);
@@ -754,7 +769,7 @@
             padding: 2.25rem;
             border-radius: 14px;
             width: 90%;
-            max-width: 460px;
+            max-width: 480px;
             box-shadow: 0 16px 36px rgba(5, 19, 41, 0.4);
             border: 3px solid var(--baby-blue);
             transform: scale(0.95);
@@ -819,41 +834,54 @@
            ========================================================================== */
         @media (max-width: 768px) {
             header {
-                padding-top: 4.5rem; /* Prevents overlap with centered top emblem */
-                padding-bottom: 1.5rem;
-                padding-left: 1rem;
-                padding-right: 1rem;
-                flex-direction: column;
-                gap: 0.8rem;
-                position: relative;
+                padding: 0.85rem 1rem;
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                justify-content: space-between;
+                min-height: auto;
+                gap: 0.5rem;
+            }
+
+            /* Ensures logo remains strictly on the top-right corner */
+            .header-actions-right {
+                order: 2;
+            }
+
+            .header-actions-left {
+                order: 1;
             }
 
             .moe-header-emblem {
-                position: absolute;
-                right: 50%;
-                top: 12px;
-                transform: translateX(50%);
-                width: 58px;
-                height: 58px;
-                padding: 4px;
-            }
-
-            .header-title-box {
-                padding: 0;
-            }
-
-            h1.site-title {
-                font-size: 1.35rem;
+                width: 48px;
+                height: 48px;
+                padding: 3px;
+                border-radius: 8px;
             }
 
             #langToggle {
-                position: static;
-                transform: none;
-                margin-top: 0.4rem;
+                padding: 0.4rem 0.85rem;
+                font-size: 0.82rem;
+            }
+
+            /* Title spans full width cleanly underneath on mobile */
+            .header-title-box {
+                order: 3;
+                width: 100%;
+                flex: 1 1 100%;
+                padding: 0.4rem 0 0.1rem 0;
+            }
+
+            h1.site-title {
+                font-size: 1.25rem;
+            }
+
+            .header-subtitle {
+                font-size: 0.8rem;
             }
 
             main {
-                padding: 0 0.8rem 2rem 0.8rem;
+                padding: 0 1rem 2rem 1rem;
             }
 
             .calendar-cell {
@@ -876,6 +904,10 @@
                 align-items: stretch;
             }
 
+            .timeline-container {
+                padding: 1.25rem 1rem;
+            }
+
             .timeline-row {
                 grid-template-columns: 1fr;
                 gap: 0.5rem;
@@ -889,16 +921,20 @@
 </head>
 <body>
 
-    <!-- Header Banner: Center Title, Fixed Language Toggle & Mobile-Friendly Logo -->
+    <!-- Header Banner: Pinned Top-Right Emblem, Pinned Left Lang Toggle, Centered Text -->
     <header>
-        <div class="moe-header-emblem">
-            <img src="logo.png" alt="MOE Logo">
+        <div class="header-actions-left">
+            <button id="langToggle">العربية</button>
         </div>
         <div class="header-title-box">
             <h1 class="site-title" id="pageTitle">Student Athletic Team Activities</h1>
             <span class="header-subtitle" id="pageSubtitle">Year 2026-2027</span>
         </div>
-        <button id="langToggle">العربية</button>
+        <div class="header-actions-right">
+            <div class="moe-header-emblem">
+                <img src="logo.png" alt="MOE Logo">
+            </div>
+        </div>
     </header>
 
     <main>
