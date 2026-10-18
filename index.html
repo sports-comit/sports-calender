@@ -9,6 +9,55 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
     <style>
+        /* START OF MINISTRY OF EDUCATION LOGO CUSTOM STYLING */
+header {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-top: 1.5rem; 
+}
+
+.moe-header-emblem {
+    position: absolute;
+    right: 1.5rem; 
+    top: 15px;
+    width: 65px;
+    height: 65px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff; 
+    border-radius: 12px;
+    padding: 6px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    border: 2px solid #5eb5f8; 
+    z-index: 100; 
+    transition: all 0.3s ease;
+}
+
+.moe-header-emblem img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+@media (max-width: 768px) {
+    header {
+        padding-top: 4.5rem; 
+    }
+    
+    .moe-header-emblem {
+        right: 50%;
+        transform: translateX(50%); 
+        top: 12px;
+        width: 55px;
+        height: 55px;
+    }
+}
+/* END OF MINISTRY OF EDUCATION LOGO CUSTOM STYLING */
+
         /* ==========================================================================
            1. STRICT NUMERIC RULE & GLOBAL TYPOGRAPHY
            ========================================================================== */
@@ -75,17 +124,44 @@
            2. HEADER: FULL-WIDTH CENTERED WITH LUMINESCENT GLOW
            ========================================================================== */
         header {
-            background: linear-gradient(135deg, var(--dark-blue-deep) 0%, var(--dark-blue-navy) 100%);
-            padding: 2.2rem 1.5rem;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 4px 20px rgba(5, 19, 41, 0.45);
-            border-bottom: 2px solid var(--blue-accent);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 40px;
+            /* In <style> */
+header {
+    position: relative;
+}
+
+.moe-header-emblem {
+    position: absolute;
+    inset-inline-start: 2rem; /* Positioned opposite to the language toggle */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 65px;
+    height: 65px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 10px;
+    padding: 4px;
+    box-shadow: 0 4px 12px rgba(5, 19, 41, 0.25);
+    border: 1.5px solid var(--baby-blue);
+    z-index: 10;
+}
+
+.moe-header-emblem img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+@media (max-width: 768px) {
+    .moe-header-emblem {
+        position: static;
+        transform: none;
+        width: 52px;
+        height: 52px;
+        margin-bottom: 0.5rem;
+    }
+}
         }
 
         .header-title-box {
@@ -840,6 +916,11 @@
 
     <!-- Header Banner: Fully Centered with Luminescent Glow -->
     <header>
+        <!-- MINISTRY OF EDUCATION LOGO ASSET ELEMENT -->
+<div class="moe-header-emblem">
+    <img src="logo.png" alt="Kingdom of Bahrain - Ministry of Education Logo">
+</div>
+
         <div class="header-title-box">
             <h1 class="site-title" id="pageTitle">Bahrain School Sports Events</h1>
             <span class="header-subtitle" id="pageSubtitle">Year 2026-2027</span>
