@@ -4,157 +4,1872 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Athletic Team Activities</title>
-    <link href="https://googleapis.com" rel="stylesheet">
+    <!-- Google Fonts for Corporate Arabic & Latin Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
     <style>
-        :root { --blue: #134074; --blue-light: #eff6ff; --dark: #0f172a; --muted: #64748b; --bg: #f8fafc; }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
-        body { background: var(--bg); color: var(--dark); padding: 0 4rem; overflow-x: hidden; }
-        .dashboard-container { width: 100%; max-width: 1400px; margin: 0 auto; padding-bottom: 5rem; }
-        header { position: relative; width: 100%; display: flex; flex-direction: column; margin-top: 2rem; }
-        .moe-header-emblem { position: absolute; top: 0; right: 0; width: 110px; z-index: 10; }
-        .moe-header-emblem img { width: 100%; height: auto; object-fit: contain; }
-        .title-block { text-align: center; margin-top: 115px; width: 100%; }
-        .title-block h1 { font-size: 2.4rem; font-weight: 800; letter-spacing: -1px; margin-bottom: 0.5rem; }
-        .title-block .subtitle { font-size: 1.15rem; color: var(--muted); }
-        .language-container { position: absolute; top: 115px; right: 40px; z-index: 20; }
-        .toggle-lang-btn { background: #fff; color: var(--blue); border: 1px solid #f1f5f9; padding: 0.6rem 1.5rem; border-radius: 10px; font-weight: 700; cursor: pointer; }
-        .mini-navigation-tabs { margin-top: 75px; display: flex; gap: 0.5rem; border-bottom: 1px solid #f1f5f9; padding-bottom: 0.5rem; }
-        .nav-button { background: transparent; border: none; padding: 0.6rem 1.2rem; font-size: 0.9rem; font-weight: 600; color: var(--muted); cursor: pointer; border-radius: 8px; }
-        .nav-button.active { color: var(--blue); background: var(--blue-light); font-weight: 700; }
-        .section-headline { margin: 2.5rem 0 1.5rem 0; }
-        .section-headline h2 { font-size: 1.5rem; font-weight: 700; }
-        .main-dashboard-grid { display: grid; grid-template-columns: 280px 1fr; gap: 2rem; width: 100%; }
-        .dashboard-sidebar { background: #fff; border-radius: 16px; padding: 1.5rem; border: 1px solid #f1f5f9; }
-        .action-button { width: 100%; background: var(--blue); color: #fff; border: none; padding: 0.8rem 1rem; border-radius: 12px; font-weight: 700; cursor: pointer; margin-bottom: 1.5rem; }
-        .calendar-matrix-view { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 75px; }
-        .month-container-card { background: #fff; border-radius: 16px; padding: 1.5rem; border: 1px solid #f1f5f9; box-shadow: 0 4px 20px rgba(0,0,0,0.03); }
-        .month-title-row { display: flex; justify-content: space-between; margin-bottom: 1.25rem; }
-        .month-label-text { font-size: 1.1rem; font-weight: 700; }
-        .month-event-counter { font-size: 0.75rem; font-weight: 700; color: var(--blue); background: var(--blue-light); padding: 0.25rem 0.6rem; border-radius: 20px; }
-        .days-header-row, .days-grid-matrix { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; }
-        .days-header-row { font-size: 0.75rem; font-weight: 700; color: var(--muted); margin-bottom: 0.75rem; }
-        .days-grid-matrix { row-gap: 0.5rem; }
-        .date-cell-item { font-size: 0.85rem; font-weight: 600; padding: 0.5rem 0; border-radius: 10px; cursor: pointer; }
-        .date-cell-item:hover:not(.empty-space) { background: #f1f5f9; }
-        .date-cell-item.active-event-day { background: var(--blue); color: #fff !important; font-weight: 700; }
-        .modal-view-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15,23,42,0.3); backdrop-filter: blur(8px); display: none; justify-content: center; align-items: center; z-index: 2000; }
-        .modal-card-body { background: #fff; border-radius: 20px; width: 100%; max-width: 460px; padding: 2rem; border: 1px solid #f1f5f9; }
-        .modal-card-header { display: flex; justify-content: space-between; margin-bottom: 1.5rem; }
-        .close-btn-marker { background: transparent; border: none; font-size: 1.5rem; cursor: pointer; color: var(--muted); }
-        .info-detail-row { margin-bottom: 1.25rem; }
-        .info-detail-label { font-size: 0.75rem; font-weight: 700; color: var(--muted); text-transform: uppercase; margin-bottom: 0.25rem; }
-        .info-detail-value { font-size: 0.95rem; font-weight: 600; }
-        .map-redirect-link { color: var(--blue); text-decoration: none; font-weight: 700; }
-        @media (max-width: 1024px) {
-            body { padding: 0 1.5rem; } .main-dashboard-grid { grid-template-columns: 1fr; }
-            .moe-header-emblem { width: 85px; } header { align-items: flex-start; }
-            .title-block { text-align: left; margin-top: 135px; } .language-container { top: 135px; right: 0; }
-            .mini-navigation-tabs { margin-top: 65px; } .calendar-matrix-view { gap: 75px; }
+        /* ==========================================================================
+           1. STRICT NUMERIC RULE & GLOBAL RESETS
+           ========================================================================== */
+        *, *::before, *::after, html[dir="rtl"] *, html[dir="ltr"] * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            /* Strict Western standard Arabic numerals (0-9) universally across both languages */
+            font-variant-numeric: lining-nums tabular-nums !important;
+            font-feature-settings: "lnum" 1, "tnum" 1 !important;
+        }
+
+        :root {
+            /* Palette: Deep Blue, Navy, Slate, and Baby Blue */
+            --dark-blue-deep: #051329;
+            --dark-blue-navy: #0B2545;
+            --dark-blue-surface: #133E68;
+            --blue-primary: #0077B6;
+            --blue-accent: #0096C7;
+            --baby-blue: #90E0EF;
+            --baby-blue-light: #E0F7FA;
+            --baby-blue-pale: #F4FAFD;
+            --white: #FFFFFF;
+            --border-subtle: rgba(0, 119, 182, 0.16);
+            --modal-backdrop: rgba(5, 19, 41, 0.65);
+
+            /* Category Badges & Soft Themes */
+            --cat-blue-bg: #E3F2FD;
+            --cat-blue-txt: #1565C0;
+            --cat-blue-border: #BBDEFB;
+
+            --cat-neutral-bg: #EAF2F8;
+            --cat-neutral-txt: #244B6E;
+            --cat-neutral-border: #BCD5EB;
+
+            --cat-slate-bg: #E2E8F0;
+            --cat-slate-txt: #1E293B;
+            --cat-slate-border: #CBD5E1;
+
+            --cat-sky-bg: #E0F2FE;
+            --cat-sky-txt: #0369A1;
+            --cat-sky-border: #BAE6FD;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--baby-blue-pale);
+            color: var(--dark-blue-navy);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Arabic Typography Specialization */
+        html[dir="rtl"] body {
+            font-family: 'Cairo', 'Tajawal', 'IBM Plex Sans Arabic', 'Segoe UI', Tahoma, sans-serif;
+            letter-spacing: 0;
+        }
+
+        /* ==========================================================================
+           2. HEADER: FIXED TOP-RIGHT LOGO & UNCLASHED NAVIGATION
+           ========================================================================== */
+        header {
+            background: linear-gradient(135deg, var(--dark-blue-deep) 0%, var(--dark-blue-navy) 100%);
+            padding: 1.5rem 1.25rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(5, 19, 41, 0.45);
+            border-bottom: 2px solid var(--blue-accent);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            min-height: 90px;
+        }
+
+        /* Action Cluster (Pinned to Left in LTR / Right in RTL via natural flex flow) */
+        .header-actions-left {
+            display: flex;
+            align-items: center;
+            z-index: 102;
+            flex-shrink: 0;
+        }
+
+        #langToggle {
+            background-color: var(--baby-blue);
+            color: var(--dark-blue-deep);
+            border: 2px solid transparent;
+            padding: 0.5rem 1.2rem;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+            font-family: inherit;
+            white-space: nowrap;
+        }
+
+        #langToggle:hover {
+            background-color: var(--white);
+            color: var(--blue-primary);
+            border-color: var(--baby-blue);
+            box-shadow: 0 0 14px rgba(144, 224, 239, 0.6);
+        }
+
+        /* Centered Header Text Container */
+        .header-title-box {
+            flex: 1;
+            text-align: center;
+            padding: 0 1rem;
+            z-index: 101;
+        }
+
+        h1.site-title {
+            color: var(--baby-blue);
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            text-align: center;
+            text-shadow: 0 0 12px rgba(144, 224, 239, 0.8),
+                         0 0 24px rgba(0, 119, 182, 0.65),
+                         0 0 45px rgba(0, 150, 199, 0.45);
+            user-select: none;
+            line-height: 1.25;
+        }
+
+        .header-subtitle {
+            font-size: 0.9rem;
+            color: var(--baby-blue-light);
+            font-weight: 600;
+            margin-top: 0.25rem;
+            display: block;
+            text-shadow: 0 0 8px rgba(144, 224, 239, 0.4);
+        }
+
+        /* STRICT TOP-RIGHT EMBLEM (Fixed across all viewport sizes) */
+        .header-actions-right {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            z-index: 102;
+            flex-shrink: 0;
+        }
+
+        .moe-header-emblem {
+            background: #ffffff;
+            width: 64px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            padding: 4px;
+            box-shadow: 0 4px 14px rgba(5, 19, 41, 0.35);
+            border: 2px solid var(--baby-blue);
+            flex-shrink: 0;
+        }
+
+        .moe-header-emblem img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        /* ==========================================================================
+           3. MAIN LAYOUT & CONTROLS (EDGE-SAFE PADDING)
+           ========================================================================== */
+        main {
+            flex: 1;
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 0 1.5rem 3rem 1.5rem; /* Safe side margin prevents clipping */
+        }
+
+        .control-panel {
+            background: var(--white);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 0.85rem 1.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .tabs-cluster {
+            display: flex;
+            gap: 0.5rem;
+            background-color: var(--baby-blue-pale);
+            padding: 0.3rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-subtle);
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            border: none;
+            background: transparent;
+            color: var(--dark-blue-navy);
+            padding: 0.5rem 1.1rem;
+            border-radius: 6px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-family: inherit;
+            white-space: nowrap;
+        }
+
+        .tab-btn.active {
+            background: var(--blue-primary);
+            color: #FFFFFF;
+            box-shadow: 0 2px 6px rgba(0, 119, 182, 0.25);
+        }
+
+        .tab-btn:hover:not(.active) {
+            color: var(--blue-primary);
+            background: rgba(0, 119, 182, 0.08);
+        }
+
+        .category-legend {
+            display: flex;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .legend-tag {
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            border: 1px solid transparent;
+            white-space: nowrap;
+        }
+
+        .legend-tag.blue { background: var(--cat-blue-bg); color: var(--cat-blue-txt); border-color: var(--cat-blue-border); }
+        .legend-tag.neutral { background: var(--cat-neutral-bg); color: var(--cat-neutral-txt); border-color: var(--cat-neutral-border); }
+        .legend-tag.slate { background: var(--cat-slate-bg); color: var(--cat-slate-txt); border-color: var(--cat-slate-border); }
+        .legend-tag.sky { background: var(--cat-sky-bg); color: var(--cat-sky-txt); border-color: var(--cat-sky-border); }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border-subtle);
+            padding-bottom: 0.6rem;
+        }
+
+        .section-title {
+            color: var(--dark-blue-navy);
+            font-size: 1.45rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* ==========================================================================
+           4. UPCOMING EVENTS SHOWCASE
+           ========================================================================== */
+        #upcomingShowcase {
+            margin-bottom: 40px;
+        }
+
+        .showcase-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(265px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .showcase-card {
+            background: var(--white);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 1.3rem;
+            border-inline-start: 6px solid var(--blue-primary);
+            box-shadow: 0 4px 14px rgba(5, 19, 41, 0.05);
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .showcase-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 24px rgba(0, 119, 182, 0.16);
+            border-color: var(--blue-accent);
+        }
+
+        .card-tag-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.8rem;
+        }
+
+        .card-date-badge {
+            font-size: 0.85rem;
+            color: var(--blue-primary);
+            font-weight: 700;
+            background-color: var(--baby-blue-light);
+            padding: 0.25rem 0.6rem;
+            border-radius: 6px;
+        }
+
+        .card-category-badge {
+            font-size: 0.75rem;
+            background-color: var(--dark-blue-surface);
+            color: var(--baby-blue);
+            padding: 0.2rem 0.55rem;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            color: var(--dark-blue-deep);
+            font-weight: 700;
+            margin-bottom: 0.6rem;
+            line-height: 1.4;
+        }
+
+        .card-location-meta {
+            font-size: 0.85rem;
+            color: var(--dark-blue-surface);
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            margin-top: 0.4rem;
+        }
+
+        /* ==========================================================================
+           5. 12-MONTH CALENDAR GRID WITH MINI-CALENDARS
+           ========================================================================== */
+        #yearGridSection {
+            margin-bottom: 40px;
+            transition: opacity 0.3s ease;
+        }
+
+        .view-section {
+            display: none;
+        }
+        .view-section.active {
+            display: block;
+        }
+
+        .year-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .month-block-card {
+            background-color: var(--white);
+            border: 1px solid var(--border-subtle);
+            border-radius: 14px;
+            padding: 1.3rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(5, 19, 41, 0.04);
+            transition: all 0.25s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .month-block-card:hover {
+            border-color: var(--blue-primary);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 24px rgba(0, 119, 182, 0.16);
+        }
+
+        .month-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 0.9rem;
+            border-bottom: 1px solid var(--baby-blue-light);
+            padding-bottom: 0.5rem;
+        }
+
+        .month-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--dark-blue-navy);
+        }
+
+        .month-event-counter {
+            font-size: 0.78rem;
+            background-color: var(--baby-blue-light);
+            color: var(--blue-primary);
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-weight: 700;
+        }
+
+        .mini-calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 3px;
+            text-align: center;
+            margin-top: 0.4rem;
+        }
+
+        .mini-day-header {
+            font-size: 0.68rem;
+            color: var(--dark-blue-surface);
+            font-weight: 700;
+            padding-bottom: 0.3rem;
+        }
+
+        .mini-day-cell {
+            font-size: 0.75rem;
+            padding: 0.25rem 0;
+            border-radius: 4px;
+            color: var(--dark-blue-navy);
+            background-color: var(--white);
+            position: relative;
+        }
+
+        .mini-day-cell.empty {
+            visibility: hidden;
+        }
+
+        .mini-day-cell.has-event {
+            background-color: var(--baby-blue);
+            color: var(--dark-blue-deep);
+            font-weight: 800;
+            box-shadow: inset 0 0 0 1px var(--blue-accent);
+        }
+
+        /* ==========================================================================
+           6. EXPANDED MONTH VIEW
+           ========================================================================== */
+        #expandedMonthSection {
+            display: none;
+            margin-bottom: 40px;
+            animation: slideDownFade 0.35s ease forwards;
+        }
+
+        @keyframes slideDownFade {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .expanded-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--white);
+            padding: 1rem 1.3rem;
+            border-radius: 10px;
+            margin-bottom: 1.3rem;
+            border: 1px solid var(--border-subtle);
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .back-nav-btn {
+            background-color: var(--dark-blue-navy);
+            color: var(--baby-blue);
+            border: none;
+            padding: 0.65rem 1.3rem;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: inherit;
+        }
+
+        .back-nav-btn:hover {
+            background-color: var(--blue-primary);
+            color: var(--white);
+            box-shadow: 0 4px 12px rgba(0, 119, 182, 0.25);
+        }
+
+        .category-filters-container {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .category-filter-btn {
+            background-color: var(--baby-blue-light);
+            color: var(--dark-blue-deep);
+            border: 1px solid var(--blue-accent);
+            padding: 0.4rem 0.85rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+
+        .category-filter-btn.active {
+            background-color: var(--blue-primary);
+            color: var(--white);
+            border-color: var(--blue-primary);
+        }
+
+        .calendar-table-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 6px;
+            background-color: var(--blue-primary);
+            border: 2px solid var(--blue-primary);
+            border-radius: 12px;
+            padding: 6px;
+            overflow: hidden;
+        }
+
+        .calendar-day-header {
+            background-color: var(--dark-blue-navy);
+            color: var(--baby-blue);
+            text-align: center;
+            padding: 0.8rem 0;
+            font-weight: 700;
+            font-size: 0.9rem;
+            border-radius: 6px;
+        }
+
+        .calendar-cell {
+            background-color: var(--white);
+            min-height: 110px;
+            padding: 0.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            border-radius: 6px;
+        }
+
+        .calendar-cell.cell-empty {
+            background-color: rgba(244, 250, 253, 0.6);
+            border: 1px dashed rgba(0, 119, 182, 0.2);
+        }
+
+        .cell-date-num {
+            font-weight: 800;
+            color: var(--dark-blue-deep);
+            font-size: 0.95rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .event-chip-item {
+            background-color: var(--blue-primary);
+            color: var(--white);
+            padding: 0.35rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.78rem;
+            cursor: pointer;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-weight: 600;
+            transition: background 0.2s ease;
+        }
+
+        .event-chip-item:hover {
+            background-color: var(--dark-blue-navy);
+        }
+
+        /* ==========================================================================
+           7. TIMELINE, SCORES & LEADERBOARD (TOUCH SCROLLING ENABLED)
+           ========================================================================== */
+        .timeline-container {
+            background: var(--white);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 1.5rem 1.75rem; /* Generous internal padding prevents text cutting */
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        }
+
+        .timeline-row {
+            display: grid;
+            grid-template-columns: 140px 1fr 140px;
+            gap: 1.5rem;
+            align-items: center;
+            padding: 1.1rem 0.5rem;
+            border-bottom: 1px solid var(--border-subtle);
+            cursor: pointer;
+            transition: background 0.15s ease;
+            border-radius: 6px;
+        }
+
+        .timeline-row:last-child {
+            border-bottom: none;
+        }
+
+        .timeline-row:hover {
+            background-color: var(--baby-blue-pale);
+        }
+
+        .timeline-date {
+            font-weight: 700;
+            color: var(--blue-primary);
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+
+        .timeline-main h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--dark-blue-navy);
+            margin-bottom: 0.2rem;
+        }
+
+        .timeline-main p {
+            font-size: 0.85rem;
+            color: var(--dark-blue-surface);
+        }
+
+        .timeline-badge-wrap {
+            text-align: end;
+        }
+
+        /* Overflow-X Scrollable Container with Protective Gutter */
+        .table-scroll-container {
+            width: 100%;
+            overflow-x: auto !important;
+            -webkit-overflow-scrolling: touch;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            background: var(--white);
+            border: 1px solid var(--border-subtle);
+            box-shadow: 0 4px 16px rgba(5, 19, 41, 0.05);
+            padding: 0 0.5rem; /* Prevents text clipping near scroll edges */
+        }
+
+        .table-scroll-container::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .table-scroll-container::-webkit-scrollbar-track {
+            background: var(--baby-blue-light);
+            border-radius: 8px;
+        }
+
+        .table-scroll-container::-webkit-scrollbar-thumb {
+            background: var(--blue-primary);
+            border-radius: 8px;
+        }
+
+        .scores-table, .leaderboard-table {
+            width: 100%;
+            min-width: 620px;
+            border-collapse: collapse;
+            text-align: start;
+        }
+
+        .scores-table th, .leaderboard-table th {
+            background-color: var(--dark-blue-navy);
+            color: var(--baby-blue);
+            font-weight: 700;
+            font-size: 0.9rem;
+            padding: 1.1rem 1.4rem;
+            text-align: inherit;
+            white-space: nowrap;
+        }
+
+        .scores-table td, .leaderboard-table td {
+            padding: 1.1rem 1.4rem;
+            font-size: 0.95rem;
+            border-bottom: 1px solid var(--baby-blue-light);
+            color: var(--dark-blue-deep);
+            text-align: inherit;
+            white-space: nowrap;
+        }
+
+        .scores-table tbody tr:hover, .leaderboard-table tbody tr:hover {
+            background-color: var(--baby-blue-pale);
+        }
+
+        .score-pill {
+            background-color: var(--baby-blue-light);
+            color: var(--dark-blue-deep);
+            font-weight: 800;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            display: inline-block;
+            white-space: nowrap;
+        }
+
+        /* Leaderboard Badges */
+        #leaderboardSection {
+            margin-top: 10px;
+            margin-bottom: 2rem;
+        }
+
+        .rank-badge {
+            font-weight: 800;
+            width: 30px;
+            height: 30px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background-color: var(--baby-blue-light);
+            color: var(--blue-primary);
+        }
+
+        .rank-top-1 { background-color: #FFD166; color: #5C4300; }
+        .rank-top-2 { background-color: #E0E1DD; color: #333333; }
+        .rank-top-3 { background-color: #EDAFB8; color: #5E2A32; }
+
+        .pts-col {
+            font-weight: 800;
+            color: var(--blue-primary);
+        }
+
+        /* ==========================================================================
+           8. MODAL WINDOW: FROSTED BLUE GLASS EFFECT
+           ========================================================================== */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: var(--modal-backdrop);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.25s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-card {
+            background-color: var(--white);
+            padding: 2.25rem;
+            border-radius: 14px;
+            width: 90%;
+            max-width: 480px;
+            box-shadow: 0 16px 36px rgba(5, 19, 41, 0.4);
+            border: 3px solid var(--baby-blue);
+            transform: scale(0.95);
+            transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .modal-overlay.active .modal-card {
+            transform: scale(1);
+        }
+
+        .modal-title {
+            color: var(--dark-blue-deep);
+            font-size: 1.35rem;
+            font-weight: 700;
+            margin-bottom: 1.25rem;
+            border-bottom: 2px solid var(--baby-blue-light);
+            padding-bottom: 0.65rem;
+            line-height: 1.35;
+        }
+
+        .modal-meta-field {
+            margin-bottom: 0.85rem;
+            color: var(--dark-blue-surface);
+            font-size: 1rem;
+            display: flex;
+            gap: 0.5rem;
+            align-items: baseline;
+        }
+
+        .modal-meta-field strong {
+            color: var(--dark-blue-navy);
+            min-width: 85px;
+            font-weight: 700;
+        }
+
+        .modal-meta-val {
+            color: var(--dark-blue-deep);
+            word-break: break-word;
+        }
+
+        .modal-close-btn {
+            margin-top: 1.75rem;
+            width: 100%;
+            background-color: var(--blue-primary);
+            color: var(--white);
+            border: none;
+            padding: 0.85rem;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            font-family: inherit;
+        }
+
+        .modal-close-btn:hover {
+            background-color: var(--dark-blue-navy);
+        }
+
+        /* ==========================================================================
+           9. RESPONSIVE DESIGN SPECIFICATIONS
+           ========================================================================== */
+        @media (max-width: 768px) {
+            header {
+                padding: 0.85rem 1rem;
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                justify-content: space-between;
+                min-height: auto;
+                gap: 0.5rem;
+            }
+
+            /* Ensures logo remains strictly on the top-right corner */
+            .header-actions-right {
+                order: 2;
+            }
+
+            .header-actions-left {
+                order: 1;
+            }
+
+            .moe-header-emblem {
+                width: 48px;
+                height: 48px;
+                padding: 3px;
+                border-radius: 8px;
+            }
+
+            #langToggle {
+                padding: 0.4rem 0.85rem;
+                font-size: 0.82rem;
+            }
+
+            /* Title spans full width cleanly underneath on mobile */
+            .header-title-box {
+                order: 3;
+                width: 100%;
+                flex: 1 1 100%;
+                padding: 0.4rem 0 0.1rem 0;
+            }
+
+            h1.site-title {
+                font-size: 1.25rem;
+            }
+
+            .header-subtitle {
+                font-size: 0.8rem;
+            }
+
+            main {
+                padding: 0 1rem 2rem 1rem;
+            }
+
+            .calendar-cell {
+                min-height: 80px;
+                padding: 0.3rem;
+            }
+
+            .calendar-day-header {
+                font-size: 0.75rem;
+                padding: 0.5rem 0;
+            }
+
+            .event-chip-item {
+                font-size: 0.68rem;
+                padding: 0.2rem;
+            }
+
+            .expanded-toolbar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .timeline-container {
+                padding: 1.25rem 1rem;
+            }
+
+            .timeline-row {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+
+            .timeline-badge-wrap {
+                text-align: start;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="dashboard-container">
-        <header>
-            <div class="moe-header-emblem"><img src="logo.png" alt="Logo"></div>
-            <div class="title-block">
-                <h1 id="mainTitleLabel">Student Athletic Team Activities</h1>
-                <div class="subtitle" id="subTitleLabel">فعاليات المنتخبات الطلابية الرياضية</div>
+
+    <!-- Header Banner: Pinned Top-Right Emblem, Pinned Left Lang Toggle, Centered Text -->
+    <header>
+        <div class="header-actions-left">
+            <button id="langToggle">العربية</button>
+        </div>
+        <div class="header-title-box">
+            <h1 class="site-title" id="pageTitle">Student Athletic Team Activities</h1>
+            <span class="header-subtitle" id="pageSubtitle">Year 2026-2027</span>
+        </div>
+        <div class="header-actions-right">
+            <div class="moe-header-emblem">
+                <img src="logo.png" alt="MOE Logo">
             </div>
-            <div class="language-container"><button class="toggle-lang-btn" id="langSwitchBtn" onclick="handleLangToggle()">العربية</button></div>
-            <div class="mini-navigation-tabs">
-                <button class="nav-button">Day</button><button class="nav-button">Week</button>
-                <button class="nav-button active">Month</button><button class="nav-button">Year</button>
+        </div>
+    </header>
+
+    <main>
+        <!-- Toolbar & View Switcher -->
+        <div class="control-panel">
+            <div class="tabs-cluster">
+                <button class="tab-btn active" data-view="yearGrid" id="tabYear">
+                    <span>📅</span> <span id="txtTabYear">Month-by-Month View</span>
+                </button>
+                <button class="tab-btn" data-view="upcoming" id="tabUpcoming">
+                    <span>⚡</span> <span id="txtTabUpcoming">Upcoming Events</span>
+                </button>
+                <button class="tab-btn" data-view="timeline" id="tabTimeline">
+                    <span>📋</span> <span id="txtTabTimeline">Show All Events</span>
+                </button>
+                <button class="tab-btn" data-view="pastScores" id="tabScores">
+                    <span>🏆</span> <span id="txtTabScores">Past Scores</span>
+                </button>
             </div>
-        </header>
-        <div class="section-headline"><h2 id="calendarSectionLabel">Academic Calendar</h2></div>
-        <div class="main-dashboard-grid">
-            <div class="dashboard-sidebar">
-                <button class="action-button">+ Create Schedule</button>
-                <div class="info-detail-label" style="margin-bottom: 0.5rem;">Quick View</div>
-                <div style="font-size: 0.85rem; font-weight:600; color: var(--muted); line-height: 1.6;">Select highlighted event tiles to view tournament summaries.</div>
+
+            <!-- Category Legend Indicators -->
+            <div class="category-legend">
+                <span class="legend-tag blue" id="legTournament">Tournaments</span>
+                <span class="legend-tag neutral" id="legAthletics">Athletics & Training</span>
+                <span class="legend-tag slate" id="legTalent">Talent Selection</span>
+                <span class="legend-tag sky" id="legCollegiate">Collegiate</span>
             </div>
-            <div class="calendar-matrix-view" id="matrixViewContainer"></div>
+        </div>
+
+        <!-- VIEW 1: 12-Month Calendar Grid Overview -->
+        <section id="yearGridSection" class="view-section active">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span>📅</span>
+                    <span id="yearHeaderTitle">Academic Calendar (12 Months)</span>
+                </h2>
+            </div>
+            <div class="year-grid" id="yearGridContainer">
+                <!-- Mini-calendars injected via JavaScript -->
+            </div>
+        </section>
+
+        <!-- VIEW 2: Upcoming Events Showcase -->
+        <section id="upcomingShowcase" class="view-section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span>⚡</span>
+                    <span id="upcomingHeaderTitle">Upcoming Events Showcase</span>
+                </h2>
+            </div>
+            <div class="showcase-grid" id="upcomingContainer">
+                <!-- Injected via JavaScript -->
+            </div>
+        </section>
+
+        <!-- VIEW 3: Show All Events (Timeline Layout) -->
+        <section id="viewTimeline" class="view-section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span>📋</span>
+                    <span id="timelineHeaderTitle">Schedule Timeline</span>
+                </h2>
+            </div>
+            <div class="timeline-container" id="timelineWrapper">
+                <!-- Injected via JavaScript -->
+            </div>
+        </section>
+
+        <!-- VIEW 4: Past Scores Overview List (Side-Scrolling Enabled) -->
+        <section id="viewPastScores" class="view-section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span>🏆</span>
+                    <span id="scoresHeaderTitle">Past Match Results</span>
+                </h2>
+            </div>
+            <div class="table-scroll-container">
+                <table class="scores-table">
+                    <thead>
+                        <tr>
+                            <th id="thDate">Date</th>
+                            <th id="thEvent">Tournament</th>
+                            <th id="thTeams">Competing Schools</th>
+                            <th id="thResult">Result / Score</th>
+                        </tr>
+                    </thead>
+                    <tbody id="scoresBodyWrapper">
+                        <!-- Scores injected via JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- DYNAMIC SUB-VIEW: Expanded Single Month Calendar View -->
+        <section id="expandedMonthSection">
+            <div class="section-header">
+                <h2 class="section-title" id="expandedMonthTitle">Month Year</h2>
+            </div>
+            <div class="expanded-toolbar">
+                <button class="back-nav-btn" id="backToYearBtn">
+                    <span id="backArrowIcon">←</span>
+                    <span id="backBtnLabel">Back to Year View</span>
+                </button>
+                <div class="category-filters-container" id="categoryFilters">
+                    <!-- Filters injected via JavaScript -->
+                </div>
+            </div>
+            <div class="calendar-table-grid" id="calendarTableGrid">
+                <!-- Date blocks injected via JavaScript -->
+            </div>
+        </section>
+
+        <!-- School Standings Leaderboard Section (Side-Scrolling Enabled) -->
+        <section id="leaderboardSection">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span>🏆</span>
+                    <span id="leaderboardTitle">School Standings Leaderboard</span>
+                </h2>
+            </div>
+            <div class="table-scroll-container">
+                <table class="leaderboard-table">
+                    <thead>
+                        <tr>
+                            <th id="thRank">Rank</th>
+                            <th id="thSchool">School</th>
+                            <th id="thPlayed">Played</th>
+                            <th id="thWins">Wins</th>
+                            <th id="thPoints">Points</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leaderboardBody">
+                        <!-- Leaderboard placeholder rows injected via JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal Popup Window With Blue Frosted Glass -->
+    <div class="modal-overlay" id="eventModal">
+        <div class="modal-card">
+            <h3 class="modal-title" id="mTitle">Event Title</h3>
+            <div class="modal-meta-field">
+                <strong id="lblDate">Date:</strong>
+                <span class="modal-meta-val" id="mDate"></span>
+            </div>
+            <div class="modal-meta-field">
+                <strong id="lblTime">Time:</strong>
+                <span class="modal-meta-val" id="mTime"></span>
+            </div>
+            <div class="modal-meta-field">
+                <strong id="lblLoc">Location:</strong>
+                <span class="modal-meta-val" id="mLoc"></span>
+            </div>
+            <div class="modal-meta-field">
+                <strong id="lblTeams">Teams:</strong>
+                <span class="modal-meta-val" id="mTeams"></span>
+            </div>
+            <div class="modal-meta-field">
+                <strong id="lblCategory">Category:</strong>
+                <span class="modal-meta-val" id="mCategory"></span>
+            </div>
+            <button class="modal-close-btn" id="modalCloseBtn">Close</button>
         </div>
     </div>
-    <div class="modal-view-overlay" id="detailModalOverlay">
-        <div class="modal-card-body">
-            <div class="modal-card-header"><h3 id="modalEventName">Event Details</h3><button class="close-btn-marker" onclick="closeDetailModal()">&times;</button></div>
-            <div class="info-detail-row"><div class="info-detail-label" id="lblDateTime">Date & Time</div><div class="info-detail-value" id="modalEventDateTime"></div></div>
-            <div class="info-detail-row"><div class="info-detail-label" id="lblVenueLocation">Location Venue</div><div class="info-detail-value"><a href="#" target="_blank" class="map-redirect-link" id="modalMapsAnchor">📍 View on Google Maps</a></div></div>
-        </div>
-    </div>
+
     <script>
-        let activeLanguage = 'en';
-        const scheduleDataset = [
-            { id: 1, titleEn: "High School Football Championship Kickoff", titleAr: "افتتاح بطولة كرة القدم للمرحلة الثانوية", date: "2026-10-04", time: "09:00 AM", venue: "Isa Town Sports Stadium", mapLink: "https://goo.gl" },
-            { id: 2, titleEn: "National School Chess Tournament - Round 1", titleAr: "بطولة المدارس الوطنية للشطرنج - الجولة الأولى", date: "2026-10-11", time: "10:30 AM", venue: "Manama Secondary School Hall", mapLink: "https://goo.gl" },
-            { id: 3, titleEn: "Inter-School Basketball Cup", titleAr: "كأس كرة السلة للمدارس", date: "2026-10-15", time: "08:00 AM", venue: "Bahrain Sports Society Arena", mapLink: "https://goo.gl" },
-            { id: 4, titleEn: "All-Schools Handball Qualifiers", titleAr: "تصفيات كرة اليد لجميع المدارس", date: "2026-10-25", time: "11:00 AM", venue: "Saar Sports Club Complex", mapLink: "https://goo.gl" }
+        // ==========================================================================
+        // DATA ARCHITECTURE (READ-ONLY SCHEDULING DATABASE)
+        // ==========================================================================
+        // <!-- GM&USER_EDITABLE_DATA_START -->
+        // STRICT NUMBER RULE: Dates, times, IDs, and scores strictly utilize standard Western digits (0-9).
+        const eventsData = [
+            {
+                id: 1,
+                title_en: "Sports Governance (Approval of Regulations, Executive Bylaws & Eligibility Criteria)",
+                title_ar: "الحوكمة الرياضية (اعتماد اللائحة الرياضية واللائحة التنفيذية وضوابط أهلية المشاركة)",
+                date: "2026-10-04",
+                time: "09:00",
+                location_en: "Ministry of Education - Building 1, Isa Town",
+                location_ar: "وزارة التربية والتعليم - المبنى 1، مدينة عيسى",
+                location_map: "https://maps.google.com/?q=Ministry+of+Education+Isa+Town+Bahrain",
+                sport_category: "Management",
+                theme: "slate",
+                teams_en: "School Sports Leadership & MOE Officials",
+                teams_ar: "قيادات الرياضة المدرسية ومسؤولو الوزارة",
+                score: "Completed"
+            },
+            {
+                id: 2,
+                title_en: "National Sports Talent Selection",
+                title_ar: "الانتقاء الرياضي",
+                date: "2026-10-11",
+                time: "08:00",
+                location_en: "Physical Education Hall, Ministry of Education, Isa Town",
+                location_ar: "صالة التربية الرياضية، وزارة التربية والتعليم، مدينة عيسى",
+                location_map: "https://maps.google.com/?q=Ministry+of+Education+Hall+Isa+Town+Bahrain",
+                sport_category: "Talent",
+                theme: "neutral",
+                teams_en: "Nominated Student Athletes",
+                teams_ar: "الطلبة الرياضيون المرشحون",
+                score: "Completed"
+            },
+            {
+                id: 3,
+                title_en: "Launch of Student Athletic Talent Discovery",
+                title_ar: "البدء باكتشاف المواهب الطلابية الرياضية",
+                date: "2026-10-15",
+                time: "09:00",
+                location_en: "Public & Private Schools across Bahrain",
+                location_ar: "المدارس الحكومية والخاصة في مملكة البحرين",
+                location_map: "https://maps.google.com/?q=Ministry+of+Education+Isa+Town+Bahrain",
+                sport_category: "Talent",
+                theme: "neutral",
+                teams_en: "All School Cohorts",
+                teams_ar: "جميع المراحل المدرسية",
+                score: "In Progress"
+            },
+            {
+                id: 4,
+                title_en: "Educational Directorates Cup",
+                title_ar: "كأس منتخبات المناطق التعليمية",
+                date: "2026-10-25",
+                time: "16:00",
+                location_en: "Local Club Stadiums (Isa Town Sports City / Al Ahli Club)",
+                location_ar: "ملاعب الأندية المحلية (مدينة عيسى الرياضية / النادي الأهلي)",
+                location_map: "https://maps.google.com/?q=Isa+Town+Sports+City+Bahrain",
+                sport_category: "Tournament",
+                theme: "blue",
+                teams_en: "Directorates Representative Teams",
+                teams_ar: "منتخبات المناطق التعليمية",
+                score: "Upcoming"
+            },
+            {
+                id: 5,
+                title_en: "University Partnership (Higher Education Sports Directors Forum)",
+                title_ar: "الشراكة الجامعية (ملتقى مسؤولي الرياضة في مؤسسات التعليم العالي)",
+                date: "2026-11-03",
+                time: "10:00",
+                location_en: "Ministry of Education Activity Center, Isa Town",
+                location_ar: "مركز وزارة التربية والتعليم للأنشطة، مدينة عيسى",
+                location_map: "https://maps.google.com/?q=Ministry+of+Education+Activity+Center+Isa+Town+Bahrain",
+                sport_category: "University",
+                theme: "sky",
+                teams_en: "Higher Education Sports Deans & Directors",
+                teams_ar: "مسؤولو وعمداء الرياضة بمؤسسات التعليم العالي",
+                score: "Upcoming"
+            },
+            {
+                id: 6,
+                title_en: "Collegiate Esports Championship",
+                title_ar: "الألعاب الجامعية (البطولة الجامعية للألعاب الإلكترونية)",
+                date: "2026-11-17",
+                time: "16:00",
+                location_en: "Ministry of Education Activity Center, Isa Town",
+                location_ar: "مركز وزارة التربية والتعليم للأنشطة، مدينة عيسى",
+                location_map: "https://maps.google.com/?q=Ministry+of+Education+Activity+Center+Isa+Town+Bahrain",
+                sport_category: "University",
+                theme: "sky",
+                teams_en: "Bahrain University Esports Teams",
+                teams_ar: "فرق الرياضات الإلكترونية بجامعات البحرين",
+                score: "Upcoming"
+            },
+            {
+                id: 7,
+                title_en: "Physical Conditioning Course for Coaches",
+                title_ar: "دورة الإعداد البدني للمدربين",
+                date: "2026-12-08",
+                time: "16:30",
+                location_en: "Isa Town Primary Intermediate Boys School Sports Hall",
+                location_ar: "صالة مدرسة مدينة عيسى الابتدائية الإعدادية للبنين",
+                location_map: "https://maps.google.com/?q=Isa+Town+Primary+Intermediate+Boys+School+Bahrain",
+                sport_category: "Training",
+                theme: "slate",
+                teams_en: "School Athletic Coaches & PE Teachers",
+                teams_ar: "مدربو المنتخبات المدرسية ومعلمو التربية الرياضية",
+                score: "Upcoming"
+            },
+            {
+                id: 8,
+                title_en: "Specialized Football Coaching Certification Course",
+                title_ar: "الدورة التخصصية لمدربي كرة القدم",
+                date: "2026-12-15",
+                time: "16:30",
+                location_en: "Isa Town Primary Intermediate Boys School Football Pitch",
+                location_ar: "ملعب مدرسة مدينة عيسى الابتدائية الإعدادية للبنين",
+                location_map: "https://maps.google.com/?q=Isa+Town+Primary+Intermediate+Boys+School+Bahrain",
+                sport_category: "Training",
+                theme: "slate",
+                teams_en: "Accredited Football Coaches",
+                teams_ar: "مدربو كرة القدم المعتمدون بالمدارس",
+                score: "Upcoming"
+            },
+            {
+                id: 9,
+                title_en: "University League Technical Meeting",
+                title_ar: "المؤتمر الفني لدوري الجامعات",
+                date: "2027-02-09",
+                time: "10:30",
+                location_en: "Ministry of Education Activity Center, Isa Town",
+                location_ar: "مركز وزارة التربية والتعليم للأنشطة، مدينة عيسى",
+                location_map: "https://maps.google.com/?q=Ministry+of+Education+Activity+Center+Isa+Town+Bahrain",
+                sport_category: "Management",
+                theme: "slate",
+                teams_en: "University Team Delegations & Referees Committee",
+                teams_ar: "وفود الفرق الجامعية ولجنة الحكام",
+                score: "Upcoming"
+            },
+            {
+                id: 10,
+                title_en: "Collegiate Chess Championship",
+                title_ar: "الألعاب الجامعية (البطولة الجامعية للشطرنج)",
+                date: "2027-03-16",
+                time: "15:30",
+                location_en: "Khalifa Sports City Arena, Isa Town",
+                location_ar: "صالة مدينة خليفة الرياضية، مدينة عيسى",
+                location_map: "https://maps.google.com/?q=Khalifa+Sports+City+Isa+Town+Bahrain",
+                sport_category: "University",
+                theme: "sky",
+                teams_en: "Collegiate Chess Competitors",
+                teams_ar: "أبطال الشطرنج من طلبة الجامعات",
+                score: "Upcoming"
+            },
+            {
+                id: 11,
+                title_en: "Open Table Tennis Championship for Public & Private Schools",
+                title_ar: "بطولة كرة الطاولة المفتوحة للمدارس الحكومية والخاصة",
+                date: "2027-03-23",
+                time: "09:00",
+                location_en: "Bahrain Table Tennis Association Hall, Riffa",
+                location_ar: "صالة الاتحاد البحريني لكرة الطاولة، الرفاع",
+                location_map: "https://maps.google.com/?q=Bahrain+Table+Tennis+Association+Riffa",
+                sport_category: "Tournament",
+                theme: "blue",
+                teams_en: "Public and Private School Qualifiers",
+                teams_ar: "المدارس الحكومية والخاصة المتأهلة",
+                score: "Upcoming"
+            },
+            {
+                id: 12,
+                title_en: "Collegiate Table Tennis Championship",
+                title_ar: "الألعاب الجامعية (البطولة الجامعية لكرة الطاولة)",
+                date: "2027-04-05",
+                time: "16:00",
+                location_en: "Bahrain Table Tennis Association Hall, Riffa",
+                location_ar: "صالة الاتحاد البحريني لكرة الطاولة، الرفاع",
+                location_map: "https://maps.google.com/?q=Bahrain+Table+Tennis+Association+Riffa",
+                sport_category: "University",
+                theme: "sky",
+                teams_en: "Collegiate Table Tennis Finalists",
+                teams_ar: "فرق الجامعات المتأهلة لنهائيات الطاولة",
+                score: "Upcoming"
+            },
+            {
+                id: 13,
+                title_en: "Collegiate Football Championship",
+                title_ar: "الألعاب الجامعية (البطولة الجامعية لكرة القدم)",
+                date: "2027-04-12",
+                time: "17:00",
+                location_en: "Local Club Stadiums & University Pitches (BFA / UoB)",
+                location_ar: "ملاعب الأندية المحلية والجامعات (اتحاد كرة القدم / جامعة البحرين)",
+                location_map: "https://maps.google.com/?q=Bahrain+Football+Association+Riffa",
+                sport_category: "University",
+                theme: "sky",
+                teams_en: "University League Football Teams",
+                teams_ar: "فرق دوري الجامعات لكرة القدم",
+                score: "Upcoming"
+            },
+            {
+                id: 14,
+                title_en: "Psychological Preparation & Mental Conditioning Course for Student Teams",
+                title_ar: "دورة الإعداد النفسي والتهيئة الذهنية للمنتخبات الطلابية",
+                date: "2027-04-20",
+                time: "18:00",
+                location_en: "Online Virtual Classroom (Distance Learning)",
+                location_ar: "دورة إلكترونية (عن بعد)",
+                location_map: "https://teams.microsoft.com",
+                sport_category: "Training",
+                theme: "neutral",
+                teams_en: "Student Athletic Team Members & Coaches",
+                teams_ar: "أعضاء المنتخبات الطلابية والأجهزة الفنية",
+                score: "Upcoming"
+            },
+            {
+                id: 15,
+                title_en: "Student Athletic Talent Discovery Season Closing",
+                title_ar: "نهاية اكتشاف المواهب الطلابية الرياضية",
+                date: "2027-04-28",
+                time: "10:00",
+                location_en: "Ministry of Education Activity Center, Isa Town",
+                location_ar: "مركز وزارة التربية والتعليم للأنشطة، مدينة عيسى",
+                location_map: "https://maps.google.com/?q=Ministry+of+Education+Activity+Center+Isa+Town+Bahrain",
+                sport_category: "Talent",
+                theme: "neutral",
+                teams_en: "Selected Student Talent Cohort",
+                teams_ar: "كافة المواهب الطلابية المكتشفة",
+                score: "Upcoming"
+            },
+            {
+                id: 16,
+                title_en: "University Sports Development Forum",
+                title_ar: "ملتقيات جامعية (ملتقى تطوير الرياضة الجامعية)",
+                date: "2027-05-11",
+                time: "10:00",
+                location_en: "Ministry of Education Activity Center, Isa Town",
+                location_ar: "مركز وزارة التربية والتعليم للأنشطة، مدينة عيسى",
+                location_map: "https://maps.google.com/?q=Ministry+of+Education+Activity+Center+Isa+Town+Bahrain",
+                sport_category: "University",
+                theme: "sky",
+                teams_en: "Higher Education Councils & Sports Committees",
+                teams_ar: "مجالس التعليم العالي واللجان الرياضية",
+                score: "Upcoming"
+            },
+            {
+                id: 17,
+                title_en: "Sports Excellence Awards",
+                title_ar: "جائزة التميز الرياضي",
+                date: "2027-06-09",
+                time: "19:00",
+                location_en: "Cultural Hall / MOE Conference Hall, Manama",
+                location_ar: "الصالة الثقافية / قاعة المؤتمرات بالوزارة، المنامة",
+                location_map: "https://maps.google.com/?q=Cultural+Hall+Manama+Bahrain",
+                sport_category: "Management",
+                theme: "slate",
+                teams_en: "All Honored Schools, Athletes & Faculty",
+                teams_ar: "جميع المدارس والرياضيين المكرمين",
+                score: "Upcoming"
+            }
         ];
-        const academicYearStructure = [
-            { en: "September 2026", ar: "سبتمبر 2026", totalDays: 30, offset: 2, monthNum: 8, yearNum: 2026 },
-            { en: "October 2026", ar: "أكتوبر 2026", totalDays: 31, offset: 4, monthNum: 9, yearNum: 2026 },
-            { en: "November 2026", ar: "نوفمبر 2026", totalDays: 30, offset: 0, monthNum: 10, yearNum: 2026 },
-            { en: "December 2026", ar: "ديسمبر 2026", totalDays: 31, offset: 2, monthNum: 11, yearNum: 2026 },
-            { en: "January 2027", ar: "يناير 2027", totalDays: 31, offset: 5, monthNum: 0, yearNum: 2027 },
-            { en: "February 2027", ar: "فبراير 2027", totalDays: 28, offset: 1, monthNum: 1, yearNum: 2027 },
-            { en: "March 2027", ar: "مارس 2027", totalDays: 31, offset: 1, monthNum: 2, yearNum: 2027 },
-            { en: "April 2027", ar: "أبريل 2027", totalDays: 30, offset: 4, monthNum: 3, yearNum: 2027 },
-            { en: "May 2027", ar: "مايو 2027", totalDays: 31, offset: 6, monthNum: 4, yearNum: 2027 },
-            { en: "June 2027", ar: "يونيو 2027", totalDays: 30, offset: 2, monthNum: 5, yearNum: 2027 },
-            { en: "July 2027", ar: "يوليو 2027", totalDays: 31, offset: 4, monthNum: 6, yearNum: 2027 },
-            { en: "August 2027", ar: "أغسطس 2027", totalDays: 31, offset: 0, monthNum: 7, yearNum: 2027 }
+
+        const sampleLeaderboard = [
+            { rank: 1, name_en: "Isa Town Secondary School", name_ar: "مدرسة مدينة عيسى الثانوية", played: 14, wins: 12, points: 37 },
+            { rank: 2, name_en: "Al-Hidaya Al-Khalifia School", name_ar: "مدرسة الهداية الخليفية", played: 14, wins: 11, points: 34 },
+            { rank: 3, name_en: "Muharraq Secondary School", name_ar: "مدرسة المحرق الثانوية", played: 14, wins: 9, points: 29 },
+            { rank: 4, name_en: "Riffa Secondary School", name_ar: "مدرسة الرفاع الثانوية", played: 14, wins: 8, points: 26 },
+            { rank: 5, name_en: "Shaikh Isa bin Ali School", name_ar: "مدرسة الشيخ عيسى بن علي", played: 14, wins: 6, points: 20 }
         ];
-        function renderMatrixEngine() {
-            const matrixTarget = document.getElementById('matrixViewContainer');
-            if(!matrixTarget) return; matrixTarget.innerHTML = '';
-            academicYearStructure.forEach(monthItem => {
-const structuralMatches = scheduleDataset.filter(evt => {
-const parsedDate = new Date(evt.date);
-return parsedDate.getMonth() === monthItem.monthNum && parsedDate.getFullYear() === monthItem.yearNum;
-});
-const card = document.createElement('div'); card.className = 'month-container-card';
-const nameLabel = activeLanguage === 'en' ? monthItem.en : monthItem.ar;
-const counterSuffix = activeLanguage === 'en' ? `${structuralMatches.length} Events` : `${structuralMatches.length} فعاليات`;
-let html = `<div class="month-title-row"><div class="month-label-text">${nameLabel}</div><div class="month-event-counter">${counterSuffix}</div></div><div class="days-header-row"><div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div></div><div class="days-grid-matrix">`;
-for (let spacer = 0; spacer < monthItem.offset; spacer++) html += `<div class="date-cell-item empty-space"></div>`;
-for (let dayUnit = 1; dayUnit <= monthItem.totalDays; dayUnit++) {
-const trackingString = `${monthItem.yearNum}-${String(monthItem.monthNum + 1).padStart(2, '0')}-${String(dayUnit).padStart(2, '0')}`;
-const match = structuralMatches.find(item => item.date === trackingString);
-const classState = match ? 'active-event-day' : '';
-const action = match ? `onclick="triggerDetailModal(${match.id})"` : '';
-html += `<div class="date-cell-item ${classState}" ${action}>${dayUnit}</div>`;
-}
-html += `</div>`; card.innerHTML = html; matrixTarget.appendChild(card);
-});
-}
-function triggerDetailModal(instanceId) {
-const item = scheduleDataset.find(x => x.id === instanceId); if (!item) return;
-document.getElementById('modalEventName').innerText = activeLanguage === 'en' ? item.titleEn : item.titleAr;
-document.getElementById('modalEventDateTime').innerText = `${item.date} at ${item.time}`;
-document.getElementById('modalMapsAnchor').href = item.mapLink;
-document.getElementById('modalMapsAnchor').innerText = activeLanguage === 'en' ? `📍 ${item.venue} - View Map` : `📍 ${item.venue} - عرض الخريطة`;
-document.getElementById('detailModalOverlay').style.display = 'flex';
-}
-function closeDetailModal() { document.getElementById('detailModalOverlay').style.display = 'none'; }
-function handleLangToggle() {
-activeLanguage = activeLanguage === 'en' ? 'ar' : 'en';
-const btnNode = document.getElementById('langSwitchBtn');
-const headlineNode = document.getElementById('calendarSectionLabel');
-const labelDateNode = document.getElementById('lblDateTime');
-const labelVenueNode = document.getElementById('lblVenueLocation');
-if (activeLanguage === 'ar') {
-document.documentElement.dir = 'rtl'; btnNode.innerText = 'English'; headlineNode.innerText = 'التقويم الأكاديمي';
-labelDateNode.innerText = 'التاريخ والوقت'; labelVenueNode.innerText = 'موقع الفعالية';
-} else {
-document.documentElement.dir = 'ltr'; btnNode.innerText = 'العربية'; headlineNode.innerText = 'Academic Calendar';
-labelDateNode.innerText = 'Date & Time'; labelVenueNode.innerText = 'Location Venue';
-}
-renderMatrixEngine();
-}
-window.onload = renderMatrixEngine;
-</script>
+        // <!-- GM&USER_EDITABLE_DATA_END -->
+
+        // State Machine
+        let currentLang = 'en';
+        let expandedMonthMeta = null;
+        let selectedCategory = 'All';
+
+        // 12-Month Academic Year Setup (Sep 2026 - Aug 2027)
+        const academicMonths = Array.from({ length: 12 }, (_, idx) => {
+            const dateRef = new Date(2026, 8 + idx, 1);
+            return {
+                year: dateRef.getFullYear(),
+                month: dateRef.getMonth()
+            };
+        });
+
+        // Multilingual Translation Dictionary
+        const i18n = {
+            en: {
+                pageTitle: "Student Athletic Team Activities",
+                pageSubtitle: "Year 2026-2027",
+                btnLang: "العربية",
+                upcomingTitle: "Upcoming Events Showcase",
+                yearGridTitle: "Academic Calendar (12 Months)",
+                timelineTitle: "Schedule Timeline",
+                scoresTitle: "Past Match Results",
+                leaderboardTitle: "School Standings Leaderboard",
+                backBtn: "Back to Year View",
+                backArrow: "←",
+                lblDate: "Date:",
+                lblTime: "Time:",
+                lblLoc: "Location:",
+                lblTeams: "Teams:",
+                lblCategory: "Category:",
+                modalClose: "Close",
+                eventsCountSuffix: "Events",
+                allCategories: "All Categories",
+                tabYear: "Month-by-Month View",
+                tabUpcoming: "Upcoming Events",
+                tabTimeline: "Show All Events",
+                tabScores: "Past Scores",
+                legTournament: "Tournaments",
+                legAthletics: "Athletics & Training",
+                legTalent: "Talent Selection",
+                legCollegiate: "Collegiate",
+                thDate: "Date",
+                thEvent: "Tournament / Event",
+                thTeams: "Competing Schools",
+                thResult: "Result / Status",
+                thRank: "Rank",
+                thSchool: "School Name",
+                thPlayed: "Played",
+                thWins: "Wins",
+                thPoints: "Points",
+                daysOfWeek: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+                miniDays: ["S", "M", "T", "W", "T", "F", "S"],
+                monthsOfYear: [
+                    "January", "February", "March", "April", "May", "June",
+                    "July", "August", "September", "October", "November", "December"
+                ]
+            },
+            ar: {
+                pageTitle: "فعاليات المنتخبات الطلابية الرياضية",
+                pageSubtitle: "للعام 2026-2027",
+                btnLang: "English",
+                upcomingTitle: "أبرز الفعاليات القادمة",
+                yearGridTitle: "التقويم الأكاديمي السنوي (12 شهراً)",
+                timelineTitle: "الجدول الزمني للفعاليات",
+                scoresTitle: "النتائج السابقة",
+                leaderboardTitle: "جدول ترتيب المدارس المعتمد",
+                backBtn: "العودة للتقويم السنوي",
+                backArrow: "→",
+                lblDate: "التاريخ:",
+                lblTime: "الوقت:",
+                lblLoc: "المكان:",
+                lblTeams: "الفرق:",
+                lblCategory: "التصنيف:",
+                modalClose: "إغلاق",
+                eventsCountSuffix: "فعاليات",
+                allCategories: "كافة التصنيفات",
+                tabYear: "عرض الشهور السنوي",
+                tabUpcoming: "الفعاليات القادمة",
+                tabTimeline: "عرض كافة الفعاليات",
+                tabScores: "النتائج السابقة",
+                legTournament: "البطولات الرسمية",
+                legAthletics: "التدريب والتأهيل",
+                legTalent: "انتقاء المواهب",
+                legCollegiate: "الأنشطة الجامعية",
+                thDate: "التاريخ",
+                thEvent: "البطولة / الفعالية",
+                thTeams: "المدارس / الفرق المشاركة",
+                thResult: "النتيجة / الحالة",
+                thRank: "الترتيب",
+                thSchool: "اسم المدرسة",
+                thPlayed: "لعب",
+                thWins: "فوز",
+                thPoints: "النقاط",
+                daysOfWeek: ["الأحد", "الإثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"],
+                miniDays: ["أ", "إ", "ث", "أ", "خ", "ج", "س"],
+                monthsOfYear: [
+                    "يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو",
+                    "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"
+                ]
+            }
+        };
+
+        function formatNumberString(str) {
+            return String(str);
+        }
+
+        function initializeApp() {
+            bindEventListeners();
+            updateUIStrings();
+            renderLeaderboard();
+        }
+
+        function toggleLanguage() {
+            currentLang = (currentLang === 'en') ? 'ar' : 'en';
+            document.documentElement.lang = currentLang;
+            document.documentElement.dir = (currentLang === 'en') ? 'ltr' : 'rtl';
+            updateUIStrings();
+        }
+
+        function updateUIStrings() {
+            const dict = i18n[currentLang];
+            document.getElementById('pageTitle').textContent = dict.pageTitle;
+            document.getElementById('pageSubtitle').textContent = dict.pageSubtitle;
+            document.getElementById('langToggle').textContent = dict.btnLang;
+
+            document.getElementById('upcomingHeaderTitle').textContent = dict.upcomingTitle;
+            document.getElementById('yearHeaderTitle').textContent = dict.yearGridTitle;
+            document.getElementById('timelineHeaderTitle').textContent = dict.timelineTitle;
+            document.getElementById('scoresHeaderTitle').textContent = dict.scoresTitle;
+            document.getElementById('leaderboardTitle').textContent = dict.leaderboardTitle;
+
+            document.getElementById('backBtnLabel').textContent = dict.backBtn;
+            document.getElementById('backArrowIcon').textContent = dict.backArrow;
+            document.getElementById('lblDate').textContent = dict.lblDate;
+            document.getElementById('lblTime').textContent = dict.lblTime;
+            document.getElementById('lblLoc').textContent = dict.lblLoc;
+            document.getElementById('lblTeams').textContent = dict.lblTeams;
+            document.getElementById('lblCategory').textContent = dict.lblCategory;
+            document.getElementById('modalCloseBtn').textContent = dict.modalClose;
+
+            document.getElementById('txtTabYear').textContent = dict.tabYear;
+            document.getElementById('txtTabUpcoming').textContent = dict.tabUpcoming;
+            document.getElementById('txtTabTimeline').textContent = dict.tabTimeline;
+            document.getElementById('txtTabScores').textContent = dict.tabScores;
+
+            document.getElementById('legTournament').textContent = dict.legTournament;
+            document.getElementById('legAthletics').textContent = dict.legAthletics;
+            document.getElementById('legTalent').textContent = dict.legTalent;
+            document.getElementById('legCollegiate').textContent = dict.legCollegiate;
+
+            document.getElementById('thDate').textContent = dict.thDate;
+            document.getElementById('thEvent').textContent = dict.thEvent;
+            document.getElementById('thTeams').textContent = dict.thTeams;
+            document.getElementById('thResult').textContent = dict.thResult;
+
+            document.getElementById('thRank').textContent = dict.thRank;
+            document.getElementById('thSchool').textContent = dict.thSchool;
+            document.getElementById('thPlayed').textContent = dict.thPlayed;
+            document.getElementById('thWins').textContent = dict.thWins;
+            document.getElementById('thPoints').textContent = dict.thPoints;
+
+            renderUpcomingShowcase();
+            renderTimelineList();
+            renderPastScoresTable();
+            renderLeaderboard();
+
+            if (expandedMonthMeta) {
+                renderCategoryFilters();
+                renderExpandedCalendar(expandedMonthMeta.year, expandedMonthMeta.month);
+            } else {
+                renderYearGrid();
+            }
+        }
+
+        // Showcase View: Upcoming Events
+        function renderUpcomingShowcase() {
+            const container = document.getElementById('upcomingContainer');
+            container.innerHTML = '';
+
+            const nowIso = new Date().toISOString().split('T')[0];
+            const upcomingList = eventsData
+                .filter(ev => ev.date >= nowIso)
+                .sort((a, b) => new Date(a.date) - new Date(b.date))
+                .slice(0, 4);
+
+            const displayList = upcomingList.length > 0 ? upcomingList : eventsData.slice(0, 4);
+
+            displayList.forEach(eventItem => {
+                const card = document.createElement('div');
+                card.className = 'showcase-card';
+                card.addEventListener('click', () => openModal(eventItem));
+
+                const titleText = (currentLang === 'en') ? eventItem.title_en : eventItem.title_ar;
+                const locText = (currentLang === 'en') ? eventItem.location_en : eventItem.location_ar;
+
+                card.innerHTML = `
+                    <div>
+                        <div class="card-tag-row">
+                            <span class="card-date-badge">${formatNumberString(eventItem.date)}</span>
+                            <span class="card-category-badge">${eventItem.sport_category}</span>
+                        </div>
+                        <div class="card-title">${titleText}</div>
+                    </div>
+                    <div class="card-location-meta">
+                        <span>📍</span>
+                        <span>${locText}</span>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Year Grid View: 12-Month Cards with Mini-Calendars
+        function renderYearGrid() {
+            const container = document.getElementById('yearGridContainer');
+            container.innerHTML = '';
+
+            const dict = i18n[currentLang];
+
+            academicMonths.forEach(m => {
+                const block = document.createElement('div');
+                block.className = 'month-block-card';
+
+                const monthEvents = eventsData.filter(ev => {
+                    const d = new Date(ev.date);
+                    return d.getFullYear() === m.year && d.getMonth() === m.month;
+                });
+
+                const eventDaysSet = new Set(monthEvents.map(ev => parseInt(ev.date.split('-')[2], 10)));
+
+                const headerHtml = `
+                    <div class="month-card-header">
+                        <div class="month-title">${dict.monthsOfYear[m.month]} ${formatNumberString(m.year)}</div>
+                        <div class="month-event-counter">${formatNumberString(monthEvents.length)} ${dict.eventsCountSuffix}</div>
+                    </div>
+                `;
+
+                let miniCalHtml = `<div class="mini-calendar">`;
+                dict.miniDays.forEach(dayLetter => {
+                    miniCalHtml += `<div class="mini-day-header">${dayLetter}</div>`;
+                });
+
+                const firstDay = new Date(m.year, m.month, 1).getDay();
+                const totalDays = new Date(m.year, m.month + 1, 0).getDate();
+
+                for (let i = 0; i < firstDay; i++) {
+                    miniCalHtml += `<div class="mini-day-cell empty"></div>`;
+                }
+
+                for (let day = 1; day <= totalDays; day++) {
+                    const isEventDay = eventDaysSet.has(day);
+                    miniCalHtml += `<div class="mini-day-cell ${isEventDay ? 'has-event' : ''}">${formatNumberString(day)}</div>`;
+                }
+
+                miniCalHtml += `</div>`;
+                block.innerHTML = headerHtml + miniCalHtml;
+
+                block.addEventListener('click', () => {
+                    document.querySelectorAll('.view-section').forEach(sec => sec.classList.remove('active'));
+                    document.getElementById('expandedMonthSection').style.display = 'block';
+                    expandedMonthMeta = { year: m.year, month: m.month };
+                    selectedCategory = 'All';
+                    renderCategoryFilters();
+                    renderExpandedCalendar(m.year, m.month);
+                    document.getElementById('expandedMonthSection').scrollIntoView({ behavior: 'smooth' });
+                });
+
+                container.appendChild(block);
+            });
+        }
+
+        // Timeline List View
+        function renderTimelineList() {
+            const container = document.getElementById('timelineWrapper');
+            container.innerHTML = '';
+
+            eventsData.forEach(evt => {
+                const row = document.createElement('div');
+                row.className = 'timeline-row';
+                row.onclick = () => openModal(evt);
+
+                const title = currentLang === 'en' ? evt.title_en : evt.title_ar;
+                const location = currentLang === 'en' ? evt.location_en : evt.location_ar;
+
+                row.innerHTML = `
+                    <div class="timeline-date">${formatNumberString(evt.date)}<br><small style="color:var(--dark-blue-surface);">${formatNumberString(evt.time)}</small></div>
+                    <div class="timeline-main">
+                        <h4>${title}</h4>
+                        <p>📍 ${location}</p>
+                    </div>
+                    <div class="timeline-badge-wrap">
+                        <span class="legend-tag ${evt.theme}">${evt.sport_category}</span>
+                    </div>
+                `;
+                container.appendChild(row);
+            });
+        }
+
+        // Past Scores Table View
+        function renderPastScoresTable() {
+            const container = document.getElementById('scoresBodyWrapper');
+            container.innerHTML = '';
+
+            eventsData.forEach(evt => {
+                const tr = document.createElement('tr');
+                const title = currentLang === 'en' ? evt.title_en : evt.title_ar;
+                const teams = currentLang === 'en' ? evt.teams_en : evt.teams_ar;
+
+                tr.innerHTML = `
+                    <td><strong>${formatNumberString(evt.date)}</strong></td>
+                    <td>${title}</td>
+                    <td>${teams}</td>
+                    <td><span class="score-pill">${formatNumberString(evt.score)}</span></td>
+                `;
+                container.appendChild(tr);
+            });
+        }
+
+        // Leaderboard View
+        function renderLeaderboard() {
+            const tbody = document.getElementById('leaderboardBody');
+            tbody.innerHTML = '';
+
+            sampleLeaderboard.forEach(row => {
+                const tr = document.createElement('tr');
+                const rankClass = row.rank <= 3 ? `rank-top-${row.rank}` : '';
+                const schoolName = currentLang === 'en' ? row.name_en : row.name_ar;
+
+                tr.innerHTML = `
+                    <td><span class="rank-badge ${rankClass}">${formatNumberString(row.rank)}</span></td>
+                    <td style="font-weight: 600;">${schoolName}</td>
+                    <td>${formatNumberString(row.played)}</td>
+                    <td>${formatNumberString(row.wins)}</td>
+                    <td class="pts-col">${formatNumberString(row.points)}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Category Filter Controls for Expanded View
+        function renderCategoryFilters() {
+            const container = document.getElementById('categoryFilters');
+            container.innerHTML = '';
+            const dict = i18n[currentLang];
+
+            const categories = ['All', ...new Set(eventsData.map(ev => ev.sport_category))];
+
+            categories.forEach(cat => {
+                const btn = document.createElement('button');
+                btn.className = `category-filter-btn ${selectedCategory === cat ? 'active' : ''}`;
+                btn.textContent = (cat === 'All') ? dict.allCategories : cat;
+                btn.addEventListener('click', () => {
+                    selectedCategory = cat;
+                    renderCategoryFilters();
+                    renderExpandedCalendar(expandedMonthMeta.year, expandedMonthMeta.month);
+                });
+                container.appendChild(btn);
+            });
+        }
+
+        // Expanded Single Month Interactive Calendar Grid
+        function renderExpandedCalendar(year, month) {
+            const dict = i18n[currentLang];
+            const grid = document.getElementById('calendarTableGrid');
+            grid.innerHTML = '';
+
+            document.getElementById('expandedMonthTitle').textContent =
+                `${dict.monthsOfYear[month]} ${formatNumberString(year)}`;
+
+            dict.daysOfWeek.forEach(dayName => {
+                const dayHeader = document.createElement('div');
+                dayHeader.className = 'calendar-day-header';
+                dayHeader.textContent = dayName;
+                grid.appendChild(dayHeader);
+            });
+
+            const firstDayIndex = new Date(year, month, 1).getDay();
+            const totalDaysInMonth = new Date(year, month + 1, 0).getDate();
+
+            for (let i = 0; i < firstDayIndex; i++) {
+                const emptyCell = document.createElement('div');
+                emptyCell.className = 'calendar-cell cell-empty';
+                grid.appendChild(emptyCell);
+            }
+
+            for (let day = 1; day <= totalDaysInMonth; day++) {
+                const cell = document.createElement('div');
+                cell.className = 'calendar-cell';
+
+                const cellDateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+
+                const numLabel = document.createElement('div');
+                numLabel.className = 'cell-date-num';
+                numLabel.textContent = formatNumberString(day);
+                cell.appendChild(numLabel);
+
+                const activeEvents = eventsData.filter(ev => {
+                    return ev.date === cellDateStr && (selectedCategory === 'All' || ev.sport_category === selectedCategory);
+                });
+
+                activeEvents.forEach(evItem => {
+                    const chip = document.createElement('div');
+                    chip.className = 'event-chip-item';
+                    chip.textContent = (currentLang === 'en') ? evItem.title_en : evItem.title_ar;
+                    chip.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        openModal(evItem);
+                    });
+                    cell.appendChild(chip);
+                });
+
+                grid.appendChild(cell);
+            }
+        }
+
+        // Modal Pop-Up Handling with Live Google Maps Links
+        function openModal(eventItem) {
+            document.getElementById('mTitle').textContent = (currentLang === 'en') ? eventItem.title_en : eventItem.title_ar;
+            document.getElementById('mDate').textContent = formatNumberString(eventItem.date);
+            document.getElementById('mTime').textContent = formatNumberString(eventItem.time);
+            
+            const locText = (currentLang === 'en') ? eventItem.location_en : eventItem.location_ar;
+            const locContainer = document.getElementById('mLoc');
+            if (eventItem.location_map) {
+                locContainer.innerHTML = `<a href="${eventItem.location_map}" target="_blank" rel="noopener noreferrer" style="color: var(--blue-primary); text-decoration: underline; font-weight: 600;">${locText} ↗</a>`;
+            } else {
+                locContainer.textContent = locText;
+            }
+
+            document.getElementById('mTeams').textContent = (currentLang === 'en') ? eventItem.teams_en : eventItem.teams_ar;
+            document.getElementById('mCategory').textContent = eventItem.sport_category;
+
+            document.getElementById('eventModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('eventModal').classList.remove('active');
+        }
+
+        // Event Listeners Binding
+        function bindEventListeners() {
+            document.getElementById('langToggle').addEventListener('click', toggleLanguage);
+
+            // Tab View Switcher
+            const tabButtons = document.querySelectorAll(".tab-btn");
+            tabButtons.forEach(btn => {
+                btn.addEventListener("click", () => {
+                    tabButtons.forEach(b => b.classList.remove("active"));
+                    btn.classList.add("active");
+
+                    document.getElementById('expandedMonthSection').style.display = 'none';
+                    expandedMonthMeta = null;
+
+                    const targetViewId = btn.getAttribute("data-view");
+                    document.querySelectorAll(".view-section").forEach(sec => sec.classList.remove("active"));
+
+                    if (targetViewId === "yearGrid") document.getElementById("yearGridSection").classList.add("active");
+                    if (targetViewId === "upcoming") document.getElementById("upcomingShowcase").classList.add("active");
+                    if (targetViewId === "timeline") document.getElementById("viewTimeline").classList.add("active");
+                    if (targetViewId === "pastScores") document.getElementById("viewPastScores").classList.add("active");
+                });
+            });
+
+            // Back to Year View Button
+            document.getElementById('backToYearBtn').addEventListener('click', () => {
+                document.getElementById('expandedMonthSection').style.display = 'none';
+                expandedMonthMeta = null;
+                document.querySelectorAll('.view-section').forEach(sec => sec.classList.remove('active'));
+                document.getElementById('yearGridSection').classList.add('active');
+                
+                tabButtons.forEach(b => b.classList.remove("active"));
+                document.getElementById('tabYear').classList.add("active");
+                
+                document.getElementById('yearGridSection').scrollIntoView({ behavior: 'smooth' });
+            });
+
+            // Modal Dismissal Handlers
+            document.getElementById('modalCloseBtn').addEventListener('click', closeModal);
+
+            const modalOverlay = document.getElementById('eventModal');
+            modalOverlay.addEventListener('click', (e) => {
+                if (e.target === modalOverlay) closeModal();
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && modalOverlay.classList.contains('active')) {
+                    closeModal();
+                }
+            });
+        }
+
+        // DOM Initialization
+        document.addEventListener('DOMContentLoaded', initializeApp);
+    </script>
 </body>
 </html>
-
