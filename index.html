@@ -16,7 +16,7 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            /* Strict Western standard numerals (0-9) universally across both languages */
+            /* Enforces Western standard Arabic numerals (0-9) universally across both languages */
             font-variant-numeric: lining-nums tabular-nums !important;
             font-feature-settings: "lnum" 1, "tnum" 1 !important;
         }
@@ -72,27 +72,32 @@
         }
 
         /* ==========================================================================
-           2. HEADER: BORDERLESS 110PX LOGO WITH 150PX VERTICAL GAP TO TITLE
+           2. HEADER: RIGHT-ALIGNED BORDERLESS 110PX LOGO WITH 150PX VERTICAL GAP
            ========================================================================== */
         header {
             background: linear-gradient(135deg, var(--dark-blue-deep) 0%, var(--dark-blue-navy) 100%);
-            padding: 3rem 2rem 2.5rem 2rem;
+            padding: 2.5rem 3rem 3rem 3rem;
             position: relative;
             z-index: 100;
             box-shadow: 0 4px 20px rgba(5, 19, 41, 0.45);
             border-bottom: 2px solid var(--blue-accent);
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
             margin-bottom: 40px;
         }
 
-        /* Language Toggle Button Pinned to Left in LTR / Right in RTL */
+        /* Top control bar: Language Toggle on left, Borderless Logo strictly on right */
+        .header-top-bar {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 150px; /* ~4cm real-world vertical gap above title */
+            position: relative;
+            z-index: 102;
+        }
+
         #langToggle {
-            position: absolute;
-            top: 2rem;
-            inset-inline-start: 2rem;
             background-color: var(--baby-blue);
             color: var(--dark-blue-deep);
             border: 2px solid transparent;
@@ -105,7 +110,6 @@
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
             font-family: inherit;
             white-space: nowrap;
-            z-index: 105;
         }
 
         #langToggle:hover {
@@ -115,7 +119,7 @@
             box-shadow: 0 0 14px rgba(144, 224, 239, 0.6);
         }
 
-        /* Borderless Logo: Cleanly floating, enlarged to 110px, with 150px spacing beneath */
+        /* Borderless Logo: Clean floating 110px asset on the right-hand side */
         .moe-header-emblem {
             background: transparent;
             border: none;
@@ -125,9 +129,9 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 150px; /* ~4cm real-world visual separation */
             filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.35));
             transition: transform 0.25s ease;
+            flex-shrink: 0;
         }
 
         .moe-header-emblem:hover {
@@ -141,17 +145,18 @@
             display: block;
         }
 
-        /* Main Bilingual Header Titles */
+        /* Centered Header Text Container */
         .header-title-box {
             text-align: center;
             width: 100%;
-            max-width: 950px;
+            max-width: 1000px;
+            margin: 0 auto;
             padding: 0 1rem;
         }
 
         h1.site-title {
             color: var(--baby-blue);
-            font-size: 2.1rem;
+            font-size: 2.2rem;
             font-weight: 800;
             letter-spacing: 0.5px;
             text-align: center;
@@ -163,10 +168,10 @@
         }
 
         .header-subtitle {
-            font-size: 0.95rem;
+            font-size: 1rem;
             color: var(--baby-blue-light);
             font-weight: 600;
-            margin-top: 0.4rem;
+            margin-top: 0.45rem;
             display: block;
             text-shadow: 0 0 8px rgba(144, 224, 239, 0.4);
         }
@@ -177,9 +182,9 @@
         main {
             flex: 1;
             width: 100%;
-            max-width: 1550px;
+            max-width: 1650px;
             margin: 0 auto;
-            padding: 0 150px 4rem 150px; /* Generous 150px side breathing space */
+            padding: 0 150px 4rem 150px; /* Generous 150px (~4cm) side layout breathing space */
         }
 
         .control-panel {
@@ -190,7 +195,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
             box-shadow: 0 2px 8px rgba(0,0,0,0.03);
             flex-wrap: wrap;
             gap: 1rem;
@@ -349,7 +354,7 @@
         }
 
         /* ==========================================================================
-           5. 12-MONTH CALENDAR GRID WITH MINI-CALENDARS
+           5. 12-MONTH CALENDAR GRID WITH 75PX (APPROX 2CM) MULTI-MONTH SPACING
            ========================================================================== */
         #yearGridSection {
             margin-bottom: 40px;
@@ -365,15 +370,16 @@
 
         .year-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            column-gap: 2rem;
+            row-gap: 75px; /* Clean 75px (~2cm) spacing between consecutive month rows */
         }
 
         .month-block-card {
             background-color: var(--white);
             border: 1px solid var(--border-subtle);
             border-radius: 14px;
-            padding: 1.3rem;
+            padding: 1.4rem;
             cursor: pointer;
             box-shadow: 0 4px 12px rgba(5, 19, 41, 0.04);
             transition: all 0.25s ease;
@@ -826,40 +832,42 @@
            ========================================================================== */
         @media (max-width: 768px) {
             header {
-                padding: 2.2rem 1.25rem 2rem 1.25rem;
+                padding: 1.5rem 1.25rem 2rem 1.25rem;
             }
 
-            #langToggle {
-                top: 1.2rem;
-                inset-inline-start: 1.2rem;
-                padding: 0.4rem 0.9rem;
-                font-size: 0.85rem;
+            .header-top-bar {
+                margin-bottom: 100px; /* Comfortable vertical spacing on mobile */
+                align-items: center;
             }
 
             .moe-header-emblem {
-                width: 95px;
-                height: 95px;
-                margin-bottom: 100px; /* Scaled visual gap for mobile comfort */
+                width: 90px;
+                height: 90px;
+            }
+
+            #langToggle {
+                padding: 0.45rem 1rem;
+                font-size: 0.85rem;
             }
 
             h1.site-title {
-                font-size: 1.35rem;
+                font-size: 1.45rem;
             }
 
             .header-subtitle {
                 font-size: 0.85rem;
             }
 
-            /* Main Layout padding scales down to 2rem to preserve screen real estate */
+            /* Responsive Main Layout: Safe 2rem horizontal padding */
             main {
                 padding: 0 2rem 3rem 2rem;
             }
 
-            /* Tall 150px vertical spacing between consecutive month cards on mobile */
+            /* 75px vertical separation between consecutive month cards on mobile */
             .year-grid {
                 display: flex;
                 flex-direction: column;
-                gap: 150px; /* ~4cm real-world separation between months */
+                gap: 75px;
             }
 
             .calendar-cell {
@@ -899,11 +907,13 @@
 </head>
 <body>
 
-    <!-- Header Banner: Borderless 110px Floating Logo, 150px Gap, Clean Language Switcher -->
+    <!-- Header Banner: Top Bar (Left Button + Right-Aligned 110px Logo), 150px Gap, Centered Title -->
     <header>
-        <button id="langToggle">العربية</button>
-        <div class="moe-header-emblem">
-            <img src="logo.png" alt="Kingdom of Bahrain - Ministry of Education">
+        <div class="header-top-bar">
+            <button id="langToggle">العربية</button>
+            <div class="moe-header-emblem">
+                <img src="logo.png" alt="Kingdom of Bahrain - Ministry of Education">
+            </div>
         </div>
         <div class="header-title-box">
             <h1 class="site-title" id="pageTitle">Student Athletic Team Activities</h1>
@@ -938,7 +948,7 @@
             </div>
         </div>
 
-        <!-- VIEW 1: 12-Month Calendar Grid Overview -->
+        <!-- VIEW 1: 12-Month Calendar Grid Overview (75px spacing) -->
         <section id="yearGridSection" class="view-section active">
             <div class="section-header">
                 <h2 class="section-title">
@@ -1563,7 +1573,7 @@
             });
         }
 
-        // Year Grid View: 12-Month Cards with Mini-Calendars
+        // Year Grid View: 12-Month Cards with Mini-Calendars (75px spacing)
         function renderYearGrid() {
             const container = document.getElementById('yearGridContainer');
             container.innerHTML = '';
