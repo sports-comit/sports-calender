@@ -1017,32 +1017,44 @@
         // DATA ARCHITECTURE (READ-ONLY SCHEDULING DATABASE)
         // ==========================================================================
         // <!-- GM&USER_EDITABLE_DATA_START -->
-        // STRICT NUMBER RULE: Dates, times, IDs, and scores strictly utilize standard Western digits (0-9).
-        const eventsData = [
-            { id: 1, title_en: 'Sports Governance Workshop', title_ar: 'ورشة عمل الحوكمة الرياضية', date: '2026-10-04', time: '09:00', location_en: 'Ministry Headquarters, Manama', location_ar: 'مقر الوزارة، المنامة', sport_category: 'Management', theme: 'slate', teams_en: 'School Coordinators', teams_ar: 'منسقو المدارس', score: 'Completed' },
-            { id: 2, title_en: 'National Sports Talent Selection', title_ar: 'الانتقاء الرياضي للمواهب', date: '2026-10-11', time: '08:00', location_en: 'Bahrain National Stadium, Riffa', location_ar: 'الاستاد الوطني، الرفاع', sport_category: 'Talent', theme: 'neutral', teams_en: 'Secondary Schools', teams_ar: 'المدارس الثانوية', score: 'Completed' },
-            { id: 3, title_en: 'Student Discovery Initiative Kickoff', title_ar: 'انطلاق مبادرة اكتشاف المواهب', date: '2026-10-15', time: '10:00', location_en: 'Public Secondary Schools', location_ar: 'المدارس الحكومية الثانوية', sport_category: 'Talent', theme: 'neutral', teams_en: 'Regional Nominees', teams_ar: 'مرشحو المناطق', score: '3 - 1' },
-            { id: 4, title_en: 'Educational Directorates Cup', title_ar: 'كأس منتخبات المناطق التعليمية', date: '2026-10-25', time: '15:30', location_en: 'Isa Town Sports City', location_ar: 'مدينة عيسى الرياضية', sport_category: 'Tournament', theme: 'blue', teams_en: 'Capital vs Muharraq', teams_ar: 'العاصمة ضد المحرق', score: '2 - 0' },
-            { id: 5, title_en: 'Higher Education Sports Symposium', title_ar: 'ندوة الشراكة الرياضية الجامعية', date: '2026-11-01', time: '11:00', location_en: 'University of Bahrain, Sakhir', location_ar: 'جامعة البحرين، الصخير', sport_category: 'University', theme: 'sky', teams_en: 'UoB vs Polytechnic', teams_ar: 'جامعة البحرين ضد بوليتكنك', score: 'Pending' },
-            { id: 6, title_en: 'Collegiate Esports Championship', title_ar: 'البطولة الجامعية للألعاب الإلكترونية', date: '2026-11-15', time: '17:00', location_en: 'Zain Arena, Um Al Hassam', location_ar: 'صالة زين، أم الحصم', sport_category: 'University', theme: 'sky', teams_en: '8 Qualified Colleges', teams_ar: '8 كليات متأهلة', score: 'Pending' },
-            { id: 7, title_en: 'University League Technical Meeting', title_ar: 'المؤتمر الفني لدوري الجامعات', date: '2027-02-07', time: '09:30', location_en: 'Conference Hall, Seef', location_ar: 'قاعة المؤتمرات، السيف', sport_category: 'Management', theme: 'slate', teams_en: 'Delegates & Coaches', teams_ar: 'الممثلون والمدربون', score: 'Upcoming' },
-            { id: 8, title_en: 'Elite Athletics Training Camps', title_ar: 'معسكرات النخبة لألعاب القوى', date: '2027-03-14', time: '07:00', location_en: 'Athletics Excellence Center', location_ar: 'مركز التميز لألعاب القوى', sport_category: 'Talent', theme: 'neutral', teams_en: 'National Youth Squad', teams_ar: 'منتخب الشباب الوطني', score: 'Upcoming' },
-            { id: 9, title_en: 'Collegiate Chess Championship', title_ar: 'البطولة الجامعية للشطرنج', date: '2027-03-21', time: '16:00', location_en: 'Student Services Center', location_ar: 'مركز الخدمات الطلابية', sport_category: 'University', theme: 'sky', teams_en: 'Individual Champions', teams_ar: 'أبطال الفردي', score: 'Upcoming' },
-            { id: 10, title_en: 'Collegiate Table Tennis Finals', title_ar: 'نهائيات دوري كرة الطاولة', date: '2027-04-04', time: '15:00', location_en: 'Table Tennis Association Hall', location_ar: 'صالة اتحاد كرة الطاولة', sport_category: 'University', theme: 'sky', teams_en: 'Finalist Teams', teams_ar: 'الفرق المتأهلة للنهائي', score: 'Upcoming' },
-            { id: 11, title_en: 'Collegiate Football Championship', title_ar: 'البطولة الجامعية لكرة القدم', date: '2027-04-11', time: '17:30', location_en: 'BFA Stadium, Riffa', location_ar: 'استاد اتحاد كرة القدم، الرفاع', sport_category: 'University', theme: 'sky', teams_en: 'Final 4 Bracket', teams_ar: 'المربع الذهبي', score: 'Upcoming' },
-            { id: 12, title_en: 'Gulf School Sports Championship', title_ar: 'البطولة الخليجية المدرسية', date: '2027-04-25', time: '08:30', location_en: 'Khalifa Sports City, Isa Town', location_ar: 'مدينة خليفة الرياضية', sport_category: 'Tournament', theme: 'blue', teams_en: 'Bahrain vs Regional Teams', teams_ar: 'البحرين ضد المنتخبات الخليجية', score: 'Upcoming' },
-            { id: 13, title_en: 'Talent Discovery Season Closing', title_ar: 'حفل ختام برنامج اكتشاف المواهب', date: '2027-04-29', time: '11:00', location_en: 'Hall D, Ministry Complex', location_ar: 'القاعة د، مجمع الوزارة', sport_category: 'Talent', theme: 'neutral', teams_en: 'All Participants', teams_ar: 'كافة المشاركين', score: 'Upcoming' },
-            { id: 14, title_en: 'Collegiate Sports Development Forum', title_ar: 'ملتقى تطوير الرياضة الجامعية', date: '2027-05-09', time: '10:00', location_en: 'Main Auditorium, Sakhir', location_ar: 'المسرح الرئيسي، الصخير', sport_category: 'University', theme: 'sky', teams_en: 'Academic Board', teams_ar: 'الهيئة الأكاديمية والرياضية', score: 'Upcoming' },
-            { id: 15, title_en: 'Annual Sports Excellence Awards', title_ar: 'جائزة التميز الرياضي السنوية', date: '2027-05-16', time: '19:00', location_en: 'Cultural Hall, Manama', location_ar: 'الصالة الثقافية، المنامة', sport_category: 'Management', theme: 'slate', teams_en: 'Award Nominees', teams_ar: 'المدارس واللاعبون المكرمون', score: 'Upcoming' }
-        ];
+      /* In <style> */
+header {
+    position: relative;
+}
 
-        const sampleLeaderboard = [
-            { rank: 1, name_en: 'Isa Town Secondary School', name_ar: 'مدرسة مدينة عيسى الثانوية', played: 12, wins: 10, points: 31 },
-            { rank: 2, name_en: 'Al-Hidaya Al-Khalifia School', name_ar: 'مدرسة الهداية الخليفية', played: 12, wins: 9, points: 28 },
-            { rank: 3, name_en: 'Muharraq Secondary School', name_ar: 'مدرسة المحرق الثانوية', played: 12, wins: 8, points: 25 },
-            { rank: 4, name_en: 'Riffa Secondary School', name_ar: 'مدرسة الرفاع الثانوية', played: 12, wins: 7, points: 22 },
-            { rank: 5, name_en: 'Shaikh Isa bin Ali School', name_ar: 'مدرسة الشيخ عيسى بن علي', played: 12, wins: 5, points: 17 }
-        ];
+.moe-header-emblem {
+    position: absolute;
+    inset-inline-start: 2rem; /* Positioned opposite to the language toggle */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 65px;
+    height: 65px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 10px;
+    padding: 4px;
+    box-shadow: 0 4px 12px rgba(5, 19, 41, 0.25);
+    border: 1.5px solid var(--baby-blue);
+    z-index: 10;
+}
+
+.moe-header-emblem img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+@media (max-width: 768px) {
+    .moe-header-emblem {
+        position: static;
+        transform: none;
+        width: 52px;
+        height: 52px;
+        margin-bottom: 0.5rem;
+    }
+}
         // <!-- GM&USER_EDITABLE_DATA_END -->
 
         // State Machine
