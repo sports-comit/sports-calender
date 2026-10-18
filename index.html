@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bahrain School Sports Events Year 2026-2027</title>
-    <!-- Google Fonts for Clean Arabic & Latin Corporate Typography -->
+    <title>Student Athletic Team Activities</title>
+    <!-- Google Fonts for Corporate Arabic & Latin Typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
@@ -16,7 +16,7 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            /* Strict Western/English numerals across both languages */
+            /* Enforces Western standard Arabic numerals (0-9) universally */
             font-variant-numeric: lining-nums tabular-nums !important;
             font-feature-settings: "lnum" 1, "tnum" 1 !important;
         }
@@ -35,7 +35,7 @@
             --border-subtle: rgba(0, 119, 182, 0.16);
             --modal-backdrop: rgba(5, 19, 41, 0.65);
 
-            /* Cohesive Neutral & Pastel Blue Accents */
+            /* Category Badges & Soft Themes */
             --cat-blue-bg: #E3F2FD;
             --cat-blue-txt: #1565C0;
             --cat-blue-border: #BBDEFB;
@@ -72,7 +72,7 @@
         }
 
         /* ==========================================================================
-           2. HEADER: FULL-WIDTH CENTERED WITH LUMINESCENT GLOW
+           2. HEADER: FULL-WIDTH CENTERED BANNER & RESPONSIVE MOE EMBLEM
            ========================================================================== */
         header {
             background: linear-gradient(135deg, var(--dark-blue-deep) 0%, var(--dark-blue-navy) 100%);
@@ -88,10 +88,34 @@
             margin-bottom: 40px;
         }
 
+        /* Responsive MOE Emblem */
+        .moe-header-emblem {
+            position: absolute;
+            right: 1.5rem;
+            top: 15px;
+            z-index: 100;
+            background: #ffffff;
+            width: 72px;
+            height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            padding: 5px;
+            box-shadow: 0 4px 14px rgba(5, 19, 41, 0.35);
+            border: 2px solid var(--baby-blue);
+        }
+
+        .moe-header-emblem img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
         .header-title-box {
             text-align: center;
             width: 100%;
-            padding: 0 5.5rem;
+            padding: 0 6.5rem;
         }
 
         h1.site-title {
@@ -119,7 +143,7 @@
 
         #langToggle {
             position: absolute;
-            inset-inline-end: 2rem;
+            left: 2rem;
             top: 50%;
             transform: translateY(-50%);
             background-color: var(--baby-blue);
@@ -134,6 +158,7 @@
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
             flex-shrink: 0;
             font-family: inherit;
+            z-index: 101;
         }
 
         #langToggle:hover {
@@ -552,7 +577,7 @@
         }
 
         /* ==========================================================================
-           7. TIMELINE & SCORES VIEWS & LEADERBOARD (SIDE-SCROLLING FIXES)
+           7. TIMELINE, SCORES & LEADERBOARD (TOUCH SCROLLING ENABLED)
            ========================================================================== */
         .timeline-container {
             background: var(--white);
@@ -605,11 +630,11 @@
             text-align: end;
         }
 
-        /* --- SIDE-SCROLLING OVERFLOW-X WRAPPERS & MIN-WIDTHS --- */
+        /* Overflow-X Scrollable Container */
         .table-scroll-container {
             width: 100%;
             overflow-x: auto !important;
-            -webkit-overflow-scrolling: touch; /* Silky smooth touch scrolling on iOS & Android */
+            -webkit-overflow-scrolling: touch;
             margin-bottom: 20px;
             border-radius: 12px;
             background: var(--white);
@@ -633,7 +658,7 @@
 
         .scores-table, .leaderboard-table {
             width: 100%;
-            min-width: 600px; /* Preserves layout integrity and prevents text squishing */
+            min-width: 600px;
             border-collapse: collapse;
             text-align: start;
         }
@@ -654,7 +679,7 @@
             border-bottom: 1px solid var(--baby-blue-light);
             color: var(--dark-blue-deep);
             text-align: inherit;
-            white-space: nowrap; /* Keeps school names, dates, and scores single-lined */
+            white-space: nowrap;
         }
 
         .scores-table tbody tr:hover, .leaderboard-table tbody tr:hover {
@@ -729,7 +754,7 @@
             padding: 2.25rem;
             border-radius: 14px;
             width: 90%;
-            max-width: 440px;
+            max-width: 460px;
             box-shadow: 0 16px 36px rgba(5, 19, 41, 0.4);
             border: 3px solid var(--baby-blue);
             transform: scale(0.95);
@@ -742,11 +767,12 @@
 
         .modal-title {
             color: var(--dark-blue-deep);
-            font-size: 1.45rem;
+            font-size: 1.35rem;
             font-weight: 700;
             margin-bottom: 1.25rem;
             border-bottom: 2px solid var(--baby-blue-light);
             padding-bottom: 0.65rem;
+            line-height: 1.35;
         }
 
         .modal-meta-field {
@@ -789,47 +815,72 @@
         }
 
         /* ==========================================================================
-           9. RESPONSIVENESS
+           9. RESPONSIVE DESIGN SPECIFICATIONS
            ========================================================================== */
         @media (max-width: 768px) {
             header {
-                padding: 1.5rem 1rem;
+                padding-top: 4.5rem; /* Prevents overlap with centered top emblem */
+                padding-bottom: 1.5rem;
+                padding-left: 1rem;
+                padding-right: 1rem;
                 flex-direction: column;
-                gap: 1rem;
+                gap: 0.8rem;
+                position: relative;
             }
+
+            .moe-header-emblem {
+                position: absolute;
+                right: 50%;
+                top: 12px;
+                transform: translateX(50%);
+                width: 58px;
+                height: 58px;
+                padding: 4px;
+            }
+
             .header-title-box {
                 padding: 0;
             }
+
             h1.site-title {
-                font-size: 1.4rem;
+                font-size: 1.35rem;
             }
+
             #langToggle {
                 position: static;
                 transform: none;
+                margin-top: 0.4rem;
             }
+
             main {
                 padding: 0 0.8rem 2rem 0.8rem;
             }
+
             .calendar-cell {
                 min-height: 80px;
                 padding: 0.3rem;
             }
+
             .calendar-day-header {
                 font-size: 0.75rem;
                 padding: 0.5rem 0;
             }
+
             .event-chip-item {
                 font-size: 0.68rem;
                 padding: 0.2rem;
             }
+
             .expanded-toolbar {
                 flex-direction: column;
                 align-items: stretch;
             }
+
             .timeline-row {
                 grid-template-columns: 1fr;
                 gap: 0.5rem;
             }
+
             .timeline-badge-wrap {
                 text-align: start;
             }
@@ -838,10 +889,13 @@
 </head>
 <body>
 
-    <!-- Header Banner: Fully Centered with Luminescent Glow -->
+    <!-- Header Banner: Center Title, Fixed Language Toggle & Mobile-Friendly Logo -->
     <header>
+        <div class="moe-header-emblem">
+            <img src="logo.png" alt="MOE Logo">
+        </div>
         <div class="header-title-box">
-            <h1 class="site-title" id="pageTitle">Bahrain School Sports Events</h1>
+            <h1 class="site-title" id="pageTitle">Student Athletic Team Activities</h1>
             <span class="header-subtitle" id="pageSubtitle">Year 2026-2027</span>
         </div>
         <button id="langToggle">العربية</button>
@@ -865,10 +919,10 @@
                 </button>
             </div>
 
-            <!-- Neutral Blue & Slate Legend Indicators -->
+            <!-- Category Legend Indicators -->
             <div class="category-legend">
                 <span class="legend-tag blue" id="legTournament">Tournaments</span>
-                <span class="legend-tag neutral" id="legAthletics">Athletics</span>
+                <span class="legend-tag neutral" id="legAthletics">Athletics & Training</span>
                 <span class="legend-tag slate" id="legTalent">Talent Selection</span>
                 <span class="legend-tag sky" id="legCollegiate">Collegiate</span>
             </div>
@@ -1019,29 +1073,269 @@
         // <!-- GM&USER_EDITABLE_DATA_START -->
         // STRICT NUMBER RULE: Dates, times, IDs, and scores strictly utilize standard Western digits (0-9).
         const eventsData = [
-            { id: 1, title_en: 'Sports Governance Workshop', title_ar: 'ورشة عمل الحوكمة الرياضية', date: '2026-10-04', time: '09:00', location_en: 'Ministry Headquarters, Manama', location_ar: 'مقر الوزارة، المنامة', sport_category: 'Management', theme: 'slate', teams_en: 'School Coordinators', teams_ar: 'منسقو المدارس', score: 'Completed' },
-            { id: 2, title_en: 'National Sports Talent Selection', title_ar: 'الانتقاء الرياضي للمواهب', date: '2026-10-11', time: '08:00', location_en: 'Bahrain National Stadium, Riffa', location_ar: 'الاستاد الوطني، الرفاع', sport_category: 'Talent', theme: 'neutral', teams_en: 'Secondary Schools', teams_ar: 'المدارس الثانوية', score: 'Completed' },
-            { id: 3, title_en: 'Student Discovery Initiative Kickoff', title_ar: 'انطلاق مبادرة اكتشاف المواهب', date: '2026-10-15', time: '10:00', location_en: 'Public Secondary Schools', location_ar: 'المدارس الحكومية الثانوية', sport_category: 'Talent', theme: 'neutral', teams_en: 'Regional Nominees', teams_ar: 'مرشحو المناطق', score: '3 - 1' },
-            { id: 4, title_en: 'Educational Directorates Cup', title_ar: 'كأس منتخبات المناطق التعليمية', date: '2026-10-25', time: '15:30', location_en: 'Isa Town Sports City', location_ar: 'مدينة عيسى الرياضية', sport_category: 'Tournament', theme: 'blue', teams_en: 'Capital vs Muharraq', teams_ar: 'العاصمة ضد المحرق', score: '2 - 0' },
-            { id: 5, title_en: 'Higher Education Sports Symposium', title_ar: 'ندوة الشراكة الرياضية الجامعية', date: '2026-11-01', time: '11:00', location_en: 'University of Bahrain, Sakhir', location_ar: 'جامعة البحرين، الصخير', sport_category: 'University', theme: 'sky', teams_en: 'UoB vs Polytechnic', teams_ar: 'جامعة البحرين ضد بوليتكنك', score: 'Pending' },
-            { id: 6, title_en: 'Collegiate Esports Championship', title_ar: 'البطولة الجامعية للألعاب الإلكترونية', date: '2026-11-15', time: '17:00', location_en: 'Zain Arena, Um Al Hassam', location_ar: 'صالة زين، أم الحصم', sport_category: 'University', theme: 'sky', teams_en: '8 Qualified Colleges', teams_ar: '8 كليات متأهلة', score: 'Pending' },
-            { id: 7, title_en: 'University League Technical Meeting', title_ar: 'المؤتمر الفني لدوري الجامعات', date: '2027-02-07', time: '09:30', location_en: 'Conference Hall, Seef', location_ar: 'قاعة المؤتمرات، السيف', sport_category: 'Management', theme: 'slate', teams_en: 'Delegates & Coaches', teams_ar: 'الممثلون والمدربون', score: 'Upcoming' },
-            { id: 8, title_en: 'Elite Athletics Training Camps', title_ar: 'معسكرات النخبة لألعاب القوى', date: '2027-03-14', time: '07:00', location_en: 'Athletics Excellence Center', location_ar: 'مركز التميز لألعاب القوى', sport_category: 'Talent', theme: 'neutral', teams_en: 'National Youth Squad', teams_ar: 'منتخب الشباب الوطني', score: 'Upcoming' },
-            { id: 9, title_en: 'Collegiate Chess Championship', title_ar: 'البطولة الجامعية للشطرنج', date: '2027-03-21', time: '16:00', location_en: 'Student Services Center', location_ar: 'مركز الخدمات الطلابية', sport_category: 'University', theme: 'sky', teams_en: 'Individual Champions', teams_ar: 'أبطال الفردي', score: 'Upcoming' },
-            { id: 10, title_en: 'Collegiate Table Tennis Finals', title_ar: 'نهائيات دوري كرة الطاولة', date: '2027-04-04', time: '15:00', location_en: 'Table Tennis Association Hall', location_ar: 'صالة اتحاد كرة الطاولة', sport_category: 'University', theme: 'sky', teams_en: 'Finalist Teams', teams_ar: 'الفرق المتأهلة للنهائي', score: 'Upcoming' },
-            { id: 11, title_en: 'Collegiate Football Championship', title_ar: 'البطولة الجامعية لكرة القدم', date: '2027-04-11', time: '17:30', location_en: 'BFA Stadium, Riffa', location_ar: 'استاد اتحاد كرة القدم، الرفاع', sport_category: 'University', theme: 'sky', teams_en: 'Final 4 Bracket', teams_ar: 'المربع الذهبي', score: 'Upcoming' },
-            { id: 12, title_en: 'Gulf School Sports Championship', title_ar: 'البطولة الخليجية المدرسية', date: '2027-04-25', time: '08:30', location_en: 'Khalifa Sports City, Isa Town', location_ar: 'مدينة خليفة الرياضية', sport_category: 'Tournament', theme: 'blue', teams_en: 'Bahrain vs Regional Teams', teams_ar: 'البحرين ضد المنتخبات الخليجية', score: 'Upcoming' },
-            { id: 13, title_en: 'Talent Discovery Season Closing', title_ar: 'حفل ختام برنامج اكتشاف المواهب', date: '2027-04-29', time: '11:00', location_en: 'Hall D, Ministry Complex', location_ar: 'القاعة د، مجمع الوزارة', sport_category: 'Talent', theme: 'neutral', teams_en: 'All Participants', teams_ar: 'كافة المشاركين', score: 'Upcoming' },
-            { id: 14, title_en: 'Collegiate Sports Development Forum', title_ar: 'ملتقى تطوير الرياضة الجامعية', date: '2027-05-09', time: '10:00', location_en: 'Main Auditorium, Sakhir', location_ar: 'المسرح الرئيسي، الصخير', sport_category: 'University', theme: 'sky', teams_en: 'Academic Board', teams_ar: 'الهيئة الأكاديمية والرياضية', score: 'Upcoming' },
-            { id: 15, title_en: 'Annual Sports Excellence Awards', title_ar: 'جائزة التميز الرياضي السنوية', date: '2027-05-16', time: '19:00', location_en: 'Cultural Hall, Manama', location_ar: 'الصالة الثقافية، المنامة', sport_category: 'Management', theme: 'slate', teams_en: 'Award Nominees', teams_ar: 'المدارس واللاعبون المكرمون', score: 'Upcoming' }
+            {
+                id: 1,
+                title_en: "Sports Governance (Approval of Regulations, Executive Bylaws & Eligibility Criteria)",
+                title_ar: "الحوكمة الرياضية (اعتماد اللائحة الرياضية واللائحة التنفيذية وضوابط أهلية المشاركة)",
+                date: "2026-10-04",
+                time: "09:00",
+                location_en: "Ministry of Education - Building 1, Isa Town",
+                location_ar: "وزارة التربية والتعليم - المبنى 1، مدينة عيسى",
+                location_map: "https://maps.google.com/?q=Ministry+of+Education+Isa+Town+Bahrain",
+                sport_category: "Management",
+                theme: "slate",
+                teams_en: "School Sports Leadership & MOE Officials",
+                teams_ar: "قيادات الرياضة المدرسية ومسؤولو الوزارة",
+                score: "Completed"
+            },
+            {
+                id: 2,
+                title_en: "National Sports Talent Selection",
+                title_ar: "الانتقاء الرياضي",
+                date: "2026-10-11",
+                time: "08:00",
+                location_en: "Physical Education Hall, Ministry of Education, Isa Town",
+                location_ar: "صالة التربية الرياضية، وزارة التربية والتعليم، مدينة عيسى",
+                location_map: "https://maps.google.com/?q=Ministry+of+Education+Hall+Isa+Town+Bahrain",
+                sport_category: "Talent",
+                theme: "neutral",
+                teams_en: "Nominated Student Athletes",
+                teams_ar: "الطلبة الرياضيون المرشحون",
+                score: "Completed"
+            },
+            {
+                id: 3,
+                title_en: "Launch of Student Athletic Talent Discovery",
+                title_ar: "البدء باكتشاف المواهب الطلابية الرياضية",
+                date: "2026-10-15",
+                time: "09:00",
+                location_en: "Public & Private Schools across Bahrain",
+                location_ar: "المدارس الحكومية والخاصة في مملكة البحرين",
+                location_map: "https://maps.google.com/?q=Ministry+of+Education+Isa+Town+Bahrain",
+                sport_category: "Talent",
+                theme: "neutral",
+                teams_en: "All School Cohorts",
+                teams_ar: "جميع المراحل المدرسية",
+                score: "In Progress"
+            },
+            {
+                id: 4,
+                title_en: "Educational Directorates Cup",
+                title_ar: "كأس منتخبات المناطق التعليمية",
+                date: "2026-10-25",
+                time: "16:00",
+                location_en: "Local Club Stadiums (Isa Town Sports City / Al Ahli Club)",
+                location_ar: "ملاعب الأندية المحلية (مدينة عيسى الرياضية / النادي الأهلي)",
+                location_map: "https://maps.google.com/?q=Isa+Town+Sports+City+Bahrain",
+                sport_category: "Tournament",
+                theme: "blue",
+                teams_en: "Directorates Representative Teams",
+                teams_ar: "منتخبات المناطق التعليمية",
+                score: "Upcoming"
+            },
+            {
+                id: 5,
+                title_en: "University Partnership (Higher Education Sports Directors Forum)",
+                title_ar: "الشراكة الجامعية (ملتقى مسؤولي الرياضة في مؤسسات التعليم العالي)",
+                date: "2026-11-03",
+                time: "10:00",
+                location_en: "Ministry of Education Activity Center, Isa Town",
+                location_ar: "مركز وزارة التربية والتعليم للأنشطة، مدينة عيسى",
+                location_map: "https://maps.google.com/?q=Ministry+of+Education+Activity+Center+Isa+Town+Bahrain",
+                sport_category: "University",
+                theme: "sky",
+                teams_en: "Higher Education Sports Deans & Directors",
+                teams_ar: "مسؤولو وعمداء الرياضة بمؤسسات التعليم العالي",
+                score: "Upcoming"
+            },
+            {
+                id: 6,
+                title_en: "Collegiate Esports Championship",
+                title_ar: "الألعاب الجامعية (البطولة الجامعية للألعاب الإلكترونية)",
+                date: "2026-11-17",
+                time: "16:00",
+                location_en: "Ministry of Education Activity Center, Isa Town",
+                location_ar: "مركز وزارة التربية والتعليم للأنشطة، مدينة عيسى",
+                location_map: "https://maps.google.com/?q=Ministry+of+Education+Activity+Center+Isa+Town+Bahrain",
+                sport_category: "University",
+                theme: "sky",
+                teams_en: "Bahrain University Esports Teams",
+                teams_ar: "فرق الرياضات الإلكترونية بجامعات البحرين",
+                score: "Upcoming"
+            },
+            {
+                id: 7,
+                title_en: "Physical Conditioning Course for Coaches",
+                title_ar: "دورة الإعداد البدني للمدربين",
+                date: "2026-12-08",
+                time: "16:30",
+                location_en: "Isa Town Primary Intermediate Boys School Sports Hall",
+                location_ar: "صالة مدرسة مدينة عيسى الابتدائية الإعدادية للبنين",
+                location_map: "https://maps.google.com/?q=Isa+Town+Primary+Intermediate+Boys+School+Bahrain",
+                sport_category: "Training",
+                theme: "slate",
+                teams_en: "School Athletic Coaches & PE Teachers",
+                teams_ar: "مدربو المنتخبات المدرسية ومعلمو التربية الرياضية",
+                score: "Upcoming"
+            },
+            {
+                id: 8,
+                title_en: "Specialized Football Coaching Certification Course",
+                title_ar: "الدورة التخصصية لمدربي كرة القدم",
+                date: "2026-12-15",
+                time: "16:30",
+                location_en: "Isa Town Primary Intermediate Boys School Football Pitch",
+                location_ar: "ملعب مدرسة مدينة عيسى الابتدائية الإعدادية للبنين",
+                location_map: "https://maps.google.com/?q=Isa+Town+Primary+Intermediate+Boys+School+Bahrain",
+                sport_category: "Training",
+                theme: "slate",
+                teams_en: "Accredited Football Coaches",
+                teams_ar: "مدربو كرة القدم المعتمدون بالمدارس",
+                score: "Upcoming"
+            },
+            {
+                id: 9,
+                title_en: "University League Technical Meeting",
+                title_ar: "المؤتمر الفني لدوري الجامعات",
+                date: "2027-02-09",
+                time: "10:30",
+                location_en: "Ministry of Education Activity Center, Isa Town",
+                location_ar: "مركز وزارة التربية والتعليم للأنشطة، مدينة عيسى",
+                location_map: "https://maps.google.com/?q=Ministry+of+Education+Activity+Center+Isa+Town+Bahrain",
+                sport_category: "Management",
+                theme: "slate",
+                teams_en: "University Team Delegations & Referees Committee",
+                teams_ar: "وفود الفرق الجامعية ولجنة الحكام",
+                score: "Upcoming"
+            },
+            {
+                id: 10,
+                title_en: "Collegiate Chess Championship",
+                title_ar: "الألعاب الجامعية (البطولة الجامعية للشطرنج)",
+                date: "2027-03-16",
+                time: "15:30",
+                location_en: "Khalifa Sports City Arena, Isa Town",
+                location_ar: "صالة مدينة خليفة الرياضية، مدينة عيسى",
+                location_map: "https://maps.google.com/?q=Khalifa+Sports+City+Isa+Town+Bahrain",
+                sport_category: "University",
+                theme: "sky",
+                teams_en: "Collegiate Chess Competitors",
+                teams_ar: "أبطال الشطرنج من طلبة الجامعات",
+                score: "Upcoming"
+            },
+            {
+                id: 11,
+                title_en: "Open Table Tennis Championship for Public & Private Schools",
+                title_ar: "بطولة كرة الطاولة المفتوحة للمدارس الحكومية والخاصة",
+                date: "2027-03-23",
+                time: "09:00",
+                location_en: "Bahrain Table Tennis Association Hall, Riffa",
+                location_ar: "صالة الاتحاد البحريني لكرة الطاولة، الرفاع",
+                location_map: "https://maps.google.com/?q=Bahrain+Table+Tennis+Association+Riffa",
+                sport_category: "Tournament",
+                theme: "blue",
+                teams_en: "Public and Private School Qualifiers",
+                teams_ar: "المدارس الحكومية والخاصة المتأهلة",
+                score: "Upcoming"
+            },
+            {
+                id: 12,
+                title_en: "Collegiate Table Tennis Championship",
+                title_ar: "الألعاب الجامعية (البطولة الجامعية لكرة الطاولة)",
+                date: "2027-04-05",
+                time: "16:00",
+                location_en: "Bahrain Table Tennis Association Hall, Riffa",
+                location_ar: "صالة الاتحاد البحريني لكرة الطاولة، الرفاع",
+                location_map: "https://maps.google.com/?q=Bahrain+Table+Tennis+Association+Riffa",
+                sport_category: "University",
+                theme: "sky",
+                teams_en: "Collegiate Table Tennis Finalists",
+                teams_ar: "فرق الجامعات المتأهلة لنهائيات الطاولة",
+                score: "Upcoming"
+            },
+            {
+                id: 13,
+                title_en: "Collegiate Football Championship",
+                title_ar: "الألعاب الجامعية (البطولة الجامعية لكرة القدم)",
+                date: "2027-04-12",
+                time: "17:00",
+                location_en: "Local Club Stadiums & University Pitches (BFA / UoB)",
+                location_ar: "ملاعب الأندية المحلية والجامعات (اتحاد كرة القدم / جامعة البحرين)",
+                location_map: "https://maps.google.com/?q=Bahrain+Football+Association+Riffa",
+                sport_category: "University",
+                theme: "sky",
+                teams_en: "University League Football Teams",
+                teams_ar: "فرق دوري الجامعات لكرة القدم",
+                score: "Upcoming"
+            },
+            {
+                id: 14,
+                title_en: "Psychological Preparation & Mental Conditioning Course for Student Teams",
+                title_ar: "دورة الإعداد النفسي والتهيئة الذهنية للمنتخبات الطلابية",
+                date: "2027-04-20",
+                time: "18:00",
+                location_en: "Online Virtual Classroom (Distance Learning)",
+                location_ar: "دورة إلكترونية (عن بعد)",
+                location_map: "https://teams.microsoft.com",
+                sport_category: "Training",
+                theme: "neutral",
+                teams_en: "Student Athletic Team Members & Coaches",
+                teams_ar: "أعضاء المنتخبات الطلابية والأجهزة الفنية",
+                score: "Upcoming"
+            },
+            {
+                id: 15,
+                title_en: "Student Athletic Talent Discovery Season Closing",
+                title_ar: "نهاية اكتشاف المواهب الطلابية الرياضية",
+                date: "2027-04-28",
+                time: "10:00",
+                location_en: "Ministry of Education Activity Center, Isa Town",
+                location_ar: "مركز وزارة التربية والتعليم للأنشطة، مدينة عيسى",
+                location_map: "https://maps.google.com/?q=Ministry+of+Education+Activity+Center+Isa+Town+Bahrain",
+                sport_category: "Talent",
+                theme: "neutral",
+                teams_en: "Selected Student Talent Cohort",
+                teams_ar: "كافة المواهب الطلابية المكتشفة",
+                score: "Upcoming"
+            },
+            {
+                id: 16,
+                title_en: "University Sports Development Forum",
+                title_ar: "ملتقيات جامعية (ملتقى تطوير الرياضة الجامعية)",
+                date: "2027-05-11",
+                time: "10:00",
+                location_en: "Ministry of Education Activity Center, Isa Town",
+                location_ar: "مركز وزارة التربية والتعليم للأنشطة، مدينة عيسى",
+                location_map: "https://maps.google.com/?q=Ministry+of+Education+Activity+Center+Isa+Town+Bahrain",
+                sport_category: "University",
+                theme: "sky",
+                teams_en: "Higher Education Councils & Sports Committees",
+                teams_ar: "مجالس التعليم العالي واللجان الرياضية",
+                score: "Upcoming"
+            },
+            {
+                id: 17,
+                title_en: "Sports Excellence Awards",
+                title_ar: "جائزة التميز الرياضي",
+                date: "2027-06-09",
+                time: "19:00",
+                location_en: "Cultural Hall / MOE Conference Hall, Manama",
+                location_ar: "الصالة الثقافية / قاعة المؤتمرات بالوزارة، المنامة",
+                location_map: "https://maps.google.com/?q=Cultural+Hall+Manama+Bahrain",
+                sport_category: "Management",
+                theme: "slate",
+                teams_en: "All Honored Schools, Athletes & Faculty",
+                teams_ar: "جميع المدارس والرياضيين المكرمين",
+                score: "Upcoming"
+            }
         ];
 
         const sampleLeaderboard = [
-            { rank: 1, name_en: 'Isa Town Secondary School', name_ar: 'مدرسة مدينة عيسى الثانوية', played: 12, wins: 10, points: 31 },
-            { rank: 2, name_en: 'Al-Hidaya Al-Khalifia School', name_ar: 'مدرسة الهداية الخليفية', played: 12, wins: 9, points: 28 },
-            { rank: 3, name_en: 'Muharraq Secondary School', name_ar: 'مدرسة المحرق الثانوية', played: 12, wins: 8, points: 25 },
-            { rank: 4, name_en: 'Riffa Secondary School', name_ar: 'مدرسة الرفاع الثانوية', played: 12, wins: 7, points: 22 },
-            { rank: 5, name_en: 'Shaikh Isa bin Ali School', name_ar: 'مدرسة الشيخ عيسى بن علي', played: 12, wins: 5, points: 17 }
+            { rank: 1, name_en: "Isa Town Secondary School", name_ar: "مدرسة مدينة عيسى الثانوية", played: 14, wins: 12, points: 37 },
+            { rank: 2, name_en: "Al-Hidaya Al-Khalifia School", name_ar: "مدرسة الهداية الخليفية", played: 14, wins: 11, points: 34 },
+            { rank: 3, name_en: "Muharraq Secondary School", name_ar: "مدرسة المحرق الثانوية", played: 14, wins: 9, points: 29 },
+            { rank: 4, name_en: "Riffa Secondary School", name_ar: "مدرسة الرفاع الثانوية", played: 14, wins: 8, points: 26 },
+            { rank: 5, name_en: "Shaikh Isa bin Ali School", name_ar: "مدرسة الشيخ عيسى بن علي", played: 14, wins: 6, points: 20 }
         ];
         // <!-- GM&USER_EDITABLE_DATA_END -->
 
@@ -1050,7 +1344,7 @@
         let expandedMonthMeta = null;
         let selectedCategory = 'All';
 
-        // 12-Month Academic Year (Sep 2026 - Aug 2027)
+        // 12-Month Academic Year Setup (Sep 2026 - Aug 2027)
         const academicMonths = Array.from({ length: 12 }, (_, idx) => {
             const dateRef = new Date(2026, 8 + idx, 1);
             return {
@@ -1062,7 +1356,7 @@
         // Multilingual Translation Dictionary
         const i18n = {
             en: {
-                pageTitle: "Bahrain School Sports Events",
+                pageTitle: "Student Athletic Team Activities",
                 pageSubtitle: "Year 2026-2027",
                 btnLang: "العربية",
                 upcomingTitle: "Upcoming Events Showcase",
@@ -1085,7 +1379,7 @@
                 tabTimeline: "Show All Events",
                 tabScores: "Past Scores",
                 legTournament: "Tournaments",
-                legAthletics: "Athletics",
+                legAthletics: "Athletics & Training",
                 legTalent: "Talent Selection",
                 legCollegiate: "Collegiate",
                 thDate: "Date",
@@ -1105,7 +1399,7 @@
                 ]
             },
             ar: {
-                pageTitle: "فعاليات الرياضة المدرسية في البحرين",
+                pageTitle: "فعاليات المنتخبات الطلابية الرياضية",
                 pageSubtitle: "للعام 2026-2027",
                 btnLang: "English",
                 upcomingTitle: "أبرز الفعاليات القادمة",
@@ -1128,7 +1422,7 @@
                 tabTimeline: "عرض كافة الفعاليات",
                 tabScores: "النتائج السابقة",
                 legTournament: "البطولات الرسمية",
-                legAthletics: "ألعاب القوى",
+                legAthletics: "التدريب والتأهيل",
                 legTalent: "انتقاء المواهب",
                 legCollegiate: "الأنشطة الجامعية",
                 thDate: "التاريخ",
@@ -1332,7 +1626,7 @@
                 const location = currentLang === 'en' ? evt.location_en : evt.location_ar;
 
                 row.innerHTML = `
-                    <div class="timeline-date">${formatNumberString(evt.date)}<br><small style="color:var(--text-light);">${formatNumberString(evt.time)}</small></div>
+                    <div class="timeline-date">${formatNumberString(evt.date)}<br><small style="color:var(--dark-blue-surface);">${formatNumberString(evt.time)}</small></div>
                     <div class="timeline-main">
                         <h4>${title}</h4>
                         <p>📍 ${location}</p>
@@ -1462,12 +1756,20 @@
             }
         }
 
-        // Modal Pop-Up Handling
+        // Modal Pop-Up Handling with Live Google Maps Links
         function openModal(eventItem) {
             document.getElementById('mTitle').textContent = (currentLang === 'en') ? eventItem.title_en : eventItem.title_ar;
             document.getElementById('mDate').textContent = formatNumberString(eventItem.date);
             document.getElementById('mTime').textContent = formatNumberString(eventItem.time);
-            document.getElementById('mLoc').textContent = (currentLang === 'en') ? eventItem.location_en : eventItem.location_ar;
+            
+            const locText = (currentLang === 'en') ? eventItem.location_en : eventItem.location_ar;
+            const locContainer = document.getElementById('mLoc');
+            if (eventItem.location_map) {
+                locContainer.innerHTML = `<a href="${eventItem.location_map}" target="_blank" rel="noopener noreferrer" style="color: var(--blue-primary); text-decoration: underline; font-weight: 600;">${locText} ↗</a>`;
+            } else {
+                locContainer.textContent = locText;
+            }
+
             document.getElementById('mTeams').textContent = (currentLang === 'en') ? eventItem.teams_en : eventItem.teams_ar;
             document.getElementById('mCategory').textContent = eventItem.sport_category;
 
