@@ -1,1 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Athletic Team Activities</title>
+    <link href="https://googleapis.com" rel="stylesheet">
+    <style>
+        :root { --blue: #134074; --blue-light: #eff6ff; --dark: #0f172a; --muted: #64748b; --bg: #f8fafc; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { background: var(--bg); color: var(--dark); padding: 0 4rem; overflow-x: hidden; }
+        .dashboard-container { width: 100%; max-width: 1400px; margin: 0 auto; padding-bottom: 5rem; }
+        header { position: relative; width: 100%; display: flex; flex-direction: column; margin-top: 2rem; }
+        .moe-header-emblem { position: absolute; top: 0; right: 0; width: 110px; z-index: 10; }
+        .moe-header-emblem img { width: 100%; height: auto; object-fit: contain; }
+        .title-block { text-align: center; margin-top: 115px; width: 100%; }
+        .title-block h1 { font-size: 2.4rem; font-weight: 800; letter-spacing: -1px; margin-bottom: 0.5rem; }
+        .title-block .subtitle { font-size: 1.15rem; color: var(--muted); }
+        .language-container { position: absolute; top: 115px; right: 40px; z-index: 20; }
+        .toggle-lang-btn { background: #fff; color: var(--blue); border: 1px solid #f1f5f9; padding: 0.6rem 1.5rem; border-radius: 10px; font-weight: 700; cursor: pointer; }
+        .mini-navigation-tabs { margin-top: 75px; display: flex; gap: 0.5rem; border-bottom: 1px solid #f1f5f9; padding-bottom: 0.5rem; }
+        .nav-button { background: transparent; border: none; padding: 0.6rem 1.2rem; font-size: 0.9rem; font-weight: 600; color: var(--muted); cursor: pointer; border-radius: 8px; }
+        .nav-button.active { color: var(--blue); background: var(--blue-light); font-weight: 700; }
+        .section-headline { margin: 2.5rem 0 1.5rem 0; }
+        .section-headline h2 { font-size: 1.5rem; font-weight: 700; }
+        .main-dashboard-grid { display: grid; grid-template-columns: 280px 1fr; gap: 2rem; width: 100%; }
+        .dashboard-sidebar { background: #fff; border-radius: 16px; padding: 1.5rem; border: 1px solid #f1f5f9; }
+        .action-button { width: 100%; background: var(--blue); color: #fff; border: none; padding: 0.8rem 1rem; border-radius: 12px; font-weight: 700; cursor: pointer; margin-bottom: 1.5rem; }
+        .calendar-matrix-view { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 75px; }
+        .month-container-card { background: #fff; border-radius: 16px; padding: 1.5rem; border: 1px solid #f1f5f9; box-shadow: 0 4px 20px rgba(0,0,0,0.03); }
+        .month-title-row { display: flex; justify-content: space-between; margin-bottom: 1.25rem; }
+        .month-label-text { font-size: 1.1rem; font-weight: 700; }
+        .month-event-counter { font-size: 0.75rem; font-weight: 700; color: var(--blue); background: var(--blue-light); padding: 0.25rem 0.6rem; border-radius: 20px; }
+        .days-header-row, .days-grid-matrix { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; }
+        .days-header-row { font-size: 0.75rem; font-weight: 700; color: var(--muted); margin-bottom: 0.75rem; }
+        .days-grid-matrix { row-gap: 0.5rem; }
+        .date-cell-item { font-size: 0.85rem; font-weight: 600; padding: 0.5rem 0; border-radius: 10px; cursor: pointer; }
+        .date-cell-item:hover:not(.empty-space) { background: #f1f5f9; }
+        .date-cell-item.active-event-day { background: var(--blue); color: #fff !important; font-weight: 700; }
+        .modal-view-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15,23,42,0.3); backdrop-filter: blur(8px); display: none; justify-content: center; align-items: center; z-index: 2000; }
+        .modal-card-body { background: #fff; border-radius: 20px; width: 100%; max-width: 460px; padding: 2rem; border: 1px solid #f1f5f9; }
+        .modal-card-header { display: flex; justify-content: space-between; margin-bottom: 1.5rem; }
+        .close-btn-marker { background: transparent; border: none; font-size: 1.5rem; cursor: pointer; color: var(--muted); }
+        .info-detail-row { margin-bottom: 1.25rem; }
+        .info-detail-label { font-size: 0.75rem; font-weight: 700; color: var(--muted); text-transform: uppercase; margin-bottom: 0.25rem; }
+        .info-detail-value { font-size: 0.95rem; font-weight: 600; }
+        .map-redirect-link { color: var(--blue); text-decoration: none; font-weight: 700; }
+        @media (max-width: 1024px) {
+            body { padding: 0 1.5rem; } .main-dashboard-grid { grid-template-columns: 1fr; }
+            .moe-header-emblem { width: 85px; } header { align-items: flex-start; }
+            .title-block { text-align: left; margin-top: 135px; } .language-container { top: 135px; right: 0; }
+            .mini-navigation-tabs { margin-top: 65px; } .calendar-matrix-view { gap: 75px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <header>
+            <div class="moe-header-emblem"><img src="logo.png" alt="Logo"></div>
+            <div class="title-block">
+                <h1 id="mainTitleLabel">Student Athletic Team Activities</h1>
+                <div class="subtitle" id="subTitleLabel">فعاليات المنتخبات الطلابية الرياضية</div>
+            </div>
+            <div class="language-container"><button class="toggle-lang-btn" id="langSwitchBtn" onclick="handleLangToggle()">العربية</button></div>
+            <div class="mini-navigation-tabs">
+                <button class="nav-button">Day</button><button class="nav-button">Week</button>
+                <button class="nav-button active">Month</button><button class="nav-button">Year</button>
+            </div>
+        </header>
+        <div class="section-headline"><h2 id="calendarSectionLabel">Academic Calendar</h2></div>
+        <div class="main-dashboard-grid">
+            <div class="dashboard-sidebar">
+                <button class="action-button">+ Create Schedule</button>
+                <div class="info-detail-label" style="margin-bottom: 0.5rem;">Quick View</div>
+                <div style="font-size: 0.85rem; font-weight:600; color: var(--muted); line-height: 1.6;">Select highlighted event tiles to view tournament summaries.</div>
+            </div>
+            <div class="calendar-matrix-view" id="matrixViewContainer"></div>
+        </div>
+    </div>
+    <div class="modal-view-overlay" id="detailModalOverlay">
+        <div class="modal-card-body">
+            <div class="modal-card-header"><h3 id="modalEventName">Event Details</h3><button class="close-btn-marker" onclick="closeDetailModal()">&times;</button></div>
+            <div class="info-detail-row"><div class="info-detail-label" id="lblDateTime">Date & Time</div><div class="info-detail-value" id="modalEventDateTime"></div></div>
+            <div class="info-detail-row"><div class="info-detail-label" id="lblVenueLocation">Location Venue</div><div class="info-detail-value"><a href="#" target="_blank" class="map-redirect-link" id="modalMapsAnchor">📍 View on Google Maps</a></div></div>
+        </div>
+    </div>
+    <script>
+        let activeLanguage = 'en';
+        const scheduleDataset = [
+            { id: 1, titleEn: "High School Football Championship Kickoff", titleAr: "افتتاح بطولة كرة القدم للمرحلة الثانوية", date: "2026-10-04", time: "09:00 AM", venue: "Isa Town Sports Stadium", mapLink: "https://goo.gl" },
+            { id: 2, titleEn: "National School Chess Tournament - Round 1", titleAr: "بطولة المدارس الوطنية للشطرنج - الجولة الأولى", date: "2026-10-11", time: "10:30 AM", venue: "Manama Secondary School Hall", mapLink: "https://goo.gl" },
+            { id: 3, titleEn: "Inter-School Basketball Cup", titleAr: "كأس كرة السلة للمدارس", date: "2026-10-15", time: "08:00 AM", venue: "Bahrain Sports Society Arena", mapLink: "https://goo.gl" },
+            { id: 4, titleEn: "All-Schools Handball Qualifiers", titleAr: "تصفيات كرة اليد لجميع المدارس", date: "2026-10-25", time: "11:00 AM", venue: "Saar Sports Club Complex", mapLink: "https://goo.gl" }
+        ];
+        const academicYearStructure = [
+            { en: "September 2026", ar: "سبتمبر 2026", totalDays: 30, offset: 2, monthNum: 8, yearNum: 2026 },
+            { en: "October 2026", ar: "أكتوبر 2026", totalDays: 31, offset: 4, monthNum: 9, yearNum: 2026 },
+            { en: "November 2026", ar: "نوفمبر 2026", totalDays: 30, offset: 0, monthNum: 10, yearNum: 2026 },
+            { en: "December 2026", ar: "ديسمبر 2026", totalDays: 31, offset: 2, monthNum: 11, yearNum: 2026 },
+            { en: "January 2027", ar: "يناير 2027", totalDays: 31, offset: 5, monthNum: 0, yearNum: 2027 },
+            { en: "February 2027", ar: "فبراير 2027", totalDays: 28, offset: 1, monthNum: 1, yearNum: 2027 },
+            { en: "March 2027", ar: "مارس 2027", totalDays: 31, offset: 1, monthNum: 2, yearNum: 2027 },
+            { en: "April 2027", ar: "أبريل 2027", totalDays: 30, offset: 4, monthNum: 3, yearNum: 2027 },
+            { en: "May 2027", ar: "مايو 2027", totalDays: 31, offset: 6, monthNum: 4, yearNum: 2027 },
+            { en: "June 2027", ar: "يونيو 2027", totalDays: 30, offset: 2, monthNum: 5, yearNum: 2027 },
+            { en: "July 2027", ar: "يوليو 2027", totalDays: 31, offset: 4, monthNum: 6, yearNum: 2027 },
+            { en: "August 2027", ar: "أغسطس 2027", totalDays: 31, offset: 0, monthNum: 7, yearNum: 2027 }
+        ];
+        function renderMatrixEngine() {
+            const matrixTarget = document.getElementById('matrixViewContainer');
+            if(!matrixTarget) return; matrixTarget.innerHTML = '';
+            academicYearStructure.forEach(monthItem => {
+const structuralMatches = scheduleDataset.filter(evt => {
+const parsedDate = new Date(evt.date);
+return parsedDate.getMonth() === monthItem.monthNum && parsedDate.getFullYear() === monthItem.yearNum;
+});
+const card = document.createElement('div'); card.className = 'month-container-card';
+const nameLabel = activeLanguage === 'en' ? monthItem.en : monthItem.ar;
+const counterSuffix = activeLanguage === 'en' ? `${structuralMatches.length} Events` : `${structuralMatches.length} فعاليات`;
+let html = `<div class="month-title-row"><div class="month-label-text">${nameLabel}</div><div class="month-event-counter">${counterSuffix}</div></div><div class="days-header-row"><div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div></div><div class="days-grid-matrix">`;
+for (let spacer = 0; spacer < monthItem.offset; spacer++) html += `<div class="date-cell-item empty-space"></div>`;
+for (let dayUnit = 1; dayUnit <= monthItem.totalDays; dayUnit++) {
+const trackingString = `${monthItem.yearNum}-${String(monthItem.monthNum + 1).padStart(2, '0')}-${String(dayUnit).padStart(2, '0')}`;
+const match = structuralMatches.find(item => item.date === trackingString);
+const classState = match ? 'active-event-day' : '';
+const action = match ? `onclick="triggerDetailModal(${match.id})"` : '';
+html += `<div class="date-cell-item ${classState}" ${action}>${dayUnit}</div>`;
+}
+html += `</div>`; card.innerHTML = html; matrixTarget.appendChild(card);
+});
+}
+function triggerDetailModal(instanceId) {
+const item = scheduleDataset.find(x => x.id === instanceId); if (!item) return;
+document.getElementById('modalEventName').innerText = activeLanguage === 'en' ? item.titleEn : item.titleAr;
+document.getElementById('modalEventDateTime').innerText = `${item.date} at ${item.time}`;
+document.getElementById('modalMapsAnchor').href = item.mapLink;
+document.getElementById('modalMapsAnchor').innerText = activeLanguage === 'en' ? `📍 ${item.venue} - View Map` : `📍 ${item.venue} - عرض الخريطة`;
+document.getElementById('detailModalOverlay').style.display = 'flex';
+}
+function closeDetailModal() { document.getElementById('detailModalOverlay').style.display = 'none'; }
+function handleLangToggle() {
+activeLanguage = activeLanguage === 'en' ? 'ar' : 'en';
+const btnNode = document.getElementById('langSwitchBtn');
+const headlineNode = document.getElementById('calendarSectionLabel');
+const labelDateNode = document.getElementById('lblDateTime');
+const labelVenueNode = document.getElementById('lblVenueLocation');
+if (activeLanguage === 'ar') {
+document.documentElement.dir = 'rtl'; btnNode.innerText = 'English'; headlineNode.innerText = 'التقويم الأكاديمي';
+labelDateNode.innerText = 'التاريخ والوقت'; labelVenueNode.innerText = 'موقع الفعالية';
+} else {
+document.documentElement.dir = 'ltr'; btnNode.innerText = 'العربية'; headlineNode.innerText = 'Academic Calendar';
+labelDateNode.innerText = 'Date & Time'; labelVenueNode.innerText = 'Location Venue';
+}
+renderMatrixEngine();
+}
+window.onload = renderMatrixEngine;
+</script>
+</body>
+</html>
 
